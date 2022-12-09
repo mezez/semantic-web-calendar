@@ -5,6 +5,7 @@ import org.semanticwebproject.lib.CalendarEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,16 +15,10 @@ import static org.semanticwebproject.lib.Helpers.downloadICS;
 public class Main {
     public static void main(String[] args) throws IOException {
         //download and read calendar file or read if necessary
-        String action = READ_COMMAND;
-        try {
-            action = args[0];
-        }catch (Exception exception){
-            System.out.println("An action argument is needed to run application");
-            System.exit(0);
-        }
+        String action = getCommand();
 
-        if (action.toString().equals(DOWNLOAD_COMMAND)){
-            String url = args[1].toString();
+        if (action.equals(DOWNLOAD_COMMAND)){
+            String url = getUrl();
             downloadICS(url);
         }
 
@@ -31,16 +26,12 @@ public class Main {
         BufferedReader reader = new BufferedReader(new FileReader(CALENDAR_FILE_NAME));
 
         String line;
-        boolean firstEvent = true;
-        boolean startBuilding = false;
 
-
-        boolean firstObject = true;
 
         CalendarEvent event = null;
         List<CalendarEvent> events = new ArrayList<CalendarEvent>();
         while ((line = reader.readLine()) != null) {
-            String[] columns = line.split(":");
+            String[] columns = line.split(":",2);
 
             if (columns[0].equals(BEGIN) && columns[1].equals(VEVENT)){
                 // build object from next line
@@ -53,6 +44,9 @@ public class Main {
                 continue;
             }
             assert event != null;
+            System.out.println(columns[0]);
+            System.out.println(columns[1]);
+
             if(columns[0].equals(DTSTAMP)){
                 event.setStampDate(columns[1]);
             }
@@ -85,5 +79,41 @@ public class Main {
             }
         }
 
+        System.out.println(events);
+
+    }
+
+    public static String getCommand() throws IOException {
+        // Enter data using BufferReader
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(System.in));
+
+        // Reading data using readLine
+        System.out.println("Please enter a run command: download or read:");
+        String command = reader.readLine().toUpperCase();
+
+        while (!command.equals(DOWNLOAD_COMMAND) && !command.equals(READ_COMMAND)){
+            System.out.println("Command must be either DOWNLOAD or READ");
+            command = reader.readLine().toUpperCase();
+        }
+
+        return command;
+    }
+
+    public static String getUrl() throws IOException{
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(System.in));
+
+        // Reading data using readLine
+        System.out.println("Please enter a url to file:");
+
+        String url = reader.readLine();
+
+        while (url.isEmpty()){
+            System.out.println("Please enter a valid url");
+            url = reader.readLine();
+        }
+
+        return url;
     }
 }
