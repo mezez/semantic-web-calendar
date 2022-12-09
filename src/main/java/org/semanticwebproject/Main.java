@@ -1,5 +1,7 @@
 package org.semanticwebproject;
 
+import org.semanticwebproject.lib.CalendarEvent;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -27,20 +29,29 @@ public class Main {
         BufferedReader reader = new BufferedReader(new FileReader(CALENDAR_FILE_NAME));
 
         String line;
-        int currentLine = 1;
-        int startLine = 0;
+        boolean firstEvent = true;
+        boolean startBuilding = false;
+
+
+        boolean firstObject = true;
+
+        CalendarEvent event = null;
         while ((line = reader.readLine()) != null) {
             String[] columns = line.split(":");
 
             if (columns[0].equals(BEGIN) && columns[1].equals(VEVENT)){
                 // build object from next line
-                startLine = currentLine + 1;
+                event = new CalendarEvent();
+                continue;
+            }
+            if (columns[0].equals(END) && columns[1].equals(VEVENT)){
+                // build object from next line
+                continue;
             }
 
-            if (startLine > 0 ){
-                //buildg
-            }
-            currentLine++;
+            assert event != null;
+            event.setStampDate(columns[1]);
+            //etc
         }
 
     }
