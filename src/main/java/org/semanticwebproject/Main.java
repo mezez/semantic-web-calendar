@@ -5,6 +5,8 @@ import org.semanticwebproject.lib.CalendarEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.semanticwebproject.lib.Constants.*;
 import static org.semanticwebproject.lib.Helpers.downloadICS;
@@ -36,6 +38,7 @@ public class Main {
         boolean firstObject = true;
 
         CalendarEvent event = null;
+        List<CalendarEvent> events = new ArrayList<CalendarEvent>();
         while ((line = reader.readLine()) != null) {
             String[] columns = line.split(":");
 
@@ -46,12 +49,40 @@ public class Main {
             }
             if (columns[0].equals(END) && columns[1].equals(VEVENT)){
                 // build object from next line
+                events.add(event);
                 continue;
             }
-
             assert event != null;
-            event.setStampDate(columns[1]);
-            //etc
+            if(columns[0].equals(DTSTAMP)){
+                event.setStampDate(columns[1]);
+            }
+            if(columns[0].equals(DTSTART)){
+                event.setStartDate(columns[1]);
+            }
+            if(columns[0].equals(DTEND)){
+                event.setEndDate(columns[1]);
+            }
+            if(columns[0].equals(SUMMARY)){
+                event.setSummary(columns[1]);
+            }
+            if(columns[0].equals(LOCATION)){
+                event.setLocation(columns[1]);
+            }
+            if(columns[0].equals(DESCRIPTION)){
+                event.setDescription(columns[1]);
+            }
+            if(columns[0].equals(UID)){
+                event.setUID(columns[1]);
+            }
+            if(columns[0].equals(CREATED)){
+                event.setCreatedAt(columns[1]);
+            }
+            if(columns[0].equals(LAST_MODIFIED)){
+                event.setLastModified(columns[1]);
+            }
+            if(columns[0].equals(SEQUENCE)){
+                event.setSequence(columns[1]);
+            }
         }
 
     }
