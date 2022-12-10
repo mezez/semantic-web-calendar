@@ -9,14 +9,14 @@ public class Constants {
     public static String BEGIN = "BEGIN";
     public static String END = "END";
     public static String VEVENT = "VEVENT";
-    public static String DTSTAMP = "DTSTAMP";
-    public static String DTSTART = "DTSTART";
-    public static String DTEND = "DTEND";
-    public static String SUMMARY = "SUMMARY";
-    public static String LOCATION = "LOCATION";
-    public static String DESCRIPTION = "DESCRIPTION";
-    public static String UID = "UID";
-    public static String CREATED = "CREATED";
-    public static String LAST_MODIFIED = "LAST-MODIFIED";
-    public static String SEQUENCE = "SEQUENCE";
+    public static final String _DTSTAMP = "DTSTAMP";
+    public static final String _DTSTART = "DTSTART";
+    public static final String _DTEND = "DTEND";
+    public static final String _SUMMARY = "SUMMARY";
+    public static final String _LOCATION = "LOCATION";
+    public static final String _DESCRIPTION = "DESCRIPTION";
+    public static final String _UID = "UID";
+    public static final String _CREATED = "CREATED";
+    public static final String _LAST_MODIFIED = "LAST-MODIFIED";
+    public static final String _SEQUENCE = "SEQUENCE";
 }
