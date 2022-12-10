@@ -99,9 +99,9 @@ public class Main {
 
             //loop through event details and form RDF
 
-            Resource eventInfo = model.createResource(eventName);
+            Resource eventInfo = model.createResource(eventName.substring(0, 1).toLowerCase() + eventName.substring(1));
 
-            eventInfo.addProperty(A_THING, SCHEMA_ORG_PREFIX + "event");
+            eventInfo.addProperty(A_THING, SCHEMA_ORG_PREFIX + "Event");
 
             for (Property eventDetail : eventDetails) {
                 String detailName = eventDetail.getName();
