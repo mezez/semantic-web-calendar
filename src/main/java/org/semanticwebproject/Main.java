@@ -14,6 +14,7 @@ import java.io.*;
 import java.util.List;
 
 import static org.semanticwebproject.lib.Constants.*;
+import static org.semanticwebproject.lib.Helpers.convertLocationToTerritoireIRI;
 import static org.semanticwebproject.lib.Helpers.downloadICS;
 
 public class Main {
@@ -21,6 +22,7 @@ public class Main {
     //PREFIXES
     public static final String SCHEMA_ORG_PREFIX = "https://schema.org/";
     public static final String EXAMPLE_PREFIX = "http://example.org/";
+    public static final String EMSE_TERRITOIRE_PREFIX = "https://territoire.emse.fr/kg/emse/fayol/";
 
 
     public static void main(String[] args) throws IOException, ParserException {
@@ -112,7 +114,9 @@ public class Main {
                     case _DTSTART -> eventInfo.addProperty(DATE_START, eventDetail.getValue());
                     case _DTEND -> eventInfo.addProperty(DATE_END, eventDetail.getValue());
                     case _SUMMARY -> eventInfo.addProperty(SUMMARY, eventDetail.getValue());
-                    case _LOCATION -> eventInfo.addProperty(LOCATION, eventDetail.getValue());
+                    case _LOCATION -> {
+                        eventInfo.addProperty(LOCATION, convertLocationToTerritoireIRI(eventDetail.getValue(), EMSE_TERRITOIRE_PREFIX));
+                    }
                     case _DESCRIPTION -> eventInfo.addProperty(DESCRIPTION, eventDetail.getValue());
                     case _UID -> eventInfo.addProperty(IDENTIFIER, eventDetail.getValue());
                     case _CREATED -> eventInfo.addProperty(DATE_CREATED, eventDetail.getValue());

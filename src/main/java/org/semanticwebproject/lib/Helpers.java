@@ -4,11 +4,11 @@ import java.io.BufferedInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 
 import static org.semanticwebproject.lib.Constants.CALENDAR_FILE_NAME;
 
 public class Helpers {
-
 
 
     public static void downloadICS(String urlString) throws IOException {
@@ -27,9 +27,32 @@ public class Helpers {
             bis.close();
 
             System.out.println("File downloaded to root of project folder");
-            System.out.println("File name: "+ CALENDAR_FILE_NAME);
-        }catch (Exception exception){
+            System.out.println("File name: " + CALENDAR_FILE_NAME);
+        } catch (Exception exception) {
             System.out.println("An error occurred while downloading file");
         }
+    }
+
+    public static String convertLocationToTerritoireIRI(String location, String prefix) {
+        String[] splitLocation = location.split("\\s+");
+        if (Arrays.stream(splitLocation).anyMatch(str -> str.toLowerCase().equals("emse")) && Arrays.stream(splitLocation).anyMatch(str -> str.toLowerCase().equals("fauriel"))) {
+            //convert to Territoire IRI
+            String roomName = splitLocation[splitLocation.length - 1];
+
+            switch (roomName.toLowerCase().substring(0, 2)) {
+                case "s1" -> location = prefix + "1ET/" + roomName;
+                case "s2" -> location = prefix + "2ET/" + roomName;
+                case "s3" -> location = prefix + "3ET/" + roomName;
+                case "s4" -> location = prefix + "4ET/" + roomName;
+                case "s5" -> location = prefix + "5ET/" + roomName;
+                case "s6" -> location = prefix + "6ET/" + roomName;
+                default -> {
+                }
+            }
+
+
+
+        }
+        return location;
     }
 }
