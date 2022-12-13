@@ -8,9 +8,14 @@ import net.fortuna.ical4j.model.component.CalendarComponent;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdfconnection.RDFConnection;
+import org.apache.jena.rdfconnection.RDFConnectionFactory;
 import org.apache.jena.vocabulary.RDF;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.semanticwebproject.lib.Constants.*;
@@ -76,8 +81,12 @@ public class Main {
         return url;
     }
 
-    public static void parseCalendarToRDF(Calendar calendar) {
+    public static void parseCalendarToRDF(Calendar calendar) throws IOException {
         List<CalendarComponent> calendarList = calendar.getComponentList().getAll();
+
+        List<String> eventFileName = new ArrayList<String>();
+
+        Integer eventCount = 1;
 
         for (CalendarComponent calendarEvent : calendarList) {
             Model model = ModelFactory.createDefaultModel();
@@ -126,9 +135,59 @@ public class Main {
             }
 
             model.createStatement(eventInfo, RDF.type, eventsInfo);
-            model.write(System.out, "Turtle");
+
+            String tempFileName = CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME+"-"+eventCount.toString()+".ttl";
+            eventFileName.add(tempFileName);
+
+            eventCount++;
+
+            FileWriter writer = new FileWriter(tempFileName);
+            BufferedWriter bufferedWriter = new BufferedWriter(writer);
+//            model.write(System.out, "Turtle");
+
+            model.write(bufferedWriter, "Turtle");
         }
 
+        mergeFiles(eventFileName, CALENDAR_OUTPUT_TURTLE_FILE_NAME);
 
+        uploadTurtleFile("fuseki", CALENDAR_OUTPUT_TURTLE_FILE_NAME);
+
+        System.out.println("Output file: "+ CALENDAR_OUTPUT_TURTLE_FILE_NAME +" generated and stores in project root folder");
+        System.out.println("Generted output has been uploaded to defined DB: Fuseki or LDP");
+        System.out.println("::::::::::::::::::::");
+    }
+
+    public static void mergeFiles(List<String> fileNames, String outputFileName) throws IOException {
+        PrintWriter pw = new PrintWriter(outputFileName);
+
+        for (String fileName: fileNames) {
+
+            BufferedReader br = new BufferedReader(new FileReader(fileName));
+
+            String line = br.readLine();
+
+            // loop to copy each line of file
+            while (line != null) {
+                pw.println(line);
+                line = br.readLine();
+            }
+            br.close();
+//            Files.deleteIfExists(Paths.get(fileName));
+        }
+
+        pw.flush();
+        pw.close();
+
+    }
+
+    public static void uploadTurtleFile(String destination, String fileName){
+        if (destination.equals("fuseki")){
+            String serviceURL = "http://localhost:3030/semweb/";
+            try (RDFConnection conn = RDFConnectionFactory.connect(serviceURL)) {
+                conn.put(fileName);
+            }
+        }else{
+            //upload to territoire
+        }
     }
 }

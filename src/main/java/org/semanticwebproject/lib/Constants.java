@@ -4,6 +4,9 @@ public class Constants {
     public static final String DOWNLOAD_COMMAND = "DOWNLOAD";
     public static final String READ_COMMAND = "READ";
     public static String CALENDAR_FILE_NAME = "calendar.ics";
+    public static String CALENDAR_OUTPUT_TURTLE_FILE_NAME = "calender_output.ttl";
+    public static String CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME = "calender_output_temp";
+
 
     //CALENDAR FORMATS
     public static String BEGIN = "BEGIN";
