@@ -5,6 +5,13 @@ import net.fortuna.ical4j.data.ParserException;
 import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.component.CalendarComponent;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
@@ -13,7 +20,9 @@ import org.apache.jena.rdfconnection.RDFConnectionFactory;
 import org.apache.jena.vocabulary.RDF;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +35,12 @@ public class Main {
 
     //PREFIXES
     public static final String SCHEMA_ORG_PREFIX = "https://schema.org/";
+    public static final String W3_LDP_PREFIX = "http://www.w3.org/ns/ldp#";
     public static final String EXAMPLE_PREFIX = "http://example.org/";
     public static final String EMSE_TERRITOIRE_PREFIX = "https://territoire.emse.fr/kg/emse/fayol/";
 
 
-    public static void main(String[] args) throws IOException, ParserException {
+    public static void main(String[] args) throws Exception {
         //download and read calendar file or read if necessary
         String action = getCommand();
 
@@ -81,7 +91,7 @@ public class Main {
         return url;
     }
 
-    public static void parseCalendarToRDF(Calendar calendar) throws IOException {
+    public static void parseCalendarToRDF(Calendar calendar) throws Exception {
         List<CalendarComponent> calendarList = calendar.getComponentList().getAll();
 
         List<String> eventFileName = new ArrayList<String>();
@@ -113,6 +123,7 @@ public class Main {
             Resource eventInfo = model.createResource(eventName.substring(0, 1).toLowerCase() + eventName.substring(1));
 
             eventInfo.addProperty(A_THING, SCHEMA_ORG_PREFIX + "Event");
+            eventInfo.addProperty(A_THING, W3_LDP_PREFIX + "BasicContainer");
 
             for (Property eventDetail : eventDetails) {
                 String detailName = eventDetail.getName();
@@ -136,7 +147,7 @@ public class Main {
 
             model.createStatement(eventInfo, RDF.type, eventsInfo);
 
-            String tempFileName = CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME+"-"+eventCount.toString()+".ttl";
+            String tempFileName = CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + eventCount.toString() + ".ttl";
             eventFileName.add(tempFileName);
 
             eventCount++;
@@ -150,17 +161,17 @@ public class Main {
 
         mergeFiles(eventFileName, CALENDAR_OUTPUT_TURTLE_FILE_NAME);
 
-        uploadTurtleFile("fuseki", CALENDAR_OUTPUT_TURTLE_FILE_NAME);
+        uploadTurtleFile(LDP_DESTINATION);
 
-        System.out.println("Output file: "+ CALENDAR_OUTPUT_TURTLE_FILE_NAME +" generated and stores in project root folder");
-        System.out.println("Generted output has been uploaded to defined DB: Fuseki or LDP");
+        System.out.println("Output file: " + CALENDAR_OUTPUT_TURTLE_FILE_NAME + " generated and stores in project root folder");
+        System.out.println("Generated output has been uploaded to defined DB: Fuseki or LDP");
         System.out.println("::::::::::::::::::::");
     }
 
     public static void mergeFiles(List<String> fileNames, String outputFileName) throws IOException {
         PrintWriter pw = new PrintWriter(outputFileName);
 
-        for (String fileName: fileNames) {
+        for (String fileName : fileNames) {
 
             BufferedReader br = new BufferedReader(new FileReader(fileName));
 
@@ -180,14 +191,41 @@ public class Main {
 
     }
 
-    public static void uploadTurtleFile(String destination, String fileName){
-        if (destination.equals("fuseki")){
-            String serviceURL = "http://localhost:3030/semweb/";
-            try (RDFConnection conn = RDFConnectionFactory.connect(serviceURL)) {
-                conn.put(fileName);
+    public static void uploadTurtleFile(String destination) throws Exception {
+        if (destination.equals(FUSEKI_DESTINATION)) {
+            try (RDFConnection conn = RDFConnectionFactory.connect(LOCAL_FUSEKI_SERVICE_URL)) {
+                conn.put(CALENDAR_OUTPUT_TURTLE_FILE_NAME);
             }
-        }else{
+        } else {
             //upload to territoire
+
+            try {
+                HttpPost post = new HttpPost(TERRITOIRE_CONTAINER_SERVICE_URL);
+                post.addHeader("Authorization", AUTH_TOKEN);
+                post.addHeader("Accept", "text/turtle");
+                post.addHeader("Content-Type", "text/turtle");
+                post.addHeader("Link", "<http://www.w3.org/ns/ldp#BasicContainer>; rel=\"type\"");
+                post.addHeader("Prefer", "http://www.w3.org/ns/ldp#Container; rel=interaction-model");
+//            post.addHeader("Slug", CONTAINER_NAME);
+                post.addHeader("Slug", "testtest2");
+
+                String requestBody = Files.readString(Path.of(CALENDAR_OUTPUT_TURTLE_FILE_NAME), StandardCharsets.UTF_8);
+                System.out.println(requestBody);
+                StringEntity requestBodyEntity = new StringEntity(requestBody);
+                post.setEntity(requestBodyEntity);
+
+//            try (CloseableHttpClient httpClient = HttpClients.createDefault();
+//                 CloseableHttpResponse response = httpClient.execute(post)) {
+                CloseableHttpClient httpClient = HttpClients.createDefault();
+                CloseableHttpResponse response = httpClient.execute(post);
+
+                System.out.println(EntityUtils.toString(response.getEntity()));
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                throw new Exception(e);
+            }
         }
     }
+
+
 }
