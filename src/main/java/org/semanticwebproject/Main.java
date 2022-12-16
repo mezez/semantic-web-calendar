@@ -38,6 +38,7 @@ public class Main {
     public static final String W3_LDP_PREFIX = "http://www.w3.org/ns/ldp#";
     public static final String EXAMPLE_PREFIX = "http://example.org/";
     public static final String EMSE_TERRITOIRE_PREFIX = "https://territoire.emse.fr/kg/emse/fayol/";
+    public static final String EVENTS_PREFIX = "eventContainer/";
 
 
     public static void main(String[] args) throws Exception {
@@ -98,9 +99,20 @@ public class Main {
 
         Integer eventCount = 1;
 
+        Model model = ModelFactory.createDefaultModel();
+        Resource eventsInfo = model.createResource("https://mines-saint-etienne.cps2.com/mycalendar");
+        String eventName = EVENTS_PREFIX;
+
+        Resource eventInfo = model.createResource(eventName);
+        eventInfo.addProperty(RDF.type, "Group of Events");
+        eventInfo.addProperty(RDF.type, W3_LDP_PREFIX + "BasicContainer");
+
+        model.createStatement(eventInfo, RDF.type, eventsInfo);
+
+
         for (CalendarComponent calendarEvent : calendarList) {
-            Model model = ModelFactory.createDefaultModel();
-            Resource eventsInfo = model.createResource("https://mines-saint-etienne.cps2.com/calendar");
+            model = ModelFactory.createDefaultModel();
+//            eventsInfo = model.createResource("https://mines-saint-etienne.cps2.com/mycalendar");
 
             //PROPERTIES
             final org.apache.jena.rdf.model.Property A_THING = model.createProperty("a");
@@ -115,15 +127,17 @@ public class Main {
             final org.apache.jena.rdf.model.Property IDENTIFIER = model.createProperty(SCHEMA_ORG_PREFIX + "identifier");
             final org.apache.jena.rdf.model.Property SEQUENCE = model.createProperty(EXAMPLE_PREFIX + "sequence");
 
-            String eventName = calendarEvent.getName();
+            eventName = calendarEvent.getName();
             List<Property> eventDetails = calendarEvent.getProperties();
 
             //loop through event details and form RDF
 
-            Resource eventInfo = model.createResource(eventName.substring(0, 1).toLowerCase() + eventName.substring(1));
+            eventInfo = model.createResource(EVENTS_PREFIX+"#"+ eventName.substring(0, 1).toLowerCase() + eventName.substring(1) + "-"+ eventCount.toString());
 
-            eventInfo.addProperty(A_THING, SCHEMA_ORG_PREFIX + "Event");
-            eventInfo.addProperty(A_THING, W3_LDP_PREFIX + "BasicContainer");
+
+//            eventInfo.addProperty(A_THING, SCHEMA_ORG_PREFIX + "Event");
+            eventInfo.addProperty(RDF.type, SCHEMA_ORG_PREFIX + "Event");
+//            eventInfo.addProperty(A_THING, W3_LDP_PREFIX + "BasicContainer");
 
             for (Property eventDetail : eventDetails) {
                 String detailName = eventDetail.getName();
@@ -227,5 +241,40 @@ public class Main {
         }
     }
 
+    public static void uploadTurtleFile2(String destination, Integer count) throws Exception {
+        if (destination.equals(FUSEKI_DESTINATION)) {
+            try (RDFConnection conn = RDFConnectionFactory.connect(LOCAL_FUSEKI_SERVICE_URL)) {
+                conn.put(CALENDAR_OUTPUT_TURTLE_FILE_NAME);
+            }
+        } else {
+            //upload to territoire
+
+            try {
+                HttpPost post = new HttpPost(TERRITOIRE_CONTAINER_SERVICE_URL);
+                post.addHeader("Authorization", AUTH_TOKEN);
+                post.addHeader("Accept", "text/turtle");
+                post.addHeader("Content-Type", "text/turtle");
+                post.addHeader("Link", "<http://www.w3.org/ns/ldp#BasicContainer>; rel=\"type\"");
+                post.addHeader("Prefer", "http://www.w3.org/ns/ldp#Container; rel=interaction-model");
+//            post.addHeader("Slug", CONTAINER_NAME);
+                post.addHeader("Slug", "testtest2");
+
+                String requestBody = Files.readString(Path.of(CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME+ "-" + count.toString() + ".ttl"), StandardCharsets.UTF_8);
+                System.out.println(requestBody);
+                StringEntity requestBodyEntity = new StringEntity(requestBody);
+                post.setEntity(requestBodyEntity);
+
+//            try (CloseableHttpClient httpClient = HttpClients.createDefault();
+//                 CloseableHttpResponse response = httpClient.execute(post)) {
+                CloseableHttpClient httpClient = HttpClients.createDefault();
+                CloseableHttpResponse response = httpClient.execute(post);
+
+                System.out.println(EntityUtils.toString(response.getEntity()));
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                throw new Exception(e);
+            }
+        }
+    }
 
 }
