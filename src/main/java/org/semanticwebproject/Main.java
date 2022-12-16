@@ -137,7 +137,6 @@ public class Main {
 
 //            eventInfo.addProperty(A_THING, SCHEMA_ORG_PREFIX + "Event");
             eventInfo.addProperty(RDF.type, SCHEMA_ORG_PREFIX + "Event");
-//            eventInfo.addProperty(A_THING, W3_LDP_PREFIX + "BasicContainer");
 
             for (Property eventDetail : eventDetails) {
                 String detailName = eventDetail.getName();
@@ -171,6 +170,7 @@ public class Main {
 //            model.write(System.out, "Turtle");
 
             model.write(bufferedWriter, "Turtle");
+            bufferedWriter.close();
         }
 
         mergeFiles(eventFileName, CALENDAR_OUTPUT_TURTLE_FILE_NAME);
@@ -184,20 +184,16 @@ public class Main {
 
     public static void mergeFiles(List<String> fileNames, String outputFileName) throws IOException {
         PrintWriter pw = new PrintWriter(outputFileName);
-
         for (String fileName : fileNames) {
-
             BufferedReader br = new BufferedReader(new FileReader(fileName));
-
             String line = br.readLine();
-
             // loop to copy each line of file
             while (line != null) {
                 pw.println(line);
                 line = br.readLine();
             }
             br.close();
-//            Files.deleteIfExists(Paths.get(fileName));
+            Files.deleteIfExists(Paths.get(fileName));
         }
 
         pw.flush();

@@ -1,0 +1,1936 @@
+<eventContainer/#vEVENT-1>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Multi agent coordination" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nNARDIN GUSTAVO\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221014T101500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d383032372d352d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S2.21" ;
+        <https://schema.org/startDate>  "20221014T060000Z" .
+<eventContainer/#vEVENT-2>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Multi agent coordination" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nBOISSIER OLIVIER\nBALBO FLAVIEN\nNARDIN GUSTAVO\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221215T143000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32333432382d302d32" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S224" ;
+        <https://schema.org/startDate>  "20221215T123000Z" .
+<eventContainer/#vEVENT-3>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Semantic Web" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nM2 DSC\nM2 DSC Alternance\nZIMMERMANN A\nCHARPENAY VICTOR\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221021T100000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32323537312d312d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20221021T064500Z" .
+<eventContainer/#vEVENT-4>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Programming connected devices / Digital Twins" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nLEFRANCOIS MAXIME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20230105T093000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32313931332d302d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20230105T080000Z" .
+<eventContainer/#vEVENT-5>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Web Programming / Research and development Project" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nRICHAUD QUENTIN\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221020T083000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d333039372d32322d30" ;
+        <https://schema.org/location>   "Salle virtuelle 1,EMSE amphi A104 Espace Fauriel" ;
+        <https://schema.org/startDate>  "20221020T060000Z" .
+<eventContainer/#vEVENT-6>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Web Programming / Research and development Project" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nEHRET GUILLAUME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220913T083000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d333039372d372d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20220913T070000Z" .
+<eventContainer/#vEVENT-7>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Web Programming / Research and development Project" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nRICHAUD QUENTIN\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220922T101500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d333039372d352d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20220922T074500Z" .
+<eventContainer/#vEVENT-8>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Web Programming / Research and development Project" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nEHRET GUILLAUME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221006T080000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d333039372d312d30" ;
+        <https://schema.org/location>   "Salle virtuelle 1,EMSE amphi A104 Espace Fauriel" ;
+        <https://schema.org/startDate>  "20221006T070000Z" .
+<eventContainer/#vEVENT-9>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Cybersecurity" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nMULLER GUILLAUME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221123T111500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32353234362d362d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S2.11" ;
+        <https://schema.org/startDate>  "20221123T094500Z" .
+<eventContainer/#vEVENT-10>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Cloud and Edge Infrastructures" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nNARDIN GUSTAVO\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220928T101500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d31303336372d332d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20220928T081500Z" .
+<eventContainer/#vEVENT-11>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Cloud and Edge Infrastructures" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nNARDIN GUSTAVO\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220928T080000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32343731312d332d30" ;
+        <https://schema.org/location>   "EMSE amphi A104 Espace Fauriel" ;
+        <https://schema.org/startDate>  "20220928T070000Z" .
+<eventContainer/#vEVENT-12>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Web Programming / Research and development Project" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nRICHAUD QUENTIN\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221013T101500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d333039372d32312d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20221013T074500Z" .
+<eventContainer/#vEVENT-13>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Multi agent coordination" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nBOISSIER OLIVIER\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220916T161500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d383032372d302d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S2.21" ;
+        <https://schema.org/startDate>  "20220916T120000Z" .
+<eventContainer/#vEVENT-14>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Multi agent coordination" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nBALBO FLAVIEN\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220930T101500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d383032372d342d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S2.21" ;
+        <https://schema.org/startDate>  "20220930T060000Z" .
+<eventContainer/#vEVENT-15>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Semantic Web" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nM2 DSC\nM2 DSC Alternance\nCHARPENAY VICTOR\nZIMMERMANN A\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221125T110000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32323537312d322d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20221125T074500Z" .
+<eventContainer/#vEVENT-16>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Overview of Research, development and innovation activities / Professional insertion" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nM1 CPS2 (12)\nZIMMERMANN A\nMARET PIERRE\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220906T083000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32323533302d302d31" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S224" ;
+        <https://schema.org/startDate>  "20220906T070000Z" .
+<eventContainer/#vEVENT-17>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Programming connected devices / Digital Twins" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nLEFRANCOIS MAXIME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20230105T111500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32313931332d302d33" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20230105T094500Z" .
+<eventContainer/#vEVENT-18>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Cybersecurity" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nMULLER GUILLAUME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221109T093000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32353234362d302d30" ;
+        <https://schema.org/location>   "EMSE salle 212" ;
+        <https://schema.org/startDate>  "20221109T080000Z" .
+<eventContainer/#vEVENT-19>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Semantic Web" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nM2 DSC\nM2 DSC Alternance\nCHARPENAY VICTOR\nZIMMERMANN A\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20230113T111500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32323537312d362d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S2.14" ;
+        <https://schema.org/startDate>  "20230113T070000Z" .
+<eventContainer/#vEVENT-20>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Semantic Web" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nM2 DSC\nM2 DSC Alternance\nCHARPENAY VICTOR\nZIMMERMANN A\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221021T144500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32323537312d372d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20221021T113000Z" .
+<eventContainer/#vEVENT-21>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "EXAM Cloud" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nNARDIN GUSTAVO\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221110T110000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d373436332d302d30" ;
+        <https://schema.org/location>   "EMSE amphi A104 Espace Fauriel" ;
+        <https://schema.org/startDate>  "20221110T090000Z" .
+<eventContainer/#vEVENT-22>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Cloud and Edge Infrastructures" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nNARDIN GUSTAVO\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221005T080000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32343731312d342d30" ;
+        <https://schema.org/location>   "EMSE amphi A104 Espace Fauriel" ;
+        <https://schema.org/startDate>  "20221005T070000Z" .
+<eventContainer/#vEVENT-23>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Cloud and Edge Infrastructures" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nNARDIN GUSTAVO\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220921T101500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d31303336372d322d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20220921T081500Z" .
+<eventContainer/#vEVENT-24>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Web Programming / Research and development Project" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nRICHAUD QUENTIN\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220922T073000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d333039372d31322d30" ;
+        <https://schema.org/location>   "Salle virtuelle 1,EMSE amphi A104 Espace Fauriel" ;
+        <https://schema.org/startDate>  "20220922T060000Z" .
+<eventContainer/#vEVENT-25>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Overview of Research, development and innovation activities / Professional insertion" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nM1 CPS2 (12)\nZIMMERMANN A\nMARET PIERRE\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220929T101500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32323533302d302d36" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S224" ;
+        <https://schema.org/startDate>  "20220929T084500Z" .
+<eventContainer/#vEVENT-26>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Cybersecurity" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nMULLER GUILLAUME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221130T093000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32353234362d352d30" ;
+        <https://schema.org/location>   "EMSE salle 212" ;
+        <https://schema.org/startDate>  "20221130T080000Z" .
+<eventContainer/#vEVENT-27>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Programming connected devices / Digital Twins" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nLEFRANCOIS MAXIME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221124T111500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32313931332d302d3136" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20221124T094500Z" .
+<eventContainer/#vEVENT-28>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Programming connected devices / Digital Twins" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nLEFRANCOIS MAXIME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221117T093000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32313931332d302d3134" ;
+        <https://schema.org/location>   "EMSE,EMSE amphi A104 Espace Fauriel" ;
+        <https://schema.org/startDate>  "20221117T080000Z" .
+<eventContainer/#vEVENT-29>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Programming connected devices / Digital Twins" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nLEFRANCOIS MAXIME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221201T093000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32313931332d302d3138" ;
+        <https://schema.org/location>   "EMSE,EMSE amphi A104 Espace Fauriel" ;
+        <https://schema.org/startDate>  "20221201T080000Z" .
+<eventContainer/#vEVENT-30>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Web Programming / Research and development Project" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nEHRET GUILLAUME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220927T083000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d333039372d392d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20220927T070000Z" .
+<eventContainer/#vEVENT-31>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Programming connected devices / Digital Twins" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nLEFRANCOIS MAXIME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221208T111500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32313931332d302d3230" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20221208T094500Z" .
+<eventContainer/#vEVENT-32>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Cloud and Edge Infrastructures" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nNARDIN GUSTAVO\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221012T101500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d31303336372d352d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20221012T081500Z" .
+<eventContainer/#vEVENT-33>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Multi agent coordination" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nBOISSIER OLIVIER\nBALBO FLAVIEN\nNARDIN GUSTAVO\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221214T143000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32333432382d302d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S224" ;
+        <https://schema.org/startDate>  "20221214T123000Z" .
+<eventContainer/#vEVENT-34>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Cloud and Edge Infrastructures" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nNARDIN GUSTAVO\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221012T080000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32343731312d352d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S2.14" ;
+        <https://schema.org/startDate>  "20221012T070000Z" .
+<eventContainer/#vEVENT-35>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Programming connected devices / Digital Twins" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nLEFRANCOIS MAXIME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221116T154500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32313931332d302d37" ;
+        <https://schema.org/location>   "EMSE,EMSE amphi A104 Espace Fauriel" ;
+        <https://schema.org/startDate>  "20221116T141500Z" .
+<eventContainer/#vEVENT-36>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Scientific writing" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nMARET PIERRE\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221118T111500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32343033342d312d30" ;
+        <https://schema.org/location>   "EMSE salle 212" ;
+        <https://schema.org/startDate>  "20221118T080000Z" .
+<eventContainer/#vEVENT-37>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Web Programming / Research and development Project" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nRICHAUD QUENTIN\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221027T101500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d333039372d32342d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20221027T074500Z" .
+<eventContainer/#vEVENT-38>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Web Programming / Research and development Project" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nEHRET GUILLAUME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220927T101500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d333039372d31332d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20220927T084500Z" .
+<eventContainer/#vEVENT-39>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Web Programming / Research and development Project" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nRICHAUD QUENTIN\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221020T101500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d333039372d32332d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20221020T084500Z" .
+<eventContainer/#vEVENT-40>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Programming connected devices / Digital Twins" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nLEFRANCOIS MAXIME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221122T154500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32313931332d302d34" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20221122T141500Z" .
+<eventContainer/#vEVENT-41>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Multi agent coordination" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nNARDIN GUSTAVO\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221006T154500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d383032372d332d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S2.21" ;
+        <https://schema.org/startDate>  "20221006T113000Z" .
+<eventContainer/#vEVENT-42>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Programming connected devices / Digital Twins" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nLEFRANCOIS MAXIME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221215T093000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32313931332d302d3232" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20221215T080000Z" .
+<eventContainer/#vEVENT-43>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Overview of Research, development and innovation activities / Professional insertion" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nM1 CPS2 (12)\nZIMMERMANN A\nMARET PIERRE\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220906T101500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32323533302d302d3132" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S224" ;
+        <https://schema.org/startDate>  "20220906T084500Z" .
+<eventContainer/#vEVENT-44>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Cloud and Edge Infrastructures" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nNARDIN GUSTAVO\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221005T101500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d31303336372d342d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20221005T081500Z" .
+<eventContainer/#vEVENT-45>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Overview of Research, development and innovation activities / Professional insertion" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nM1 CPS2 (12)\nZIMMERMANN A\nMARET PIERRE\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220923T083000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32323533302d302d3133" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S224" ;
+        <https://schema.org/startDate>  "20220923T070000Z" .
+<eventContainer/#vEVENT-46>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Web Programming / Research and development Project" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nEHRET GUILLAUME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220920T101500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d333039372d332d30" ;
+        <https://schema.org/location>   "EMSE S129,EMSE Espace Fauriel 1.21" ;
+        <https://schema.org/startDate>  "20220920T081500Z" .
+<eventContainer/#vEVENT-47>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "TD Professional insertion" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nMARET PIERRE\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221201T163000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d33363236322d312d30" ;
+        <https://schema.org/location>   "EMSE salle 212" ;
+        <https://schema.org/startDate>  "20221201T123000Z" .
+<eventContainer/#vEVENT-48>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Overview of Research, development and innovation activities / Professional insertion" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nM1 CPS2 (12)\nZIMMERMANN A\nMARET PIERRE\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221208T140000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32323533302d302d34" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S224" ;
+        <https://schema.org/startDate>  "20221208T123000Z" .
+<eventContainer/#vEVENT-49>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Multi agent coordination" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nBOISSIER OLIVIER\nBALBO FLAVIEN\nNARDIN GUSTAVO\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221214T164500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32333432382d302d31" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S111" ;
+        <https://schema.org/startDate>  "20221214T144500Z" .
+<eventContainer/#vEVENT-50>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Cloud and Edge Infrastructures" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nNARDIN GUSTAVO\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221019T080000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32343731312d362d30" ;
+        <https://schema.org/location>   "EMSE amphi A104 Espace Fauriel" ;
+        <https://schema.org/startDate>  "20221019T070000Z" .
+<eventContainer/#vEVENT-51>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Overview of Research, development and innovation activities / Professional insertion" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nM1 CPS2 (12)\nZIMMERMANN A\nMARET PIERRE\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221027T130000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32323533302d302d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S224" ;
+        <https://schema.org/startDate>  "20221027T113000Z" .
+<eventContainer/#vEVENT-52>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Scientific writing" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nMARET PIERRE\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221202T111500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32343033342d322d30" ;
+        <https://schema.org/location>   "EMSE salle 212" ;
+        <https://schema.org/startDate>  "20221202T080000Z" .
+<eventContainer/#vEVENT-53>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Programming connected devices / Digital Twins" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nLEFRANCOIS MAXIME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221121T111500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32313931332d302d39" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20221121T094500Z" .
+<eventContainer/#vEVENT-54>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Programming connected devices / Digital Twins" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nLEFRANCOIS MAXIME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221201T111500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32313931332d302d3231" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20221201T094500Z" .
+<eventContainer/#vEVENT-55>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Scientific writing" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nMARET PIERRE\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221020T144500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32343033342d302d30" ;
+        <https://schema.org/location>   "EMSE EF 2.32" ;
+        <https://schema.org/startDate>  "20221020T113000Z" .
+<eventContainer/#vEVENT-56>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Programming connected devices / Digital Twins" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nLEFRANCOIS MAXIME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221117T111500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32313931332d302d3137" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20221117T094500Z" .
+<eventContainer/#vEVENT-57>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Semantic Web" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nM2 DSC\nM2 DSC Alternance\nZIMMERMANN A\nCHARPENAY VICTOR\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221216T154500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32323537312d31312d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S2.14" ;
+        <https://schema.org/startDate>  "20221216T123000Z" .
+<eventContainer/#vEVENT-58>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Programming connected devices / Digital Twins" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nLEFRANCOIS MAXIME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221124T093000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32313931332d302d3139" ;
+        <https://schema.org/location>   "EMSE,EMSE amphi A104 Espace Fauriel" ;
+        <https://schema.org/startDate>  "20221124T080000Z" .
+<eventContainer/#vEVENT-59>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "EXAM Digital Twins LEFRANCOIS Maxime" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20230104T110000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d33323430342d302d30" ;
+        <https://schema.org/location>   "" ;
+        <https://schema.org/startDate>  "20230104T090000Z" .
+<eventContainer/#vEVENT-60>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Web Programming / Research and development Project" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nEHRET GUILLAUME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221006T101500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d333039372d31352d30" ;
+        <https://schema.org/location>   "EMSE S129,EMSE Espace Fauriel 1.21" ;
+        <https://schema.org/startDate>  "20221006T081500Z" .
+<eventContainer/#vEVENT-61>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Programming connected devices / Digital Twins" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nLEFRANCOIS MAXIME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221207T154500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32313931332d302d3132" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20221207T141500Z" .
+<eventContainer/#vEVENT-62>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Cybersecurity" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nMULLER GUILLAUME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221213T111500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32353234362d31302d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S2.11" ;
+        <https://schema.org/startDate>  "20221213T094500Z" .
+<eventContainer/#vEVENT-63>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Overview of Research, development and innovation activities / Professional insertion" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nM1 CPS2 (12)\nZIMMERMANN A\nMARET PIERRE\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220929T083000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32323533302d302d39" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S224" ;
+        <https://schema.org/startDate>  "20220929T070000Z" .
+<eventContainer/#vEVENT-64>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Cybersecurity" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nMULLER GUILLAUME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221122T111500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32353234362d31312d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S2.11" ;
+        <https://schema.org/startDate>  "20221122T094500Z" .
+<eventContainer/#vEVENT-65>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Cybersecurity" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nMULLER GUILLAUME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221213T093000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32353234362d372d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S2.11" ;
+        <https://schema.org/startDate>  "20221213T080000Z" .
+<eventContainer/#vEVENT-66>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Cybersecurity" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nMULLER GUILLAUME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221109T111500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32353234362d322d30" ;
+        <https://schema.org/location>   "EMSE salle 212" ;
+        <https://schema.org/startDate>  "20221109T094500Z" .
+<eventContainer/#vEVENT-67>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Programming connected devices / Digital Twins" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nLEFRANCOIS MAXIME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221116T140000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32313931332d302d38" ;
+        <https://schema.org/location>   "EMSE,EMSE amphi A104 Espace Fauriel" ;
+        <https://schema.org/startDate>  "20221116T123000Z" .
+<eventContainer/#vEVENT-68>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Semantic Web" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nM2 DSC\nM2 DSC Alternance\nZIMMERMANN A\nCHARPENAY VICTOR\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221216T110000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32323537312d352d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S2.14" ;
+        <https://schema.org/startDate>  "20221216T074500Z" .
+<eventContainer/#vEVENT-69>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Web Programming / Research and development Project" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nEHRET GUILLAUME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220908T073000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d333039372d31372d30" ;
+        <https://schema.org/location>   "Salle virtuelle 1,EMSE amphi A104 Espace Fauriel" ;
+        <https://schema.org/startDate>  "20220908T060000Z" .
+<eventContainer/#vEVENT-70>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Multi agent coordination" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nBALBO FLAVIEN\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220923T154500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d383032372d312d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S2.21" ;
+        <https://schema.org/startDate>  "20220923T113000Z" .
+<eventContainer/#vEVENT-71>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Cybersecurity" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nMULLER GUILLAUME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221123T093000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32353234362d342d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S2.11" ;
+        <https://schema.org/startDate>  "20221123T080000Z" .
+<eventContainer/#vEVENT-72>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Programming connected devices / Digital Twins" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nLEFRANCOIS MAXIME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221215T111500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32313931332d302d31" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20221215T094500Z" .
+<eventContainer/#vEVENT-73>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Web Programming / Research and development Project" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nEHRET GUILLAUME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220920T080000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d333039372d322d30" ;
+        <https://schema.org/location>   "Salle virtuelle 1,EMSE amphi A104 Espace Fauriel" ;
+        <https://schema.org/startDate>  "20220920T070000Z" .
+<eventContainer/#vEVENT-74>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Web Programming / Research and development Project" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nEHRET GUILLAUME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221004T101500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d333039372d31342d30" ;
+        <https://schema.org/location>   "EMSE S129,EMSE Espace Fauriel 1.21" ;
+        <https://schema.org/startDate>  "20221004T081500Z" .
+<eventContainer/#vEVENT-75>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Programming connected devices / Digital Twins" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nLEFRANCOIS MAXIME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221121T140000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32313931332d302d3131" ;
+        <https://schema.org/location>   "EMSE,EMSE amphi A104 Espace Fauriel" ;
+        <https://schema.org/startDate>  "20221121T123000Z" .
+<eventContainer/#vEVENT-76>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Programming connected devices / Digital Twins" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nLEFRANCOIS MAXIME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221208T093000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32313931332d302d3233" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20221208T080000Z" .
+<eventContainer/#vEVENT-77>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Semantic Web" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nM2 DSC\nM2 DSC Alternance\nCHARPENAY VICTOR\nZIMMERMANN A\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20230106T154500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32323537312d31322d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S2.14" ;
+        <https://schema.org/startDate>  "20230106T123000Z" .
+<eventContainer/#vEVENT-78>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Web Programming / Research and development Project" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nEHRET GUILLAUME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221004T080000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d333039372d31302d30" ;
+        <https://schema.org/location>   "Salle virtuelle 1,EMSE amphi A104 Espace Fauriel" ;
+        <https://schema.org/startDate>  "20221004T070000Z" .
+<eventContainer/#vEVENT-79>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Programming connected devices / Digital Twins" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nLEFRANCOIS MAXIME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221123T140000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32313931332d302d3130" ;
+        <https://schema.org/location>   "EMSE,EMSE amphi A104 Espace Fauriel" ;
+        <https://schema.org/startDate>  "20221123T123000Z" .
+<eventContainer/#vEVENT-80>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "EXAM Cybersecurity" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nMULLER GUILLAUME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20230103T110000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32353330392d302d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S2.14" ;
+        <https://schema.org/startDate>  "20230103T090000Z" .
+<eventContainer/#vEVENT-81>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Web Programming / Research and development Project" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nRICHAUD QUENTIN\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220915T073000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d333039372d382d30" ;
+        <https://schema.org/location>   "Salle virtuelle 1,EMSE amphi A104 Espace Fauriel" ;
+        <https://schema.org/startDate>  "20220915T060000Z" .
+<eventContainer/#vEVENT-82>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Scientific writing" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nMARET PIERRE\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20230106T110000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32343033342d342d30" ;
+        <https://schema.org/location>   "EMSE salle 212" ;
+        <https://schema.org/startDate>  "20230106T080000Z" .
+<eventContainer/#vEVENT-83>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Cloud and Edge Infrastructures" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nNARDIN GUSTAVO\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221019T101500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d31303336372d362d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20221019T081500Z" .
+<eventContainer/#vEVENT-84>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Programming connected devices / Digital Twins" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nLEFRANCOIS MAXIME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221121T154500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32313931332d302d36" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20221121T141500Z" .
+<eventContainer/#vEVENT-85>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Cybersecurity" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nMULLER GUILLAUME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221122T093000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32353234362d382d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S2.11" ;
+        <https://schema.org/startDate>  "20221122T080000Z" .
+<eventContainer/#vEVENT-86>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Web Programming / Research and development Project" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nEHRET GUILLAUME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220913T101500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d333039372d362d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20220913T084500Z" .
+<eventContainer/#vEVENT-87>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Cybersecurity" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nMULLER GUILLAUME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221116T111500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32353234362d332d30" ;
+        <https://schema.org/location>   "EMSE salle 212" ;
+        <https://schema.org/startDate>  "20221116T094500Z" .
+<eventContainer/#vEVENT-88>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "TD Professional insertion" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nMARET PIERRE\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221202T153000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d33363236322d302d30" ;
+        <https://schema.org/location>   "EMSE salle 212" ;
+        <https://schema.org/startDate>  "20221202T123000Z" .
+<eventContainer/#vEVENT-89>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Web Programming / Research and development Project" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nRICHAUD QUENTIN\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221013T073000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d333039372d31362d30" ;
+        <https://schema.org/location>   "Salle virtuelle 1,EMSE amphi A104 Espace Fauriel" ;
+        <https://schema.org/startDate>  "20221013T060000Z" .
+<eventContainer/#vEVENT-90>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Semantic Web" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nM2 DSC\nM2 DSC Alternance\nZIMMERMANN A\nCHARPENAY VICTOR\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221028T100000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32323537312d332d30" ;
+        <https://schema.org/location>   "EMSE S120" ;
+        <https://schema.org/startDate>  "20221028T064500Z" .
+<eventContainer/#vEVENT-91>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Overview of Research, development and innovation activities / Professional insertion" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nM1 CPS2 (12)\nZIMMERMANN A\nMARET PIERRE\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220923T101500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32323533302d302d3130" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S224" ;
+        <https://schema.org/startDate>  "20220923T084500Z" .
+<eventContainer/#vEVENT-92>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Overview of Research, development and innovation activities / Professional insertion" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nM1 CPS2 (12)\nZIMMERMANN A\nMARET PIERRE\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220908T144500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32323533302d302d3131" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S224" ;
+        <https://schema.org/startDate>  "20220908T131500Z" .
+<eventContainer/#vEVENT-93>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Cybersecurity" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nMULLER GUILLAUME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221116T093000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32353234362d312d30" ;
+        <https://schema.org/location>   "EMSE salle 212" ;
+        <https://schema.org/startDate>  "20221116T080000Z" .
+<eventContainer/#vEVENT-94>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Cloud and Edge Infrastructures" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nNARDIN GUSTAVO\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220907T080000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32343731312d302d30" ;
+        <https://schema.org/location>   "EMSE amphi A104 Espace Fauriel" ;
+        <https://schema.org/startDate>  "20220907T070000Z" .
+<eventContainer/#vEVENT-95>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Semantic Web" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nM2 DSC\nM2 DSC Alternance\nCHARPENAY VICTOR\nZIMMERMANN A\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221125T154500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32323537312d392d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20221125T123000Z" .
+<eventContainer/#vEVENT-96>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Overview of Research, development and innovation activities / Professional insertion" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nM1 CPS2 (12)\nZIMMERMANN A\nMARET PIERRE\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221208T154500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32323533302d302d37" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S224" ;
+        <https://schema.org/startDate>  "20221208T141500Z" .
+<eventContainer/#vEVENT-97>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Programming connected devices / Digital Twins" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nLEFRANCOIS MAXIME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221123T154500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32313931332d302d3133" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20221123T141500Z" .
+<eventContainer/#vEVENT-98>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Cloud and Edge Infrastructures" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nNARDIN GUSTAVO\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220914T080000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32343731312d312d30" ;
+        <https://schema.org/location>   "EMSE amphi A104 Espace Fauriel" ;
+        <https://schema.org/startDate>  "20220914T070000Z" .
+<eventContainer/#vEVENT-99>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Semantic Web" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nM2 DSC\nM2 DSC Alternance\nZIMMERMANN A\nCHARPENAY VICTOR\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221028T144500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32323537312d382d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20221028T113000Z" .
+<eventContainer/#vEVENT-100>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Web Programming / Research and development Project" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nRICHAUD QUENTIN\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220915T101500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d333039372d31312d30" ;
+        <https://schema.org/location>   "Salle virtuelle 1,EMSE amphi A104 Espace Fauriel" ;
+        <https://schema.org/startDate>  "20220915T074500Z" .
+<eventContainer/#vEVENT-101>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Overview of Research, development and innovation activities / Professional insertion" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nM1 CPS2 (12)\nZIMMERMANN A\nMARET PIERRE\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221027T144500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32323533302d302d33" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S224" ;
+        <https://schema.org/startDate>  "20221027T131500Z" .
+<eventContainer/#vEVENT-102>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Semantic Web" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nM2 DSC\nM2 DSC Alternance\nCHARPENAY VICTOR\nZIMMERMANN A\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221007T143000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32323537312d302d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20221007T113000Z" .
+<eventContainer/#vEVENT-103>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Cloud and Edge Infrastructures" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nNARDIN GUSTAVO\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220914T101500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d31303336372d312d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20220914T081500Z" .
+<eventContainer/#vEVENT-104>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "Rentrée" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220905T160000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d313337342d302d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S2.14" ;
+        <https://schema.org/startDate>  "20220905T140000Z" .
+<eventContainer/#vEVENT-105>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Semantic Web" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nM2 DSC\nM2 DSC Alternance\nZIMMERMANN A\nCHARPENAY VICTOR\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221209T110000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32323537312d342d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S2.14" ;
+        <https://schema.org/startDate>  "20221209T074500Z" .
+<eventContainer/#vEVENT-106>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Multi agent coordination" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nBOISSIER OLIVIER\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220909T101500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d383032372d322d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S2.21" ;
+        <https://schema.org/startDate>  "20220909T060000Z" .
+<eventContainer/#vEVENT-107>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Programming connected devices / Digital Twins" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nLEFRANCOIS MAXIME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221121T093000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32313931332d302d32" ;
+        <https://schema.org/location>   "EMSE,EMSE amphi A104 Espace Fauriel" ;
+        <https://schema.org/startDate>  "20221121T080000Z" .
+<eventContainer/#vEVENT-108>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Web Programming / Research and development Project" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nEHRET GUILLAUME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221011T083000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d333039372d342d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20221011T070000Z" .
+<eventContainer/#vEVENT-109>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Web Programming / Research and development Project" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nRICHAUD QUENTIN\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221027T073000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d333039372d31392d30" ;
+        <https://schema.org/location>   "Salle virtuelle 1,EMSE amphi A104 Espace Fauriel" ;
+        <https://schema.org/startDate>  "20221027T060000Z" .
+<eventContainer/#vEVENT-110>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Programming connected devices / Digital Twins" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nLEFRANCOIS MAXIME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221207T140000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32313931332d302d3135" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20221207T123000Z" .
+<eventContainer/#vEVENT-111>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "International Lunch" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 RADMEP (4 UJM)\nM2 AIMA (4+4TSE)\nM2 PE (6+1TSE)\nM1 CPS2 (12)\nM2 CPS2\nM1 MLDM (20)\nM2 MLDM\nParcours COSI (9)\nParcours IMLEX (14)\nM1 PSRS (18)\nM2 PSRS (3 UJM /16)\nM1 PE (5)\nCours Communs 2A (21)\nCours Communs 3A (24)\nM1 DSC (24)\nM2 DSC\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20230111T133000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32333535372d302d30" ;
+        <https://schema.org/location>   "L125 co-working (50) (Manufacture)" ;
+        <https://schema.org/startDate>  "20230111T113000Z" .
+<eventContainer/#vEVENT-112>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Overview of Research, development and innovation activities / Professional insertion" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nM1 CPS2 (12)\nVIRTUEL SCIENCES\nMUHLENBACH FABRICE\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221108T093000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32323533302d302d35" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S224" ;
+        <https://schema.org/startDate>  "20221108T080000Z" .
+<eventContainer/#vEVENT-113>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Semantic Web" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nM2 DSC\nM2 DSC Alternance\nCHARPENAY VICTOR\nZIMMERMANN A\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221209T154500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32323537312d31302d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S2.14" ;
+        <https://schema.org/startDate>  "20221209T123000Z" .
+<eventContainer/#vEVENT-114>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Cloud and Edge Infrastructures" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nNARDIN GUSTAVO\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220921T080000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32343731312d322d30" ;
+        <https://schema.org/location>   "EMSE amphi A104 Espace Fauriel" ;
+        <https://schema.org/startDate>  "20220921T070000Z" .
+<eventContainer/#vEVENT-115>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Overview of Research, development and innovation activities / Professional insertion" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nM1 CPS2 (12)\nZIMMERMANN A\nMARET PIERRE\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220908T130000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32323533302d302d38" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S224" ;
+        <https://schema.org/startDate>  "20220908T113000Z" .
+<eventContainer/#vEVENT-116>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Web Programming / Research and development Project" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nEHRET GUILLAUME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221011T101500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d333039372d302d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20221011T084500Z" .
+<eventContainer/#vEVENT-117>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM Cybersecurity" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nMULLER GUILLAUME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221130T111500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32353234362d392d30" ;
+        <https://schema.org/location>   "EMSE salle 212" ;
+        <https://schema.org/startDate>  "20221130T094500Z" .
+<eventContainer/#vEVENT-118>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Web Programming / Research and development Project" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nEHRET GUILLAUME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220908T101500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d333039372d31382d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20220908T074500Z" .
+<eventContainer/#vEVENT-119>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Overview of Research, development and innovation activities / Professional insertion" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nM1 CPS2 (12)\nVIRTUEL SCIENCES\nMUHLENBACH FABRICE\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221108T111500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32323533302d302d32" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/2ET/S224" ;
+        <https://schema.org/startDate>  "20221108T094500Z" .
+<eventContainer/#vEVENT-120>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Programming connected devices / Digital Twins" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM1 CPS2 (12)\nM2 CPS2\nLEFRANCOIS MAXIME\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20221122T140000Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d32313931332d302d35" ;
+        <https://schema.org/location>   "EMSE,EMSE amphi A104 Espace Fauriel" ;
+        <https://schema.org/startDate>  "20221122T123000Z" .
+<eventContainer/#vEVENT-121>
+        a                               "https://schema.org/Event" ;
+        <http://example.org/sequence>   "2140493457" ;
+        <http://example.org/summary>    "CM/TD Cloud and Edge Infrastructures" ;
+        <https://schema.org/DateTime>   "20221209T151720Z" ;
+        <https://schema.org/dateCreated>
+                "19700101T000000Z" ;
+        <https://schema.org/dateModified>
+                "20221209T151720Z" ;
+        <https://schema.org/description>
+                "\n\nM2 CPS2\nNARDIN GUSTAVO\n(Exporté le:09/12/2022 16:17)\n" ;
+        <https://schema.org/endDate>    "20220907T101500Z" ;
+        <https://schema.org/identifier>
+                "ADE60323032322d3230323353542d455449454e4e452d31303336372d302d30" ;
+        <https://schema.org/location>   "https://territoire.emse.fr/kg/emse/fayol/1ET/S1.32" ;
+        <https://schema.org/startDate>  "20220907T081500Z" .
