@@ -38,7 +38,6 @@ public class Main {
     public static final String W3_LDP_PREFIX = "http://www.w3.org/ns/ldp#";
     public static final String EXAMPLE_PREFIX = "http://example.org/";
     public static final String EMSE_TERRITOIRE_PREFIX = "https://territoire.emse.fr/kg/emse/fayol/";
-    public static final String EVENTS_PREFIX = "eventContainer/";
 
 
     public static void main(String[] args) throws Exception {
@@ -101,13 +100,24 @@ public class Main {
 
         Model model = ModelFactory.createDefaultModel();
         Resource eventsInfo = model.createResource("https://mines-saint-etienne.cps2.com/mycalendar");
-        String eventName = EVENTS_PREFIX;
+        String eventName = CONTAINER_NAME_URL;
 
         Resource eventInfo = model.createResource(eventName);
-        eventInfo.addProperty(RDF.type, "Group of Events");
         eventInfo.addProperty(RDF.type, W3_LDP_PREFIX + "BasicContainer");
 
         model.createStatement(eventInfo, RDF.type, eventsInfo);
+
+
+        String tempFileName = CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "_container.ttl";
+        eventFileName.add(tempFileName);
+
+        FileWriter writer = new FileWriter(tempFileName);
+        BufferedWriter bufferedWriter = new BufferedWriter(writer);
+//            model.write(System.out, "Turtle");
+
+        model.write(bufferedWriter, "Turtle");
+        bufferedWriter.close();
+        uploadTurtleFile(LDP_DESTINATION, true, 0);
 
 
         for (CalendarComponent calendarEvent : calendarList) {
@@ -132,7 +142,8 @@ public class Main {
 
             //loop through event details and form RDF
 
-            eventInfo = model.createResource(EVENTS_PREFIX+"#"+ eventName.substring(0, 1).toLowerCase() + eventName.substring(1) + "-"+ eventCount.toString());
+//            eventInfo = model.createResource(EVENTS_PREFIX+"#"+ eventName.substring(0, 1).toLowerCase() + eventName.substring(1) + "-"+ eventCount.toString());
+            eventInfo = model.createResource(eventName.substring(0, 1).toLowerCase() + eventName.substring(1) + "-" + eventCount.toString());
 
 
 //            eventInfo.addProperty(A_THING, SCHEMA_ORG_PREFIX + "Event");
@@ -160,24 +171,29 @@ public class Main {
 
             model.createStatement(eventInfo, RDF.type, eventsInfo);
 
-            String tempFileName = CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + eventCount.toString() + ".ttl";
-            eventFileName.add(tempFileName);
+            tempFileName = CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + eventCount.toString() + ".ttl";
+//            eventFileName.add(tempFileName);
 
             eventCount++;
 
-            FileWriter writer = new FileWriter(tempFileName);
-            BufferedWriter bufferedWriter = new BufferedWriter(writer);
+            writer = new FileWriter(tempFileName);
+            bufferedWriter = new BufferedWriter(writer);
 //            model.write(System.out, "Turtle");
 
             model.write(bufferedWriter, "Turtle");
             bufferedWriter.close();
         }
 
-        mergeFiles(eventFileName, CALENDAR_OUTPUT_TURTLE_FILE_NAME);
+//        mergeFiles(eventFileName, CALENDAR_OUTPUT_TURTLE_FILE_NAME);
 
-        uploadTurtleFile(LDP_DESTINATION);
+        int cc = 1;
+        while (cc <= eventCount) {
+            uploadTurtleFile(LDP_DESTINATION, false, cc);
+            cc++;
 
-        System.out.println("Output file: " + CALENDAR_OUTPUT_TURTLE_FILE_NAME + " generated and stores in project root folder");
+        }
+
+//        System.out.println("Output file: " + CALENDAR_OUTPUT_TURTLE_FILE_NAME + " generated and stores in project root folder");
         System.out.println("Generated output has been uploaded to defined DB: Fuseki or LDP");
         System.out.println("::::::::::::::::::::");
     }
@@ -201,7 +217,7 @@ public class Main {
 
     }
 
-    public static void uploadTurtleFile(String destination) throws Exception {
+    public static void uploadTurtleFile(String destination, Boolean isContainer, Integer count) throws Exception {
         if (destination.equals(FUSEKI_DESTINATION)) {
             try (RDFConnection conn = RDFConnectionFactory.connect(LOCAL_FUSEKI_SERVICE_URL)) {
                 conn.put(CALENDAR_OUTPUT_TURTLE_FILE_NAME);
@@ -210,7 +226,8 @@ public class Main {
             //upload to territoire
 
             try {
-                HttpPost post = new HttpPost(TERRITOIRE_CONTAINER_SERVICE_URL);
+
+                HttpPost post = new HttpPost(isContainer?TERRITOIRE_SERVICE_URL:TERRITOIRE_CONTAINER_SERVICE_URL);
                 post.addHeader("Authorization", AUTH_TOKEN);
                 post.addHeader("Accept", "text/turtle");
                 post.addHeader("Content-Type", "text/turtle");
@@ -219,7 +236,17 @@ public class Main {
 //            post.addHeader("Slug", CONTAINER_NAME);
                 post.addHeader("Slug", "testtest2");
 
-                String requestBody = Files.readString(Path.of(CALENDAR_OUTPUT_TURTLE_FILE_NAME), StandardCharsets.UTF_8);
+//                String requestBody = Files.readString(Path.of(CALENDAR_OUTPUT_TURTLE_FILE_NAME), StandardCharsets.UTF_8);
+                String requestBody;
+                if (isContainer) {
+                    requestBody = Files.readString(Path.of(CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "_container.ttl"), StandardCharsets.UTF_8);
+
+                } else {
+                    //container child
+                    requestBody = Files.readString(Path.of(CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl"), StandardCharsets.UTF_8);
+
+                }
+//                String requestBody = Files.readString(Path.of(CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME), StandardCharsets.UTF_8);
                 System.out.println(requestBody);
                 StringEntity requestBodyEntity = new StringEntity(requestBody);
                 post.setEntity(requestBodyEntity);
@@ -255,7 +282,7 @@ public class Main {
 //            post.addHeader("Slug", CONTAINER_NAME);
                 post.addHeader("Slug", "testtest2");
 
-                String requestBody = Files.readString(Path.of(CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME+ "-" + count.toString() + ".ttl"), StandardCharsets.UTF_8);
+                String requestBody = Files.readString(Path.of(CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl"), StandardCharsets.UTF_8);
                 System.out.println(requestBody);
                 StringEntity requestBodyEntity = new StringEntity(requestBody);
                 post.setEntity(requestBodyEntity);

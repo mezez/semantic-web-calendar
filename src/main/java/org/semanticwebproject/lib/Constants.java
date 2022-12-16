@@ -7,7 +7,9 @@ public class Constants {
 
     //SERVICES
     public static final String LOCAL_FUSEKI_SERVICE_URL = "http://localhost:3030/semweb/";
-    public static final String TERRITOIRE_CONTAINER_SERVICE_URL = "https://territoire.emse.fr/ldp/";
+    public static final String TERRITOIRE_SERVICE_URL = "https://territoire.emse.fr/ldp/";
+    public static final String CONTAINER_NAME_URL = "mieventcontainer/";
+    public static final String TERRITOIRE_CONTAINER_SERVICE_URL = "https://territoire.emse.fr/ldp/"+CONTAINER_NAME_URL;
     public static final String CONTAINER_NAME = "mez-ignas";
     public static final String AUTH_TOKEN = "Basic bGRwdXNlcjpMaW5rZWREYXRhSXNHcmVhdA==";
 
