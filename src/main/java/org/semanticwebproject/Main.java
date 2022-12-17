@@ -25,7 +25,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.semanticwebproject.lib.Constants.*;
@@ -155,18 +158,18 @@ public class Main {
 
 
                 switch (detailName) {
-                    case _DTSTAMP -> eventInfo.addProperty(DATE_TIME, eventDetail.getValue());
-                    case _DTSTART -> eventInfo.addProperty(DATE_START, eventDetail.getValue());
-                    case _DTEND -> eventInfo.addProperty(DATE_END, eventDetail.getValue());
-                    case _SUMMARY -> eventInfo.addProperty(SUMMARY, eventDetail.getValue());
+                    case _DTSTAMP -> eventInfo.addProperty(DATE_TIME, model.createTypedLiteral(createDateTimeObject(eventDetail.getValue())));
+                    case _DTSTART -> eventInfo.addProperty(DATE_START,  model.createTypedLiteral(createDateTimeObject(eventDetail.getValue())));
+                    case _DTEND -> eventInfo.addProperty(DATE_END, model.createTypedLiteral(createDateTimeObject(eventDetail.getValue())));
+                    case _SUMMARY -> eventInfo.addProperty(SUMMARY, model.createTypedLiteral(eventDetail.getValue()));
                     case _LOCATION -> {
-                        eventInfo.addProperty(LOCATION, convertLocationToTerritoireIRI(eventDetail.getValue(), EMSE_TERRITOIRE_PREFIX));
+                        eventInfo.addProperty(LOCATION, model.createTypedLiteral( convertLocationToTerritoireIRI(eventDetail.getValue(), EMSE_TERRITOIRE_PREFIX)));
                     }
-                    case _DESCRIPTION -> eventInfo.addProperty(DESCRIPTION, eventDetail.getValue());
-                    case _UID -> eventInfo.addProperty(IDENTIFIER, eventDetail.getValue());
-                    case _CREATED -> eventInfo.addProperty(DATE_CREATED, eventDetail.getValue());
-                    case _LAST_MODIFIED -> eventInfo.addProperty(DATE_MODIFIED, eventDetail.getValue());
-                    case _SEQUENCE -> eventInfo.addProperty(SEQUENCE, eventDetail.getValue());
+                    case _DESCRIPTION -> eventInfo.addProperty(DESCRIPTION, model.createTypedLiteral(eventDetail.getValue()));
+                    case _UID -> eventInfo.addProperty(IDENTIFIER, model.createTypedLiteral(eventDetail.getValue()));
+                    case _CREATED -> eventInfo.addProperty(DATE_CREATED, model.createTypedLiteral(createDateTimeObject(eventDetail.getValue())));
+                    case _LAST_MODIFIED -> eventInfo.addProperty(DATE_MODIFIED, model.createTypedLiteral(createDateTimeObject( eventDetail.getValue())));
+                    case _SEQUENCE -> eventInfo.addProperty(SEQUENCE,model.createTypedLiteral(Integer.parseInt(eventDetail.getValue())));
                 }
             }
 
@@ -280,6 +283,18 @@ public class Main {
             System.out.println(e.getMessage());
             throw new Exception(e);
         }
+    }
+
+    public static Date createDateTimeObject(String dateTimeString) throws ParseException {
+        String year = dateTimeString.substring(0,3);
+        String month = dateTimeString.substring(4,5);
+        String day = dateTimeString.substring(6,7);
+        String hour = dateTimeString.substring(9,10);
+        String minute = dateTimeString.substring(11,12);
+        String second = dateTimeString.substring(13,14);
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy;HH:mm:ss");
+        return simpleDateFormat.parse(day+"-"+month+"-"+year+";"+hour+":"+minute+":"+second);
     }
 
 }
