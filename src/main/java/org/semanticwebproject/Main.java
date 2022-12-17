@@ -19,6 +19,7 @@ import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdfconnection.RDFConnection;
 import org.apache.jena.rdfconnection.RDFConnectionFactory;
 import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.datatypes.xsd.*;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
