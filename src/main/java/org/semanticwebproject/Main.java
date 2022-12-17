@@ -286,16 +286,20 @@ public class Main {
         }
     }
 
-    public static Date createDateTimeObject(String dateTimeString) throws ParseException {
-        String year = dateTimeString.substring(0,3);
-        String month = dateTimeString.substring(4,5);
-        String day = dateTimeString.substring(6,7);
-        String hour = dateTimeString.substring(9,10);
-        String minute = dateTimeString.substring(11,12);
-        String second = dateTimeString.substring(13,14);
+    public static XSDDateTime createDateTimeObject(String dateTimeString) throws ParseException {
+        String year = dateTimeString.substring(0,4);
+        String month = dateTimeString.substring(4,6);
+        String day = dateTimeString.substring(6,8);
+        String hour = dateTimeString.substring(9,11);
+        String minute = dateTimeString.substring(11,13);
+        String second = dateTimeString.substring(13,15);
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy;HH:mm:ss");
-        return simpleDateFormat.parse(day+"-"+month+"-"+year+";"+hour+":"+minute+":"+second);
+
+        Date date = simpleDateFormat.parse(day+"-"+month+"-"+year+";"+hour+":"+minute+":"+second);
+        java.util.Calendar calendar = java.util.Calendar.getInstance();
+        calendar.setTime(date);
+        return new XSDDateTime(calendar);
     }
 
 }
