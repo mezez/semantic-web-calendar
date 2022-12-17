@@ -7,6 +7,7 @@ import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.component.CalendarComponent;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -187,7 +188,7 @@ public class Main {
 //        mergeFiles(eventFileName, CALENDAR_OUTPUT_TURTLE_FILE_NAME);
 
         int cc = 1;
-        while (cc <= eventCount) {
+        while (cc < eventCount) {
             uploadTurtleFile(LDP_DESTINATION, false, cc);
             cc++;
 
@@ -227,7 +228,7 @@ public class Main {
 
             try {
 
-                HttpPost post = new HttpPost(isContainer?TERRITOIRE_SERVICE_URL:TERRITOIRE_CONTAINER_SERVICE_URL);
+                HttpPost post = new HttpPost(isContainer ? TERRITOIRE_SERVICE_URL : TERRITOIRE_CONTAINER_SERVICE_URL);
                 post.addHeader("Authorization", AUTH_TOKEN);
                 post.addHeader("Accept", "text/turtle");
                 post.addHeader("Content-Type", "text/turtle");
@@ -246,7 +247,6 @@ public class Main {
                     requestBody = Files.readString(Path.of(CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl"), StandardCharsets.UTF_8);
 
                 }
-//                String requestBody = Files.readString(Path.of(CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME), StandardCharsets.UTF_8);
                 System.out.println(requestBody);
                 StringEntity requestBodyEntity = new StringEntity(requestBody);
                 post.setEntity(requestBodyEntity);
@@ -255,6 +255,9 @@ public class Main {
 //                 CloseableHttpResponse response = httpClient.execute(post)) {
                 CloseableHttpClient httpClient = HttpClients.createDefault();
                 CloseableHttpResponse response = httpClient.execute(post);
+
+                //DELETE TEMP FILE HERE
+                Files.deleteIfExists(Paths.get(isContainer ? CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "_container.ttl" : CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl"));
 
                 System.out.println(EntityUtils.toString(response.getEntity()));
             } catch (Exception e) {
@@ -264,39 +267,18 @@ public class Main {
         }
     }
 
-    public static void uploadTurtleFile2(String destination, Integer count) throws Exception {
-        if (destination.equals(FUSEKI_DESTINATION)) {
-            try (RDFConnection conn = RDFConnectionFactory.connect(LOCAL_FUSEKI_SERVICE_URL)) {
-                conn.put(CALENDAR_OUTPUT_TURTLE_FILE_NAME);
-            }
-        } else {
-            //upload to territoire
+    public static void deleteRemoteResource(String url) throws Exception {
+        //deleted from
+        try {
+            HttpDelete delete = new HttpDelete(url);
+            delete.addHeader("Authorization", AUTH_TOKEN);
+            System.out.println("Event at: " + url + " was deleted");
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            httpClient.execute(delete);
 
-            try {
-                HttpPost post = new HttpPost(TERRITOIRE_CONTAINER_SERVICE_URL);
-                post.addHeader("Authorization", AUTH_TOKEN);
-                post.addHeader("Accept", "text/turtle");
-                post.addHeader("Content-Type", "text/turtle");
-                post.addHeader("Link", "<http://www.w3.org/ns/ldp#BasicContainer>; rel=\"type\"");
-                post.addHeader("Prefer", "http://www.w3.org/ns/ldp#Container; rel=interaction-model");
-//            post.addHeader("Slug", CONTAINER_NAME);
-                post.addHeader("Slug", "testtest2");
-
-                String requestBody = Files.readString(Path.of(CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl"), StandardCharsets.UTF_8);
-                System.out.println(requestBody);
-                StringEntity requestBodyEntity = new StringEntity(requestBody);
-                post.setEntity(requestBodyEntity);
-
-//            try (CloseableHttpClient httpClient = HttpClients.createDefault();
-//                 CloseableHttpResponse response = httpClient.execute(post)) {
-                CloseableHttpClient httpClient = HttpClients.createDefault();
-                CloseableHttpResponse response = httpClient.execute(post);
-
-                System.out.println(EntityUtils.toString(response.getEntity()));
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-                throw new Exception(e);
-            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new Exception(e);
         }
     }
 
