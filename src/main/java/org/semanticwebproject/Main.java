@@ -56,13 +56,23 @@ public class Main {
             FileInputStream fin = new FileInputStream(CALENDAR_FILE_NAME);
             CalendarBuilder builder = new CalendarBuilder();
             Calendar calendar = builder.build(fin);
+
+
             parseCalendarToRDF(calendar);
+            //TODO OPTION FOR DIRECTLY SAVING ALREADY PARSED OR WRITTEN TURTLE FILE
+            //Events can either be generated from an ICS file, extracted from Web pages or manually written
         }
 
         if (action.equals(ADD_ATTENDEE_COMMAND)){
             List<String> attendeeDetails =  getAttendeeDetails();
 
             addAttendeeToEvent(attendeeDetails.get(0),attendeeDetails.get(1));
+        }
+
+        if (action.equals(GET_EVENTS_COMMAND)){
+            List<String> dateDetails =  getEventDate();
+
+            upcomingEventsByDate(dateDetails.get(2), dateDetails.get(1), dateDetails.get(0) );
         }
 
 
@@ -74,15 +84,35 @@ public class Main {
                 new InputStreamReader(System.in));
 
         // Reading data using readLine
-        System.out.println("Please enter a run command: download | read | add_attendee:");
+        System.out.println("Please enter a run command: download | read | add_attendee | get_events:");
         String command = reader.readLine().toUpperCase();
 
-        while (!command.equals(DOWNLOAD_COMMAND) && !command.equals(READ_COMMAND) && !command.equals(ADD_ATTENDEE_COMMAND)) {
-            System.out.println("Command must be either of DOWNLOAD | READ | ADD_ATTENDEE");
+        while (!command.equals(DOWNLOAD_COMMAND) && !command.equals(READ_COMMAND) && !command.equals(ADD_ATTENDEE_COMMAND) && !command.equals(GET_EVENTS_COMMAND)) {
+            System.out.println("Command must be either of DOWNLOAD | READ | ADD_ATTENDEE | GET_EVENTS");
             command = reader.readLine().toUpperCase();
         }
 
         return command;
+    }
+
+    public static List<String> getEventDate() throws IOException {
+        // Enter data using BufferReader
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(System.in));
+
+        // Reading data using readLine
+        System.out.println("Please enter event date eg 01-01-2022 :");
+        String date = reader.readLine();
+
+        while (date.isEmpty()) {
+            System.out.println("Date must be in the format of dd-MM-yyyy");
+            date = reader.readLine().toUpperCase();
+        }
+
+        List<String> dateDetails = List.of(date.split("-"));
+        System.out.println(dateDetails);
+
+        return dateDetails;
     }
 
     public static List<String> getAttendeeDetails() throws IOException {
@@ -338,9 +368,7 @@ public class Main {
     }
 
     public static void addAttendeeToEvent(String attendeeURI,String eventUrl) throws Exception {
-        System.out.println("event url: "+ eventUrl);
         //fetch event
-//        HttpGet get = new HttpGet(TERRITOIRE_CONTAINER_SERVICE_URL+eventName+"/");
         HttpGet get = new HttpGet(eventUrl);
         get.addHeader("Authorization", AUTH_TOKEN);
 
@@ -406,7 +434,7 @@ public class Main {
 
         //push file online
 
-        // ALTERNATIVE, DELETE OLD RESOURCE AND POST UPDATE
+        // TODO ALTERNATIVE, DELETE OLD RESOURCE AND POST UPDATE
         try {
 
             HttpPut put = new HttpPut(eventUrl);
@@ -435,6 +463,41 @@ public class Main {
 
             System.out.println(response.toString());
             System.out.println("Attendee added to event:::::::::");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new Exception(e);
+        }
+    }
+
+    public static void upcomingEventsByDate(String year,String month, String day) throws Exception {
+
+        try {
+
+            HttpPost post = new HttpPost(TERRITOIRE_CONTAINER_SERVICE_URL);
+            post.addHeader("Authorization", AUTH_TOKEN);
+            post.addHeader("Content-Type", "application/sparql-query");
+
+
+            String requestBody = "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+                    "\n" +
+                    "SELECT * WHERE {\n" +
+                    "  ?sub <https://schema.org/startDate> ?obj.\n" +
+                    "  FILTER(xsd:dateTime(?obj) >= \""+year+"-"+month+"-"+day+"T00:00:00Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime>)\n" +
+                    "  FILTER(xsd:dateTime(?obj) <= \""+year+"-"+month+"-"+day+"T23:59:59Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime>)\n" +
+                    "}";
+            System.out.println("requestBody::::");
+            System.out.println(requestBody);
+            System.out.println();
+
+            StringEntity requestBodyEntity = new StringEntity(requestBody);
+            post.setEntity(requestBodyEntity);
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            CloseableHttpResponse response = httpClient.execute(post);
+
+//            System.out.println(response.toString());
+//            System.out.println(EntityUtils.toString(response.getEntity()));
+            System.out.println(EntityUtils.toString(response.getEntity()));
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new Exception(e);
