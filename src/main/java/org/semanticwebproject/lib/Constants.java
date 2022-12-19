@@ -16,11 +16,13 @@ public class Constants {
     //COMMANDS
     public static final String DOWNLOAD_COMMAND = "DOWNLOAD";
     public static final String READ_COMMAND = "READ";
+    public static final String ADD_ATTENDEE_COMMAND = "ADD_ATTENDEE";
 
     //FILES
     public static String CALENDAR_FILE_NAME = "calendar.ics";
     public static String CALENDAR_OUTPUT_TURTLE_FILE_NAME = "calender_output.ttl";
     public static String CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME = "calender_output_temp";
+    public static String FETCHED_RESOURCE_TEMP_NAME = "fetched_resource_temp.ttl";
 
 
     //CALENDAR FORMATS

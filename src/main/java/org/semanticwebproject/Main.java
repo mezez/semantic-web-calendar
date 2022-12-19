@@ -6,16 +6,13 @@ import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.component.CalendarComponent;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.*;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.base.Sys;
+import org.apache.jena.rdf.model.*;
 import org.apache.jena.rdfconnection.RDFConnection;
 import org.apache.jena.rdfconnection.RDFConnectionFactory;
 import org.apache.jena.vocabulary.RDF;
@@ -49,15 +46,24 @@ public class Main {
         //download and read calendar file or read if necessary
         String action = getCommand();
 
-        if (action.equals(DOWNLOAD_COMMAND)) {
-            String url = getUrl();
-            downloadICS(url);
+        if (action.equals(DOWNLOAD_COMMAND) || action.equals(READ_COMMAND)) {
+            if (action.equals(DOWNLOAD_COMMAND)) {
+                String url = getUrl();
+                downloadICS(url);
+            }
+
+
+            FileInputStream fin = new FileInputStream(CALENDAR_FILE_NAME);
+            CalendarBuilder builder = new CalendarBuilder();
+            Calendar calendar = builder.build(fin);
+            parseCalendarToRDF(calendar);
         }
 
-        FileInputStream fin = new FileInputStream(CALENDAR_FILE_NAME);
-        CalendarBuilder builder = new CalendarBuilder();
-        Calendar calendar = builder.build(fin);
-        parseCalendarToRDF(calendar);
+        if (action.equals(ADD_ATTENDEE_COMMAND)){
+            List<String> attendeeDetails =  getAttendeeDetails();
+
+            addAttendeeToEvent(attendeeDetails.get(0),attendeeDetails.get(1));
+        }
 
 
     }
@@ -68,15 +74,44 @@ public class Main {
                 new InputStreamReader(System.in));
 
         // Reading data using readLine
-        System.out.println("Please enter a run command: download or read:");
+        System.out.println("Please enter a run command: download | read | add_attendee:");
         String command = reader.readLine().toUpperCase();
 
-        while (!command.equals(DOWNLOAD_COMMAND) && !command.equals(READ_COMMAND)) {
-            System.out.println("Command must be either DOWNLOAD or READ");
+        while (!command.equals(DOWNLOAD_COMMAND) && !command.equals(READ_COMMAND) && !command.equals(ADD_ATTENDEE_COMMAND)) {
+            System.out.println("Command must be either of DOWNLOAD | READ | ADD_ATTENDEE");
             command = reader.readLine().toUpperCase();
         }
 
         return command;
+    }
+
+    public static List<String> getAttendeeDetails() throws IOException {
+        // Enter data using BufferReader
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(System.in));
+
+        // Reading data using readLine
+        System.out.println("Please enter a event uri: eg https://territoire.emse.fr/ldp/mieventcontainer/vevent-2/");
+        String eventUri = reader.readLine();
+
+        while (eventUri.isEmpty()) {
+            System.out.println("event url is invalid");
+            eventUri = reader.readLine().toUpperCase();
+        }
+
+        System.out.println("Please enter a attendee uri: eg http://example.com/mezIgnas");
+        String attendeeUri = reader.readLine();
+
+        while (attendeeUri.isEmpty()) {
+            System.out.println("event url is invalid");
+            attendeeUri = reader.readLine();
+        }
+
+        List <String> attendeeDetails = new ArrayList<String>();
+        attendeeDetails.add(attendeeUri);
+        attendeeDetails.add(eventUri);
+
+        return attendeeDetails;
     }
 
     public static String getUrl() throws IOException {
@@ -300,6 +335,110 @@ public class Main {
         java.util.Calendar calendar = java.util.Calendar.getInstance();
         calendar.setTime(date);
         return new XSDDateTime(calendar);
+    }
+
+    public static void addAttendeeToEvent(String attendeeURI,String eventUrl) throws Exception {
+        System.out.println("event url: "+ eventUrl);
+        //fetch event
+//        HttpGet get = new HttpGet(TERRITOIRE_CONTAINER_SERVICE_URL+eventName+"/");
+        HttpGet get = new HttpGet(eventUrl);
+        get.addHeader("Authorization", AUTH_TOKEN);
+
+        CloseableHttpResponse response;
+        String eTagHeader;
+        try{
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            response = httpClient.execute(get);
+
+            eTagHeader = response.getFirstHeader("Etag").getValue();
+
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new Exception(e);
+        }
+
+//        System.out.println(EntityUtils.toString(response.getEntity()));
+        String data = EntityUtils.toString(response.getEntity());
+
+        // write results to file
+        String tempFileName = FETCHED_RESOURCE_TEMP_NAME; //REFACTOR TO include random numbers
+
+        FileWriter writer = new FileWriter(tempFileName);
+        BufferedWriter bufferedWriter = new BufferedWriter(writer);
+
+        bufferedWriter.write(data);
+        bufferedWriter.close();
+
+        //read file into jena and update or delete and repost
+        Model model = ModelFactory.createDefaultModel() ;
+        model.read(FETCHED_RESOURCE_TEMP_NAME) ;
+
+        final org.apache.jena.rdf.model.Property ATTENDEE = model.createProperty(SCHEMA_ORG_PREFIX + "attendee");
+        model.getResource(eventUrl).addProperty(ATTENDEE,model.createResource(attendeeURI));
+
+        // list the statements in the Model
+//        StmtIterator iter = model.listStatements();
+//
+//        while (iter.hasNext()) {
+//            Statement stmt      = iter.nextStatement();  // get next statement
+//            Resource  subject   = stmt.getSubject();     // get the subject
+//            org.apache.jena.rdf.model.Property predicate = stmt.getPredicate();   // get the predicate
+//            RDFNode   object    = stmt.getObject();      // get the object
+//
+//            System.out.print(subject.toString());
+//            System.out.print(" " + predicate.toString() + " ");
+//            if (object instanceof Resource) {
+//                System.out.print(object.toString());
+//            } else {
+//                // object is a literal
+//                System.out.print(" \"" + object.toString() + "\"");
+//            }
+//
+//            System.out.println(" .");
+//        }
+
+        //write to file
+        writer = new FileWriter(FETCHED_RESOURCE_TEMP_NAME);
+        bufferedWriter = new BufferedWriter(writer);
+//            model.write(System.out, "Turtle");
+
+        model.write(bufferedWriter, "Turtle");
+
+        //push file online
+
+        // ALTERNATIVE, DELETE OLD RESOURCE AND POST UPDATE
+        try {
+
+            HttpPut put = new HttpPut(eventUrl);
+            put.addHeader("Authorization", AUTH_TOKEN);
+            put.addHeader("Accept", "text/turtle");
+            put.addHeader("Content-Type", "text/turtle");
+            put.addHeader("If-Match", eTagHeader);
+            put.addHeader("Prefer", "http://www.w3.org/ns/ldp#RDFSource; rel=interaction-model");
+
+
+            String requestBody = Files.readString(Path.of(FETCHED_RESOURCE_TEMP_NAME));
+//            String requestBody = attendeeURI;
+//            System.out.println(requestBody);
+
+            StringEntity requestBodyEntity = new StringEntity(requestBody);
+            put.setEntity(requestBodyEntity);
+
+//            try (CloseableHttpClient httpClient = HttpClients.createDefault();
+//                 CloseableHttpResponse response = httpClient.execute(post)) {
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            response = httpClient.execute(put);
+
+//            System.out.println(EntityUtils.toString(response.getEntity()));
+
+            Files.deleteIfExists(Paths.get(FETCHED_RESOURCE_TEMP_NAME));
+
+            System.out.println(response.toString());
+            System.out.println("Attendee added to event:::::::::");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new Exception(e);
+        }
     }
 
 }
