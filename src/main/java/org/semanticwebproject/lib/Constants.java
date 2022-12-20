@@ -14,7 +14,8 @@ public class Constants {
     public static final String AUTH_TOKEN = "Basic bGRwdXNlcjpMaW5rZWREYXRhSXNHcmVhdA==";
 
     //COMMANDS
-    public static final String DOWNLOAD_COMMAND = "DOWNLOAD";
+    public static final String DOWNLOAD_ICS_COMMAND = "DOWNLOAD";
+    public static final String EXTRACT_COMMAND = "EXTRACT";
     public static final String READ_COMMAND = "READ";
     public static final String ADD_ATTENDEE_COMMAND = "ADD_ATTENDEE";
     public static final String GET_EVENTS_COMMAND = "GET_EVENTS";

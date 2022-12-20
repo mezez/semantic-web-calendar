@@ -1,22 +1,21 @@
 package org.semanticwebproject;
 
 import net.fortuna.ical4j.data.CalendarBuilder;
-import net.fortuna.ical4j.data.ParserException;
 import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.component.CalendarComponent;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.*;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.apache.jena.base.Sys;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.rdfconnection.RDFConnection;
 import org.apache.jena.rdfconnection.RDFConnectionFactory;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.datatypes.xsd.*;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -46,8 +45,8 @@ public class Main {
         //download and read calendar file or read if necessary
         String action = getCommand();
 
-        if (action.equals(DOWNLOAD_COMMAND) || action.equals(READ_COMMAND)) {
-            if (action.equals(DOWNLOAD_COMMAND)) {
+        if (action.equals(DOWNLOAD_ICS_COMMAND) || action.equals(READ_COMMAND)) {
+            if (action.equals(DOWNLOAD_ICS_COMMAND)) {
                 String url = getUrl();
                 downloadICS(url);
             }
@@ -63,16 +62,21 @@ public class Main {
             //Events can either be generated from an ICS file, extracted from Web pages or manually written
         }
 
-        if (action.equals(ADD_ATTENDEE_COMMAND)){
-            List<String> attendeeDetails =  getAttendeeDetails();
-
-            addAttendeeToEvent(attendeeDetails.get(0),attendeeDetails.get(1));
+        if (action.equals(EXTRACT_COMMAND)) {
+            String url = getUrl();
+            fetchRDFFromUrl(url);
         }
 
-        if (action.equals(GET_EVENTS_COMMAND)){
-            List<String> dateDetails =  getEventDate();
+        if (action.equals(ADD_ATTENDEE_COMMAND)) {
+            List<String> attendeeDetails = getAttendeeDetails();
 
-            upcomingEventsByDate(dateDetails.get(2), dateDetails.get(1), dateDetails.get(0) );
+            addAttendeeToEvent(attendeeDetails.get(0), attendeeDetails.get(1));
+        }
+
+        if (action.equals(GET_EVENTS_COMMAND)) {
+            List<String> dateDetails = getEventDate();
+
+            upcomingEventsByDate(dateDetails.get(2), dateDetails.get(1), dateDetails.get(0));
         }
 
 
@@ -84,11 +88,11 @@ public class Main {
                 new InputStreamReader(System.in));
 
         // Reading data using readLine
-        System.out.println("Please enter a run command: download | read | add_attendee | get_events:");
+        System.out.println("Please enter a run command: download | read | add_attendee | get_events | extract:");
         String command = reader.readLine().toUpperCase();
 
-        while (!command.equals(DOWNLOAD_COMMAND) && !command.equals(READ_COMMAND) && !command.equals(ADD_ATTENDEE_COMMAND) && !command.equals(GET_EVENTS_COMMAND)) {
-            System.out.println("Command must be either of DOWNLOAD | READ | ADD_ATTENDEE | GET_EVENTS");
+        while (!command.equals(DOWNLOAD_ICS_COMMAND) && !command.equals(READ_COMMAND) && !command.equals(ADD_ATTENDEE_COMMAND) && !command.equals(GET_EVENTS_COMMAND) && !command.equals(EXTRACT_COMMAND)) {
+            System.out.println("Command must be either of DOWNLOAD | READ | ADD_ATTENDEE | GET_EVENTS| EXTRACT");
             command = reader.readLine().toUpperCase();
         }
 
@@ -137,7 +141,7 @@ public class Main {
             attendeeUri = reader.readLine();
         }
 
-        List <String> attendeeDetails = new ArrayList<String>();
+        List<String> attendeeDetails = new ArrayList<String>();
         attendeeDetails.add(attendeeUri);
         attendeeDetails.add(eventUri);
 
@@ -224,18 +228,25 @@ public class Main {
 
 
                 switch (detailName) {
-                    case _DTSTAMP -> eventInfo.addProperty(DATE_TIME, model.createTypedLiteral(createDateTimeObject(eventDetail.getValue())));
-                    case _DTSTART -> eventInfo.addProperty(DATE_START,  model.createTypedLiteral(createDateTimeObject(eventDetail.getValue())));
-                    case _DTEND -> eventInfo.addProperty(DATE_END, model.createTypedLiteral(createDateTimeObject(eventDetail.getValue())));
+                    case _DTSTAMP ->
+                            eventInfo.addProperty(DATE_TIME, model.createTypedLiteral(createDateTimeObject(eventDetail.getValue())));
+                    case _DTSTART ->
+                            eventInfo.addProperty(DATE_START, model.createTypedLiteral(createDateTimeObject(eventDetail.getValue())));
+                    case _DTEND ->
+                            eventInfo.addProperty(DATE_END, model.createTypedLiteral(createDateTimeObject(eventDetail.getValue())));
                     case _SUMMARY -> eventInfo.addProperty(SUMMARY, model.createTypedLiteral(eventDetail.getValue()));
                     case _LOCATION -> {
-                        eventInfo.addProperty(LOCATION, model.createTypedLiteral( convertLocationToTerritoireIRI(eventDetail.getValue(), EMSE_TERRITOIRE_PREFIX)));
+                        eventInfo.addProperty(LOCATION, model.createTypedLiteral(convertLocationToTerritoireIRI(eventDetail.getValue(), EMSE_TERRITOIRE_PREFIX)));
                     }
-                    case _DESCRIPTION -> eventInfo.addProperty(DESCRIPTION, model.createTypedLiteral(eventDetail.getValue()));
+                    case _DESCRIPTION ->
+                            eventInfo.addProperty(DESCRIPTION, model.createTypedLiteral(eventDetail.getValue()));
                     case _UID -> eventInfo.addProperty(IDENTIFIER, model.createTypedLiteral(eventDetail.getValue()));
-                    case _CREATED -> eventInfo.addProperty(DATE_CREATED, model.createTypedLiteral(createDateTimeObject(eventDetail.getValue())));
-                    case _LAST_MODIFIED -> eventInfo.addProperty(DATE_MODIFIED, model.createTypedLiteral(createDateTimeObject( eventDetail.getValue())));
-                    case _SEQUENCE -> eventInfo.addProperty(SEQUENCE,model.createTypedLiteral(Integer.parseInt(eventDetail.getValue())));
+                    case _CREATED ->
+                            eventInfo.addProperty(DATE_CREATED, model.createTypedLiteral(createDateTimeObject(eventDetail.getValue())));
+                    case _LAST_MODIFIED ->
+                            eventInfo.addProperty(DATE_MODIFIED, model.createTypedLiteral(createDateTimeObject(eventDetail.getValue())));
+                    case _SEQUENCE ->
+                            eventInfo.addProperty(SEQUENCE, model.createTypedLiteral(Integer.parseInt(eventDetail.getValue())));
                 }
             }
 
@@ -352,35 +363,35 @@ public class Main {
     }
 
     public static XSDDateTime createDateTimeObject(String dateTimeString) throws ParseException {
-        String year = dateTimeString.substring(0,4);
-        String month = dateTimeString.substring(4,6);
-        String day = dateTimeString.substring(6,8);
-        String hour = dateTimeString.substring(9,11);
-        String minute = dateTimeString.substring(11,13);
-        String second = dateTimeString.substring(13,15);
+        String year = dateTimeString.substring(0, 4);
+        String month = dateTimeString.substring(4, 6);
+        String day = dateTimeString.substring(6, 8);
+        String hour = dateTimeString.substring(9, 11);
+        String minute = dateTimeString.substring(11, 13);
+        String second = dateTimeString.substring(13, 15);
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy;HH:mm:ss");
 
-        Date date = simpleDateFormat.parse(day+"-"+month+"-"+year+";"+hour+":"+minute+":"+second);
+        Date date = simpleDateFormat.parse(day + "-" + month + "-" + year + ";" + hour + ":" + minute + ":" + second);
         java.util.Calendar calendar = java.util.Calendar.getInstance();
         calendar.setTime(date);
         return new XSDDateTime(calendar);
     }
 
-    public static void addAttendeeToEvent(String attendeeURI,String eventUrl) throws Exception {
+    public static void addAttendeeToEvent(String attendeeURI, String eventUrl) throws Exception {
         //fetch event
         HttpGet get = new HttpGet(eventUrl);
         get.addHeader("Authorization", AUTH_TOKEN);
 
         CloseableHttpResponse response;
         String eTagHeader;
-        try{
+        try {
             CloseableHttpClient httpClient = HttpClients.createDefault();
             response = httpClient.execute(get);
 
             eTagHeader = response.getFirstHeader("Etag").getValue();
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new Exception(e);
         }
@@ -398,11 +409,11 @@ public class Main {
         bufferedWriter.close();
 
         //read file into jena and update or delete and repost
-        Model model = ModelFactory.createDefaultModel() ;
-        model.read(FETCHED_RESOURCE_TEMP_NAME) ;
+        Model model = ModelFactory.createDefaultModel();
+        model.read(FETCHED_RESOURCE_TEMP_NAME);
 
         final org.apache.jena.rdf.model.Property ATTENDEE = model.createProperty(SCHEMA_ORG_PREFIX + "attendee");
-        model.getResource(eventUrl).addProperty(ATTENDEE,model.createResource(attendeeURI));
+        model.getResource(eventUrl).addProperty(ATTENDEE, model.createResource(attendeeURI));
 
         // list the statements in the Model
 //        StmtIterator iter = model.listStatements();
@@ -469,7 +480,7 @@ public class Main {
         }
     }
 
-    public static void upcomingEventsByDate(String year,String month, String day) throws Exception {
+    public static void upcomingEventsByDate(String year, String month, String day) throws Exception {
 
         try {
 
@@ -482,8 +493,8 @@ public class Main {
                     "\n" +
                     "SELECT * WHERE {\n" +
                     "  ?sub <https://schema.org/startDate> ?obj.\n" +
-                    "  FILTER(xsd:dateTime(?obj) >= \""+year+"-"+month+"-"+day+"T00:00:00Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime>)\n" +
-                    "  FILTER(xsd:dateTime(?obj) <= \""+year+"-"+month+"-"+day+"T23:59:59Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime>)\n" +
+                    "  FILTER(xsd:dateTime(?obj) >= \"" + year + "-" + month + "-" + day + "T00:00:00Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime>)\n" +
+                    "  FILTER(xsd:dateTime(?obj) <= \"" + year + "-" + month + "-" + day + "T23:59:59Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime>)\n" +
                     "}";
             System.out.println("requestBody::::");
             System.out.println(requestBody);
@@ -502,6 +513,24 @@ public class Main {
             System.out.println(e.getMessage());
             throw new Exception(e);
         }
+    }
+
+    public static void fetchRDFFromUrl(String url) throws IOException {
+        Document document = Jsoup.connect(url).get();
+        List<String> rdfsItem = new ArrayList<String>();
+        document.select("script").forEach(el ->
+                {
+                    String element = String.valueOf(el);
+                    if (element.contains("application/ld+json")) {
+                        element = element.replace("<script type=\"application/ld+json\">", "");
+                        element = element.replace("</script>", "");
+                        rdfsItem.add(String.valueOf(element));
+                    }
+                }
+        );
+//        document.select("script").forEach(System.out::println);
+//        System.out.println(rdfsItem.size());
+        System.out.println(rdfsItem);
     }
 
 }
