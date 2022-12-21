@@ -25,6 +25,8 @@ public class Constants {
     public static String CALENDAR_OUTPUT_TURTLE_FILE_NAME = "calender_output.ttl";
     public static String CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME = "calender_output_temp";
     public static String FETCHED_RESOURCE_TEMP_NAME = "fetched_resource_temp.ttl";
+    public static String FETCHED_JSON_LD_TEMP_NAME = "fetched_json_ld_temp";
+
 
 
     //CALENDAR FORMATS

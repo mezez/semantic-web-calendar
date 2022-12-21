@@ -1,12 +1,13 @@
 package org.semanticwebproject.lib;
 
-import java.io.BufferedInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import org.apache.jena.rdf.model.Model;
+
+import java.io.*;
 import java.net.URL;
 import java.util.Arrays;
 
 import static org.semanticwebproject.lib.Constants.CALENDAR_FILE_NAME;
+import static org.semanticwebproject.lib.Constants.FETCHED_RESOURCE_TEMP_NAME;
 
 public class Helpers {
 
@@ -54,5 +55,25 @@ public class Helpers {
 
         }
         return location;
+    }
+
+    public static void writeStringToFile(String content, String fileName) throws IOException {
+        FileWriter fileWriter = new FileWriter(fileName);
+        BufferedWriter writer = new BufferedWriter(fileWriter);
+        writer.write(content);
+
+        writer.close();
+        fileWriter.close();
+    }
+
+    public static void writeModelToFIle(String fileName, Model model) throws IOException {
+        //write to file
+        FileWriter writer = new FileWriter(fileName);
+        BufferedWriter bufferedWriter = new BufferedWriter(writer);
+//            model.write(System.out, "Turtle");
+
+        model.write(bufferedWriter, "Turtle");
+        bufferedWriter.close();
+        writer.close();
     }
 }

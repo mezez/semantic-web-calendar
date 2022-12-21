@@ -27,10 +27,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.semanticwebproject.lib.Constants.*;
-import static org.semanticwebproject.lib.Helpers.convertLocationToTerritoireIRI;
-import static org.semanticwebproject.lib.Helpers.downloadICS;
+import static org.semanticwebproject.lib.Helpers.*;
 
 public class Main {
 
@@ -279,6 +280,28 @@ public class Main {
         System.out.println("::::::::::::::::::::");
     }
 
+    public static void parseJSONLDToRDF(Integer numberOfFiles) throws Exception {
+        int count = 1;
+        while (count < numberOfFiles) {
+            //read json ld file
+            Model model = ModelFactory.createDefaultModel();
+            model.read(FETCHED_JSON_LD_TEMP_NAME + "-" + count + ".jsonld");
+
+            //write data to turtle file
+            writeModelToFIle(CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME+ "-" + count + ".ttl", model);
+
+            //DELETE TEMP FILE HERE
+            Files.deleteIfExists(Paths.get(FETCHED_JSON_LD_TEMP_NAME + "-" + count + ".jsonld"));
+
+
+            //upload to ldp
+            uploadTurtleFile(LDP_DESTINATION, false, count);
+            count++;
+        }
+        System.out.println("Generated output has been uploaded to defined DB: Fuseki or LDP");
+        System.out.println("::::::::::::::::::::");
+    }
+
     public static void mergeFiles(List<String> fileNames, String outputFileName) throws IOException {
         PrintWriter pw = new PrintWriter(outputFileName);
         for (String fileName : fileNames) {
@@ -515,22 +538,52 @@ public class Main {
         }
     }
 
-    public static void fetchRDFFromUrl(String url) throws IOException {
+    public static void fetchRDFFromUrl(String url) throws Exception {
         Document document = Jsoup.connect(url).get();
-        List<String> rdfsItem = new ArrayList<String>();
+//        List<String> rdfsItem = new ArrayList<String>();
+
+        String jsonLDString = "";
+
+        final Integer[] count = {1};
         document.select("script").forEach(el ->
                 {
                     String element = String.valueOf(el);
                     if (element.contains("application/ld+json")) {
                         element = element.replace("<script type=\"application/ld+json\">", "");
                         element = element.replace("</script>", "");
-                        rdfsItem.add(String.valueOf(element));
+                        element = element.replace("@context\":\"http://schema.org", "@context\":\"http://schema.org/docs/jsonldcontext.json");
+
+                        element = element.replaceFirst("https://www.alentoor.fr/agenda/", TERRITOIRE_CONTAINER_SERVICE_URL+"agenda-");
+//                        System.out.println(element);
+
+                        //UNIQUE TO ALENTOOR
+//                        Pattern pattern = Pattern.compile("[a-zA-Z]+://[a-zA-Z]+\\.[a-zA-Z]+\\.[a-zA-Z]+/[a-zA-Z]+/[a-zA-Z]+/[a-zA-Z]+/[0-9]+");
+
+                        Pattern pattern = Pattern.compile("\"@id\":\"https://territoire.emse.fr/ldp/mieventcontainer/agenda-[0-9]+\"");
+                        Matcher matcher = pattern.matcher(element);
+                        if (matcher.find()){
+
+                            String strToReplace = matcher.group();
+//                            System.out.println(strToReplace);
+                            element = element.replaceFirst(strToReplace, strToReplace.substring(0,strToReplace.length()-1)+"/\"");
+                            System.out.println(element);
+                        }
+
+//                        rdfsItem.add(String.valueOf(element));
+                        try {
+                            writeStringToFile(element, FETCHED_JSON_LD_TEMP_NAME + "-" + count[0].toString() + ".jsonld");
+                            count[0]++;
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }
         );
 //        document.select("script").forEach(System.out::println);
 //        System.out.println(rdfsItem.size());
-        System.out.println(rdfsItem);
+//        System.out.println(rdfsItem);
+        parseJSONLDToRDF(count[0]);
+
     }
 
 }
