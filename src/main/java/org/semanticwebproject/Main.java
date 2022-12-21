@@ -64,8 +64,9 @@ public class Main {
         }
 
         if (action.equals(EXTRACT_COMMAND)) {
-            String url = getUrl();
-            fetchRDFFromUrl(url);
+            String alentoorCity = getCity();
+            String url = "https://www.alentoor.fr/"+alentoorCity+"/agenda";
+            fetchRDFFromUrl(url, alentoorCity);
         }
 
         if (action.equals(ADD_ATTENDEE_COMMAND)) {
@@ -164,6 +165,23 @@ public class Main {
         }
 
         return url;
+    }
+
+    public static String getCity() throws IOException {
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(System.in));
+
+        // Reading data using readLine
+        System.out.println("Please enter an alentoor city name, eg saint-etienne, lyon :");
+
+        String city = reader.readLine();
+
+        while (city.isEmpty()) {
+            System.out.println("Please enter a valid city");
+            city = reader.readLine();
+        }
+
+        return city;
     }
 
     public static void parseCalendarToRDF(Calendar calendar) throws Exception {
@@ -538,7 +556,7 @@ public class Main {
         }
     }
 
-    public static void fetchRDFFromUrl(String url) throws Exception {
+    public static void fetchRDFFromUrl(String url, String alentoorCity) throws Exception {
         Document document = Jsoup.connect(url).get();
 //        List<String> rdfsItem = new ArrayList<String>();
 
@@ -553,13 +571,13 @@ public class Main {
                         element = element.replace("</script>", "");
                         element = element.replace("@context\":\"http://schema.org", "@context\":\"http://schema.org/docs/jsonldcontext.json");
 
-                        element = element.replaceFirst("https://www.alentoor.fr/agenda/", TERRITOIRE_CONTAINER_SERVICE_URL+"agenda-");
+                        element = element.replaceFirst("https://www.alentoor.fr/agenda/", TERRITOIRE_CONTAINER_SERVICE_URL+alentoorCity+"-agenda-");
 //                        System.out.println(element);
 
                         //UNIQUE TO ALENTOOR
 //                        Pattern pattern = Pattern.compile("[a-zA-Z]+://[a-zA-Z]+\\.[a-zA-Z]+\\.[a-zA-Z]+/[a-zA-Z]+/[a-zA-Z]+/[a-zA-Z]+/[0-9]+");
 
-                        Pattern pattern = Pattern.compile("\"@id\":\"https://territoire.emse.fr/ldp/mieventcontainer/agenda-[0-9]+\"");
+                        Pattern pattern = Pattern.compile("\"@id\":\"https://territoire.emse.fr/ldp/mieventcontainer/"+alentoorCity+"-agenda-[0-9]+\"");
                         Matcher matcher = pattern.matcher(element);
                         if (matcher.find()){
 
