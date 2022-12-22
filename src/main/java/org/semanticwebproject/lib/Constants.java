@@ -19,6 +19,7 @@ public class Constants {
     public static final String READ_COMMAND = "READ";
     public static final String ADD_ATTENDEE_COMMAND = "ADD_ATTENDEE";
     public static final String GET_EVENTS_COMMAND = "GET_EVENTS";
+    public static final String GET_NON_COURSE_EVENTS_COMMAND = "GET_NON_COURSE_EVENTS";
 
     //FILES
     public static String CALENDAR_FILE_NAME = "calendar.ics";

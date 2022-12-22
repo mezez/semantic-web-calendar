@@ -81,6 +81,10 @@ public class Main {
             upcomingEventsByDate(dateDetails.get(2), dateDetails.get(1), dateDetails.get(0));
         }
 
+        if (action.equals(GET_NON_COURSE_EVENTS_COMMAND)) {
+            nonCourseEvents();
+        }
+
 
     }
 
@@ -90,11 +94,11 @@ public class Main {
                 new InputStreamReader(System.in));
 
         // Reading data using readLine
-        System.out.println("Please enter a run command: download | read | add_attendee | get_events | extract:");
+        System.out.println("Please enter a run command: download | read | add_attendee | get_events | get_non_course_events | extract:");
         String command = reader.readLine().toUpperCase();
 
-        while (!command.equals(DOWNLOAD_ICS_COMMAND) && !command.equals(READ_COMMAND) && !command.equals(ADD_ATTENDEE_COMMAND) && !command.equals(GET_EVENTS_COMMAND) && !command.equals(EXTRACT_COMMAND)) {
-            System.out.println("Command must be either of DOWNLOAD | READ | ADD_ATTENDEE | GET_EVENTS| EXTRACT");
+        while (!command.equals(DOWNLOAD_ICS_COMMAND) && !command.equals(READ_COMMAND) && !command.equals(ADD_ATTENDEE_COMMAND) && !command.equals(GET_EVENTS_COMMAND) && !command.equals(EXTRACT_COMMAND) && !command.equals(GET_NON_COURSE_EVENTS_COMMAND)) {
+            System.out.println("Command must be either of DOWNLOAD | READ | ADD_ATTENDEE | GET_EVENTS| GET_NON_COURSE_EVENTS | EXTRACT");
             command = reader.readLine().toUpperCase();
         }
 
@@ -240,7 +244,8 @@ public class Main {
 
 
 //            eventInfo.addProperty(A_THING, SCHEMA_ORG_PREFIX + "Event");
-            eventInfo.addProperty(RDF.type, SCHEMA_ORG_PREFIX + "Event");
+            eventInfo.addProperty(RDF.type, model.createResource(SCHEMA_ORG_PREFIX + "Event"));
+            eventInfo.addProperty(RDF.type, model.createResource(SCHEMA_ORG_PREFIX + "Course"));
 
             for (Property eventDetail : eventDetails) {
                 String detailName = eventDetail.getName();
@@ -255,7 +260,7 @@ public class Main {
                             eventInfo.addProperty(DATE_END, model.createTypedLiteral(createDateTimeObject(eventDetail.getValue())));
                     case _SUMMARY -> eventInfo.addProperty(SUMMARY, model.createTypedLiteral(eventDetail.getValue()));
                     case _LOCATION -> {
-                        eventInfo.addProperty(LOCATION, model.createTypedLiteral(convertLocationToTerritoireIRI(eventDetail.getValue(), EMSE_TERRITOIRE_PREFIX)));
+                        eventInfo.addProperty(LOCATION, model.createResource(convertLocationToTerritoireIRI(eventDetail.getValue(), EMSE_TERRITOIRE_PREFIX)));
                     }
                     case _DESCRIPTION ->
                             eventInfo.addProperty(DESCRIPTION, model.createTypedLiteral(eventDetail.getValue()));
@@ -537,6 +542,46 @@ public class Main {
                     "  FILTER(xsd:dateTime(?obj) >= \"" + year + "-" + month + "-" + day + "T00:00:00Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime>)\n" +
                     "  FILTER(xsd:dateTime(?obj) <= \"" + year + "-" + month + "-" + day + "T23:59:59Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime>)\n" +
                     "}";
+            System.out.println("requestBody::::");
+            System.out.println(requestBody);
+            System.out.println();
+
+            StringEntity requestBodyEntity = new StringEntity(requestBody);
+            post.setEntity(requestBodyEntity);
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            CloseableHttpResponse response = httpClient.execute(post);
+
+//            System.out.println(response.toString());
+//            System.out.println(EntityUtils.toString(response.getEntity()));
+            System.out.println(EntityUtils.toString(response.getEntity()));
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new Exception(e);
+        }
+    }
+    public static void nonCourseEvents() throws Exception {
+
+        try {
+
+            HttpPost post = new HttpPost(TERRITOIRE_CONTAINER_SERVICE_URL);
+            post.addHeader("Authorization", AUTH_TOKEN);
+            post.addHeader("Content-Type", "application/sparql-query");
+
+
+            String requestBody = "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+                    "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+                    "PREFIX schema: <https://schema.org/>\n" +
+                    "\n" +
+                    "SELECT * WHERE {\n" +
+                    "  ?sub a schema:Event.\n" +
+                    "  FILTER (\n" +
+                    "     !EXISTS {\n" +
+                    "       ?sub a schema:Course\n" +
+                    "     }\n" +
+                    "   )\n" +
+                    "}";
+
             System.out.println("requestBody::::");
             System.out.println(requestBody);
             System.out.println();

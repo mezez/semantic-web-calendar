@@ -41,12 +41,12 @@ public class Helpers {
             String roomName = splitLocation[splitLocation.length - 1];
 
             switch (roomName.toLowerCase().substring(0, 2)) {
-                case "s1" -> location = prefix + "1ET/" + roomName;
-                case "s2" -> location = prefix + "2ET/" + roomName;
-                case "s3" -> location = prefix + "3ET/" + roomName;
-                case "s4" -> location = prefix + "4ET/" + roomName;
-                case "s5" -> location = prefix + "5ET/" + roomName;
-                case "s6" -> location = prefix + "6ET/" + roomName;
+                case "s1" -> location = prefix + "1ET/" + roomName.substring(1).replace(".","");
+                case "s2" -> location = prefix + "2ET/" + roomName.substring(1).replace(".","");
+                case "s3" -> location = prefix + "3ET/" + roomName.substring(1).replace(".","");
+                case "s4" -> location = prefix + "4ET/" + roomName.substring(1).replace(".","");
+                case "s5" -> location = prefix + "5ET/" + roomName.substring(1).replace(".","");
+                case "s6" -> location = prefix + "6ET/" + roomName.substring(1).replace(".","");
                 default -> {
                 }
             }
