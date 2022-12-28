@@ -1,16 +1,32 @@
 package org.semanticwebproject.lib;
 
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Resource;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 
-import static org.semanticwebproject.lib.Constants.CALENDAR_FILE_NAME;
-import static org.semanticwebproject.lib.Constants.FETCHED_RESOURCE_TEMP_NAME;
+import org.apache.jena.riot.RDFDataMgr;
+import org.apache.jena.riot.RDFFormat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
+import org.topbraid.jenax.util.JenaUtil;
+import org.topbraid.shacl.validation.ValidationUtil;
+import org.topbraid.shacl.vocabulary.SH;
+
+import static org.semanticwebproject.lib.Constants.*;
 
 public class Helpers {
 
+    private static Logger logger = LoggerFactory.getLogger(Helpers.class);
+    // Why This Failure marker
+    private static final Marker WTF_MARKER = MarkerFactory.getMarker("WTF");
 
     public static void downloadICS(String urlString) throws IOException {
 
@@ -75,5 +91,40 @@ public class Helpers {
         model.write(bufferedWriter, "Turtle");
         bufferedWriter.close();
         writer.close();
+    }
+
+    public static boolean validateWithSHACL(String fileContent){
+        boolean conforms = false;
+        try {
+//            Path path = Paths.get(".").toAbsolutePath().normalize();
+//            String data = "file:" + path.toFile().getAbsolutePath() + "/src/main/resources/person.ttl";
+//            String shape = "file:" + path.toFile().getAbsolutePath() + "/src/main/resources/personShape.ttl";
+
+//            String data = Files.readString(Path.of(fileName), StandardCharsets.UTF_8);
+            String shape = Files.readString(Path.of(SHACL_VALIDATION_SHAPE), StandardCharsets.UTF_8);
+
+
+            Model dataModel = JenaUtil.createDefaultModel();
+            dataModel.read(fileContent);
+            Model shapeModel = JenaUtil.createDefaultModel();
+            shapeModel.read(shape);
+
+            Resource reportResource = ValidationUtil.validateModel(dataModel, shapeModel, true);
+            conforms  = reportResource.getProperty(SH.conforms).getBoolean();
+            logger.trace("Conforms = " + conforms);
+
+            if (!conforms) {
+//                String report = path.toFile().getAbsolutePath() + SHACL_VALIDATION_REPORTS;
+                File reportFile = new File(SHACL_VALIDATION_REPORTS);
+                reportFile.createNewFile();
+                OutputStream reportOutputStream = new FileOutputStream(reportFile);
+
+                RDFDataMgr.write(reportOutputStream, reportResource.getModel(), RDFFormat.TTL);
+            }
+
+        } catch (Throwable t) {
+            logger.error(WTF_MARKER, t.getMessage(), t);
+        }
+        return conforms;
     }
 }

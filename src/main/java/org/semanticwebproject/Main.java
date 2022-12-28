@@ -9,6 +9,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.apache.jena.base.Sys;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.rdfconnection.RDFConnection;
 import org.apache.jena.rdfconnection.RDFConnectionFactory;
@@ -373,6 +374,14 @@ public class Main {
                     requestBody = Files.readString(Path.of(CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl"), StandardCharsets.UTF_8);
 
                 }
+                //validate shape
+                boolean isValidShape = validateWithSHACL(requestBody);
+                if (!isValidShape){
+                    System.out.println("File: "+ CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl");
+                    System.out.println("Invalid events shape. See log file: " + SHACL_VALIDATION_REPORTS  + " for details");
+                    return;
+                }
+
                 System.out.println(requestBody);
                 StringEntity requestBodyEntity = new StringEntity(requestBody);
                 post.setEntity(requestBodyEntity);
