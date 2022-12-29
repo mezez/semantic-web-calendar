@@ -28,6 +28,7 @@ public class Constants {
     public static String FETCHED_RESOURCE_TEMP_NAME = "fetched_resource_temp.ttl";
     public static String FETCHED_JSON_LD_TEMP_NAME = "fetched_json_ld_temp";
     public static String SHACL_VALIDATION_SHAPE = "shacl_validation_shape.ttl";
+    public static String SHACL_VALIDATION_SHAPE_CPS2_EVENT = "shacl_validation_shape_cps2_course.ttl";
     public static String SHACL_VALIDATION_REPORTS = "shacl_validation_reports.ttl";
 
 

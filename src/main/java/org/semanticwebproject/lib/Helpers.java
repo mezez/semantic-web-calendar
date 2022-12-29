@@ -57,16 +57,15 @@ public class Helpers {
             String roomName = splitLocation[splitLocation.length - 1];
 
             switch (roomName.toLowerCase().substring(0, 2)) {
-                case "s1" -> location = prefix + "1ET/" + roomName.substring(1).replace(".","");
-                case "s2" -> location = prefix + "2ET/" + roomName.substring(1).replace(".","");
-                case "s3" -> location = prefix + "3ET/" + roomName.substring(1).replace(".","");
-                case "s4" -> location = prefix + "4ET/" + roomName.substring(1).replace(".","");
-                case "s5" -> location = prefix + "5ET/" + roomName.substring(1).replace(".","");
-                case "s6" -> location = prefix + "6ET/" + roomName.substring(1).replace(".","");
+                case "s1" -> location = prefix + "1ET/" + roomName.substring(1).replace(".", "");
+                case "s2" -> location = prefix + "2ET/" + roomName.substring(1).replace(".", "");
+                case "s3" -> location = prefix + "3ET/" + roomName.substring(1).replace(".", "");
+                case "s4" -> location = prefix + "4ET/" + roomName.substring(1).replace(".", "");
+                case "s5" -> location = prefix + "5ET/" + roomName.substring(1).replace(".", "");
+                case "s6" -> location = prefix + "6ET/" + roomName.substring(1).replace(".", "");
                 default -> {
                 }
             }
-
 
 
         }
@@ -93,7 +92,7 @@ public class Helpers {
         writer.close();
     }
 
-    public static boolean validateWithSHACL(String fileContent){
+    public static boolean validateWithSHACL(String fileContent, Boolean isCPS2Event) {
         boolean conforms = false;
         try {
 //            Path path = Paths.get(".").toAbsolutePath().normalize();
@@ -101,7 +100,15 @@ public class Helpers {
 //            String shape = "file:" + path.toFile().getAbsolutePath() + "/src/main/resources/personShape.ttl";
 
 //            String data = Files.readString(Path.of(fileName), StandardCharsets.UTF_8);
-            String shape = Files.readString(Path.of(SHACL_VALIDATION_SHAPE), StandardCharsets.UTF_8);
+            String shape;
+
+            if (isCPS2Event) {
+                shape = Files.readString(Path.of(SHACL_VALIDATION_SHAPE_CPS2_EVENT), StandardCharsets.UTF_8);
+
+            } else {
+                shape = Files.readString(Path.of(SHACL_VALIDATION_SHAPE), StandardCharsets.UTF_8);
+
+            }
 
 
             Model dataModel = JenaUtil.createDefaultModel();
@@ -110,7 +117,7 @@ public class Helpers {
             shapeModel.read(shape);
 
             Resource reportResource = ValidationUtil.validateModel(dataModel, shapeModel, true);
-            conforms  = reportResource.getProperty(SH.conforms).getBoolean();
+            conforms = reportResource.getProperty(SH.conforms).getBoolean();
             logger.trace("Conforms = " + conforms);
 
             if (!conforms) {

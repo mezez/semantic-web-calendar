@@ -215,7 +215,7 @@ public class Main {
 
         model.write(bufferedWriter, "Turtle");
         bufferedWriter.close();
-        uploadTurtleFile(LDP_DESTINATION, true, 0);
+        uploadTurtleFile(LDP_DESTINATION, true, 0, false);
 
 
         for (CalendarComponent calendarEvent : calendarList) {
@@ -294,7 +294,7 @@ public class Main {
 
         int cc = 1;
         while (cc < eventCount) {
-            uploadTurtleFile(LDP_DESTINATION, false, cc);
+            uploadTurtleFile(LDP_DESTINATION, false, cc, true);
             cc++;
 
         }
@@ -319,7 +319,7 @@ public class Main {
 
 
             //upload to ldp
-            uploadTurtleFile(LDP_DESTINATION, false, count);
+            uploadTurtleFile(LDP_DESTINATION, false, count, false);
             count++;
         }
         System.out.println("Generated output has been uploaded to defined DB: Fuseki or LDP");
@@ -345,7 +345,7 @@ public class Main {
 
     }
 
-    public static void uploadTurtleFile(String destination, Boolean isContainer, Integer count) throws Exception {
+    public static void uploadTurtleFile(String destination, Boolean isContainer, Integer count, Boolean isCPS2Event) throws Exception {
         if (destination.equals(FUSEKI_DESTINATION)) {
             try (RDFConnection conn = RDFConnectionFactory.connect(LOCAL_FUSEKI_SERVICE_URL)) {
                 conn.put(CALENDAR_OUTPUT_TURTLE_FILE_NAME);
@@ -375,11 +375,20 @@ public class Main {
 
                 }
                 //validate shape
-                boolean isValidShape = validateWithSHACL(requestBody);
+                boolean isValidShape = validateWithSHACL(requestBody, false);
                 if (!isValidShape){
                     System.out.println("File: "+ CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl");
                     System.out.println("Invalid events shape. See log file: " + SHACL_VALIDATION_REPORTS  + " for details");
                     return;
+                }
+
+                if (isCPS2Event){
+                    isValidShape = validateWithSHACL(requestBody, true);
+                    if (!isValidShape){
+                        System.out.println("File: "+ CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl");
+                        System.out.println("Invalid events shape. See log file: " + SHACL_VALIDATION_REPORTS  + " for details");
+                        return;
+                    }
                 }
 
                 System.out.println(requestBody);
