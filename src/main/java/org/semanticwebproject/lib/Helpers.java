@@ -98,10 +98,10 @@ public class Helpers {
             String shape;
 
             if (isCPS2Event) {
-                shape = Files.readString(Path.of(SHACL_VALIDATION_SHAPE_CPS2_EVENT), StandardCharsets.UTF_8);
+                shape = SHACL_VALIDATION_SHAPE_CPS2_EVENT;
 
             } else {
-                shape = Files.readString(Path.of(SHACL_VALIDATION_SHAPE), StandardCharsets.UTF_8);
+                shape = SHACL_VALIDATION_SHAPE;
             }
 
 

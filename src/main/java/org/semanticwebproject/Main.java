@@ -366,16 +366,19 @@ public class Main {
 
 //                String requestBody = Files.readString(Path.of(CALENDAR_OUTPUT_TURTLE_FILE_NAME), StandardCharsets.UTF_8);
                 String requestBody;
+                String fileName = "";
                 if (isContainer) {
                     requestBody = Files.readString(Path.of(CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "_container.ttl"), StandardCharsets.UTF_8);
+                    fileName=CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "_container.ttl";
 
                 } else {
                     //container child
                     requestBody = Files.readString(Path.of(CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl"), StandardCharsets.UTF_8);
+                    fileName=CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl";
 
                 }
                 //validate shape
-                boolean isValidShape = validateWithSHACL(requestBody, false);
+                boolean isValidShape = validateWithSHACL(fileName, false);
                 if (!isValidShape){
                     System.out.println("File: "+ CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl");
                     System.out.println("Invalid events shape. See log file: " + SHACL_VALIDATION_REPORTS  + " for details");
@@ -383,7 +386,7 @@ public class Main {
                 }
 
                 if (isCPS2Event){
-                    isValidShape = validateWithSHACL(requestBody, true);
+                    isValidShape = validateWithSHACL(fileName, true);
                     if (!isValidShape){
                         System.out.println("File: "+ CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl");
                         System.out.println("Invalid events shape. See log file: " + SHACL_VALIDATION_REPORTS  + " for details");
