@@ -95,11 +95,6 @@ public class Helpers {
     public static boolean validateWithSHACL(String fileContent, Boolean isCPS2Event) {
         boolean conforms = false;
         try {
-//            Path path = Paths.get(".").toAbsolutePath().normalize();
-//            String data = "file:" + path.toFile().getAbsolutePath() + "/src/main/resources/person.ttl";
-//            String shape = "file:" + path.toFile().getAbsolutePath() + "/src/main/resources/personShape.ttl";
-
-//            String data = Files.readString(Path.of(fileName), StandardCharsets.UTF_8);
             String shape;
 
             if (isCPS2Event) {
@@ -107,7 +102,6 @@ public class Helpers {
 
             } else {
                 shape = Files.readString(Path.of(SHACL_VALIDATION_SHAPE), StandardCharsets.UTF_8);
-
             }
 
 

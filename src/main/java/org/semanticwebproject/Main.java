@@ -37,7 +37,7 @@ import static org.semanticwebproject.lib.Helpers.*;
 public class Main {
 
     //PREFIXES
-    public static final String SCHEMA_ORG_PREFIX = "https://schema.org/";
+    public static final String SCHEMA_ORG_PREFIX = "http://schema.org/";
     public static final String W3_LDP_PREFIX = "http://www.w3.org/ns/ldp#";
     public static final String EXAMPLE_PREFIX = "http://example.org/";
     public static final String EMSE_TERRITOIRE_PREFIX = "https://territoire.emse.fr/kg/emse/fayol/";
