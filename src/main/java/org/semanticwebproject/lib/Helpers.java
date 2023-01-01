@@ -50,7 +50,9 @@ public class Helpers {
         }
     }
 
-    public static String convertLocationToTerritoireIRI(String location, String prefix) {
+    public static String convertLocationToTerritoireIRI(String locationPassed, String prefix) {
+        String[] splitLocations = locationPassed.split(",");
+        String location = splitLocations.length >1 ? splitLocations[1]: splitLocations[0];
         String[] splitLocation = location.split("\\s+");
         if (Arrays.stream(splitLocation).anyMatch(str -> str.toLowerCase().equals("emse")) && Arrays.stream(splitLocation).anyMatch(str -> str.toLowerCase().equals("fauriel"))) {
             //convert to Territoire IRI
@@ -64,13 +66,38 @@ public class Helpers {
                 case "s5" -> location = prefix + "5ET/" + roomName.substring(1).replace(".", "");
                 case "s6" -> location = prefix + "6ET/" + roomName.substring(1).replace(".", "");
                 default -> {
+                    String roomNumber= location.replaceAll("[^0-9]", "");
+                    switch (roomNumber.substring(0,1)){
+                        case "1" -> location =  prefix + "1ET/" + roomNumber;
+                        case "2" -> location =  prefix + "2ET/" + roomNumber;
+                        case "3" -> location =  prefix + "3ET/" + roomNumber;
+                        case "4" -> location =  prefix + "4ET/" + roomNumber;
+                        case "5" -> location =  prefix + "5ET/" + roomNumber;
+                        case "6" -> location =  prefix + "6ET/" + roomNumber;
+                    }
                 }
             }
 
+        }else{
+            if (location.toLowerCase().contains("amphi") || location.toLowerCase().contains("salle")){
+                String roomNumber= location.replaceAll("[^0-9]", "");
+                switch (roomNumber.substring(0,1)){
+                    case "1" -> location =  prefix + "1ET/" + roomNumber;
+                    case "2" -> location =  prefix + "2ET/" + roomNumber;
+                    case "3" -> location =  prefix + "3ET/" + roomNumber;
+                    case "4" -> location =  prefix + "4ET/" + roomNumber;
+                    case "5" -> location =  prefix + "5ET/" + roomNumber;
+                    case "6" -> location =  prefix + "6ET/" + roomNumber;
+                }
+            }else{
+                //other location eg UJM
+//                location = location.replace("\(\d\d\)");
+                location = location.replaceAll("[^0-9]", "");
 
+            }
         }
         return location;
-    }
+}
 
     public static void writeStringToFile(String content, String fileName) throws IOException {
         FileWriter fileWriter = new FileWriter(fileName);
