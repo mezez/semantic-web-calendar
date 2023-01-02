@@ -13,24 +13,34 @@ schema:EventShape
     sh:path schema:startDate;
     sh:minCount 1;
     sh:maxCount 1;
-    sh:lessThan schema:endDate;
-    sh:datatype xsd:dateTime;
+    sh:or (
+          [
+	    sh:datatype xsd:dateTime ;
+	  ]
+	  [
+	    sh:datatype schema:Date;
+	  ]
+    )
   ];
   sh:property [
     sh:path schema:endDate;
     sh:minCount 1;
     sh:maxCount 1;
-    sh:datatype xsd:dateTime;
-  ];
+    sh:or (
+          [
+	    sh:datatype xsd:dateTime ;
+	  ]
+	  [
+	    sh:datatype schema:Date;
+	  ]
+    )    ];
   sh:property [
     sh:path ex:sequence;
-    sh:minCount 1;
     sh:maxCount 1;
     sh:datatype xsd:int;
   ];
   sh:property [
     sh:path ex:summary;
-    sh:minCount 1;
     sh:maxCount 1;
     sh:datatype xsd:string;
   ];
@@ -42,7 +52,6 @@ schema:EventShape
   ];
   sh:property [
     sh:path schema:identifier;
-    sh:minCount 1;
     sh:maxCount 1;
     sh:datatype xsd:string;
   ];
@@ -53,11 +62,24 @@ schema:EventShape
   ];
   sh:property [
     sh:path schema:dateCreated;
-    sh:minCount 1;
     sh:maxCount 1;
-    sh:datatype xsd:dateTime;
+    sh:or (
+          [
+	    sh:datatype xsd:dateTime ;
+	  ]
+	  [
+	    sh:datatype schema:Date;
+	  ]
+    )
   ];
   sh:property [
     sh:path schema:dateModified;
-    sh:datatype xsd:dateTime;
+    sh:or (
+          [
+	    sh:datatype xsd:dateTime ;
+	  ]
+	  [
+	    sh:datatype schema:Date;
+	  ]
+    )
   ].
