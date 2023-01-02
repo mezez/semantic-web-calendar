@@ -382,7 +382,6 @@ public class Main {
                 if (!isValidShape){
                     System.out.println("File: "+ CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl");
                     System.out.println("Invalid events shape. See log file: " + SHACL_VALIDATION_REPORTS  + " for details");
-                    return;
                 }
 
                 if (isCPS2Event){
@@ -390,13 +389,14 @@ public class Main {
                     if (!isValidShape){
                         System.out.println("File: "+ CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl");
                         System.out.println("Invalid events shape. See log file: " + SHACL_VALIDATION_REPORTS  + " for details");
-                        return;
                     }
                 }
 
                 System.out.println(requestBody);
-                StringEntity requestBodyEntity = new StringEntity(requestBody);
-                post.setEntity(requestBodyEntity);
+                if(isValidShape) {
+                    StringEntity requestBodyEntity = new StringEntity(requestBody);
+                    post.setEntity(requestBodyEntity);
+                }
 
 //            try (CloseableHttpClient httpClient = HttpClients.createDefault();
 //                 CloseableHttpResponse response = httpClient.execute(post)) {
