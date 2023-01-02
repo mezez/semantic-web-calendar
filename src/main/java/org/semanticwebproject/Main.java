@@ -30,6 +30,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import static spark.Spark.*;
 
 import static org.semanticwebproject.lib.Constants.*;
 import static org.semanticwebproject.lib.Helpers.*;
@@ -42,8 +43,16 @@ public class Main {
     public static final String EXAMPLE_PREFIX = "http://example.org/";
     public static final String EMSE_TERRITOIRE_PREFIX = "https://territoire.emse.fr/kg/emse/fayol/";
 
-
     public static void main(String[] args) throws Exception {
+        get("/read", (req, res) -> {
+            readFile();
+            return "success";
+        });
+        post("/download", (req, res) -> {
+            downloadICS(req.body());
+            readFile();
+            return "success";
+        });
         //download and read calendar file or read if necessary
         String action = getCommand();
 
@@ -52,16 +61,7 @@ public class Main {
                 String url = getUrl();
                 downloadICS(url);
             }
-
-
-            FileInputStream fin = new FileInputStream(CALENDAR_FILE_NAME);
-            CalendarBuilder builder = new CalendarBuilder();
-            Calendar calendar = builder.build(fin);
-
-
-            parseCalendarToRDF(calendar);
-            //TODO OPTION FOR DIRECTLY SAVING ALREADY PARSED OR WRITTEN TURTLE FILE
-            //Events can either be generated from an ICS file, extracted from Web pages or manually written
+            readFile();
         }
 
         if (action.equals(EXTRACT_COMMAND)) {
@@ -87,6 +87,14 @@ public class Main {
         }
 
 
+    }
+    public static void readFile()  throws Exception{
+        FileInputStream fin = new FileInputStream(CALENDAR_FILE_NAME);
+        CalendarBuilder builder = new CalendarBuilder();
+        Calendar calendar = builder.build(fin);
+        parseCalendarToRDF(calendar);
+        //TODO OPTION FOR DIRECTLY SAVING ALREADY PARSED OR WRITTEN TURTLE FILE
+        //Events can either be generated from an ICS file, extracted from Web pages or manually written
     }
 
     public static String getCommand() throws IOException {
