@@ -1,0 +1,26 @@
+<https://territoire.emse.fr/ldp/mieventcontainer/vevent-2/>
+        a                               <http://www.w3.org/ns/ldp#Resource> , <http://www.w3.org/ns/ldp#RDFSource> , <http://schema.org/Course> , <http://www.w3.org/ns/ldp#Container> , <http://schema.org/Event> , <https://carbonldp.com/ns/v1/platform#Document> , <http://www.w3.org/ns/ldp#BasicContainer> ;
+        <http://example.org/sequence>   "2140493457"^^<http://www.w3.org/2001/XMLSchema#int> ;
+        <http://example.org/summary>    "CM Multi agent coordination" ;
+        <http://schema.org/DateTime>    "2022-12-09T14:17:20Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+        <http://schema.org/attendee>    <http://example.com/mezIgnas> ;
+        <http://schema.org/dateCreated>
+                "1969-12-31T23:00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+        <http://schema.org/dateModified>
+                "2022-12-09T14:17:20Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+        <http://schema.org/description>
+                "\n\nM2 CPS2\nBOISSIER OLIVIER\nBALBO FLAVIEN\nNARDIN GUSTAVO\n(Exportï¿½ le:09/12/2022 16:17)\n" ;
+        <http://schema.org/endDate>     "2022-12-15T13:30:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+        <http://schema.org/identifier>  "ADE60323032322d3230323353542d455449454e4e452d32333432382d302d32" ;
+        <http://schema.org/location>    <https://territoire.emse.fr/kg/emse/fayol/2ET/224> ;
+        <http://schema.org/startDate>   "2022-12-15T11:30:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+        <http://www.w3.org/ns/ldp#hasMemberRelation>
+                <http://www.w3.org/ns/ldp#member> ;
+        <http://www.w3.org/ns/ldp#insertedContentRelation>
+                <http://www.w3.org/ns/ldp#MemberSubject> ;
+        <http://www.w3.org/ns/ldp#membershipResource>
+                <https://territoire.emse.fr/ldp/mieventcontainer/vevent-2/> ;
+        <https://carbonldp.com/ns/v1/platform#created>
+                "2023-01-01T19:36:31.812Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+        <https://carbonldp.com/ns/v1/platform#modified>
+                "2023-01-02T20:49:43.555Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> .

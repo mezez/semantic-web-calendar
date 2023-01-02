@@ -9,6 +9,9 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.apache.jena.atlas.json.JsonObject;
+import org.apache.jena.atlas.json.io.JSONMaker;
+import org.apache.jena.atlas.json.io.parser.JSONParser;
 import org.apache.jena.base.Sys;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.rdfconnection.RDFConnection;
@@ -51,6 +54,26 @@ public class Main {
         post("/download", (req, res) -> {
             downloadICS(req.body());
             readFile();
+            return "success";
+        });
+        post("/extract", (req, res) -> {
+            String url = "https://www.alentoor.fr/"+req.body()+"/agenda";
+            fetchRDFFromUrl(url, req.body());
+            return "success";
+        });
+        post("/add-attendee", (req, res) -> {
+            JSONMaker jm = new JSONMaker();
+            JSONParser.parseAny(new StringReader(req.body()), jm);
+            JsonObject obj = jm.jsonValue().getAsObject();
+            addAttendeeToEvent(obj.getString("eventURI"), obj.getString("attendeeURI"));
+            return "success";
+        });
+        post("/get-events", (req, res) -> {
+            JSONMaker jm = new JSONMaker();
+            JSONParser.parseAny(new StringReader(req.body()), jm);
+            JsonObject obj = jm.jsonValue().getAsObject();
+            System.out.println("Hello");
+            upcomingEventsByDate(obj.getString("year"), obj.getString("month"), obj.getString("day"));
             return "success";
         });
         //download and read calendar file or read if necessary
