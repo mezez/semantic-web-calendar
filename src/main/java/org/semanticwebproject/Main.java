@@ -4,6 +4,7 @@ import net.fortuna.ical4j.data.CalendarBuilder;
 import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.component.CalendarComponent;
+import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.*;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -72,9 +73,10 @@ public class Main {
             JSONMaker jm = new JSONMaker();
             JSONParser.parseAny(new StringReader(req.body()), jm);
             JsonObject obj = jm.jsonValue().getAsObject();
-            System.out.println("Hello");
-            upcomingEventsByDate(obj.getString("year"), obj.getString("month"), obj.getString("day"));
-            return "success";
+           return( upcomingEventsByDate(obj.getString("year"), obj.getString("month"), obj.getString("day")));
+        });
+        post("/get-non-course-events", (req, res) -> {
+            return( nonCourseEvents());
         });
         //download and read calendar file or read if necessary
         String action = getCommand();
@@ -102,11 +104,11 @@ public class Main {
         if (action.equals(GET_EVENTS_COMMAND)) {
             List<String> dateDetails = getEventDate();
 
-            upcomingEventsByDate(dateDetails.get(2), dateDetails.get(1), dateDetails.get(0));
+            System.out.println(upcomingEventsByDate(dateDetails.get(2), dateDetails.get(1), dateDetails.get(0)));
         }
 
         if (action.equals(GET_NON_COURSE_EVENTS_COMMAND)) {
-            nonCourseEvents();
+            System.out.println(nonCourseEvents());
         }
 
 
@@ -578,7 +580,7 @@ public class Main {
         }
     }
 
-    public static void upcomingEventsByDate(String year, String month, String day) throws Exception {
+    public static String upcomingEventsByDate(String year, String month, String day) throws Exception {
 
         try {
 
@@ -605,14 +607,14 @@ public class Main {
 
 //            System.out.println(response.toString());
 //            System.out.println(EntityUtils.toString(response.getEntity()));
-            System.out.println(EntityUtils.toString(response.getEntity()));
+            return(EntityUtils.toString(response.getEntity()));
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new Exception(e);
         }
     }
-    public static void nonCourseEvents() throws Exception {
+    public static String nonCourseEvents() throws Exception {
 
         try {
 
@@ -645,7 +647,7 @@ public class Main {
 
 //            System.out.println(response.toString());
 //            System.out.println(EntityUtils.toString(response.getEntity()));
-            System.out.println(EntityUtils.toString(response.getEntity()));
+            return(EntityUtils.toString(response.getEntity()));
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
