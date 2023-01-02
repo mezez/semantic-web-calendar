@@ -92,7 +92,7 @@ public class Helpers {
             }else{
                 //other location eg UJM
 //                location = location.replace("\(\d\d\)");
-                location = location.replaceAll("[^0-9]", "");
+                location = "UJM-" + location.replaceAll("[^0-9]", "");
 
             }
         }

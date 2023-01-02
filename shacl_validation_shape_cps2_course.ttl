@@ -50,6 +50,7 @@ schema:EventShape
     sh:path schema:location;
     sh:minCount 1;
     sh:maxCount 1;
+    sh:pattern "^https://territoire.emse.fr/kg/emse/fayol/|UJM-"
   ];
   sh:property [
     sh:path schema:dateCreated;
