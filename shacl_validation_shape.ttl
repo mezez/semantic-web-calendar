@@ -1,0 +1,85 @@
+@prefix dash: <http://datashapes.org/dash#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+@prefix ex: <http://example.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+schema:EventShape
+  a sh:NodeShape;
+  sh:targetClass schema:Event;
+  sh:property [
+    sh:path schema:startDate;
+    sh:minCount 1;
+    sh:maxCount 1;
+    sh:or (
+          [
+	    sh:datatype xsd:dateTime ;
+	  ]
+	  [
+	    sh:datatype schema:Date;
+	  ]
+    )
+  ];
+  sh:property [
+    sh:path schema:endDate;
+    sh:minCount 1;
+    sh:maxCount 1;
+    sh:or (
+          [
+	    sh:datatype xsd:dateTime ;
+	  ]
+	  [
+	    sh:datatype schema:Date;
+	  ]
+    )    ];
+  sh:property [
+    sh:path ex:sequence;
+    sh:maxCount 1;
+    sh:datatype xsd:int;
+  ];
+  sh:property [
+    sh:path ex:summary;
+    sh:maxCount 1;
+    sh:datatype xsd:string;
+  ];
+  sh:property [
+    sh:path schema:description;
+    sh:minCount 1;
+    sh:maxCount 1;
+    sh:datatype xsd:string;
+  ];
+  sh:property [
+    sh:path schema:identifier;
+    sh:maxCount 1;
+    sh:datatype xsd:string;
+  ];
+  sh:property [
+    sh:path schema:location;
+    sh:minCount 1;
+    sh:maxCount 1;
+  ];
+  sh:property [
+    sh:path schema:dateCreated;
+    sh:maxCount 1;
+    sh:or (
+          [
+	    sh:datatype xsd:dateTime ;
+	  ]
+	  [
+	    sh:datatype schema:Date;
+	  ]
+    )
+  ];
+  sh:property [
+    sh:path schema:dateModified;
+    sh:or (
+          [
+	    sh:datatype xsd:dateTime ;
+	  ]
+	  [
+	    sh:datatype schema:Date;
+	  ]
+    )
+  ].

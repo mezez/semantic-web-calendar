@@ -9,6 +9,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.apache.jena.base.Sys;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.rdfconnection.RDFConnection;
 import org.apache.jena.rdfconnection.RDFConnectionFactory;
@@ -36,7 +37,7 @@ import static org.semanticwebproject.lib.Helpers.*;
 public class Main {
 
     //PREFIXES
-    public static final String SCHEMA_ORG_PREFIX = "https://schema.org/";
+    public static final String SCHEMA_ORG_PREFIX = "http://schema.org/";
     public static final String W3_LDP_PREFIX = "http://www.w3.org/ns/ldp#";
     public static final String EXAMPLE_PREFIX = "http://example.org/";
     public static final String EMSE_TERRITOIRE_PREFIX = "https://territoire.emse.fr/kg/emse/fayol/";
@@ -214,7 +215,7 @@ public class Main {
 
         model.write(bufferedWriter, "Turtle");
         bufferedWriter.close();
-        uploadTurtleFile(LDP_DESTINATION, true, 0);
+        uploadTurtleFile(LDP_DESTINATION, true, 0, false);
 
 
         for (CalendarComponent calendarEvent : calendarList) {
@@ -293,7 +294,7 @@ public class Main {
 
         int cc = 1;
         while (cc < eventCount) {
-            uploadTurtleFile(LDP_DESTINATION, false, cc);
+            uploadTurtleFile(LDP_DESTINATION, false, cc, true);
             cc++;
 
         }
@@ -318,7 +319,7 @@ public class Main {
 
 
             //upload to ldp
-            uploadTurtleFile(LDP_DESTINATION, false, count);
+            uploadTurtleFile(LDP_DESTINATION, false, count, false);
             count++;
         }
         System.out.println("Generated output has been uploaded to defined DB: Fuseki or LDP");
@@ -344,7 +345,7 @@ public class Main {
 
     }
 
-    public static void uploadTurtleFile(String destination, Boolean isContainer, Integer count) throws Exception {
+    public static void uploadTurtleFile(String destination, Boolean isContainer, Integer count, Boolean isCPS2Event) throws Exception {
         if (destination.equals(FUSEKI_DESTINATION)) {
             try (RDFConnection conn = RDFConnectionFactory.connect(LOCAL_FUSEKI_SERVICE_URL)) {
                 conn.put(CALENDAR_OUTPUT_TURTLE_FILE_NAME);
@@ -365,17 +366,37 @@ public class Main {
 
 //                String requestBody = Files.readString(Path.of(CALENDAR_OUTPUT_TURTLE_FILE_NAME), StandardCharsets.UTF_8);
                 String requestBody;
+                String fileName = "";
                 if (isContainer) {
                     requestBody = Files.readString(Path.of(CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "_container.ttl"), StandardCharsets.UTF_8);
+                    fileName=CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "_container.ttl";
 
                 } else {
                     //container child
                     requestBody = Files.readString(Path.of(CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl"), StandardCharsets.UTF_8);
+                    fileName=CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl";
 
                 }
+                //validate shape
+                boolean isValidShape = validateWithSHACL(fileName, false);
+                if (!isValidShape){
+                    System.out.println("File: "+ CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl");
+                    System.out.println("Invalid events shape. See log file: " + SHACL_VALIDATION_REPORTS  + " for details");
+                }
+
+                if (isCPS2Event){
+                    isValidShape = validateWithSHACL(fileName, true);
+                    if (!isValidShape){
+                        System.out.println("File: "+ CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl");
+                        System.out.println("Invalid events shape. See log file: " + SHACL_VALIDATION_REPORTS  + " for details");
+                    }
+                }
+
                 System.out.println(requestBody);
-                StringEntity requestBodyEntity = new StringEntity(requestBody);
-                post.setEntity(requestBodyEntity);
+                if(isValidShape) {
+                    StringEntity requestBodyEntity = new StringEntity(requestBody);
+                    post.setEntity(requestBodyEntity);
+                }
 
 //            try (CloseableHttpClient httpClient = HttpClients.createDefault();
 //                 CloseableHttpResponse response = httpClient.execute(post)) {

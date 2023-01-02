@@ -1,16 +1,32 @@
 package org.semanticwebproject.lib;
 
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Resource;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 
-import static org.semanticwebproject.lib.Constants.CALENDAR_FILE_NAME;
-import static org.semanticwebproject.lib.Constants.FETCHED_RESOURCE_TEMP_NAME;
+import org.apache.jena.riot.RDFDataMgr;
+import org.apache.jena.riot.RDFFormat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
+import org.topbraid.jenax.util.JenaUtil;
+import org.topbraid.shacl.validation.ValidationUtil;
+import org.topbraid.shacl.vocabulary.SH;
+
+import static org.semanticwebproject.lib.Constants.*;
 
 public class Helpers {
 
+    private static Logger logger = LoggerFactory.getLogger(Helpers.class);
+    // Why This Failure marker
+    private static final Marker WTF_MARKER = MarkerFactory.getMarker("WTF");
 
     public static void downloadICS(String urlString) throws IOException {
 
@@ -34,28 +50,54 @@ public class Helpers {
         }
     }
 
-    public static String convertLocationToTerritoireIRI(String location, String prefix) {
+    public static String convertLocationToTerritoireIRI(String locationPassed, String prefix) {
+        String[] splitLocations = locationPassed.split(",");
+        String location = splitLocations.length >1 ? splitLocations[1]: splitLocations[0];
         String[] splitLocation = location.split("\\s+");
         if (Arrays.stream(splitLocation).anyMatch(str -> str.toLowerCase().equals("emse")) && Arrays.stream(splitLocation).anyMatch(str -> str.toLowerCase().equals("fauriel"))) {
             //convert to Territoire IRI
             String roomName = splitLocation[splitLocation.length - 1];
 
             switch (roomName.toLowerCase().substring(0, 2)) {
-                case "s1" -> location = prefix + "1ET/" + roomName.substring(1).replace(".","");
-                case "s2" -> location = prefix + "2ET/" + roomName.substring(1).replace(".","");
-                case "s3" -> location = prefix + "3ET/" + roomName.substring(1).replace(".","");
-                case "s4" -> location = prefix + "4ET/" + roomName.substring(1).replace(".","");
-                case "s5" -> location = prefix + "5ET/" + roomName.substring(1).replace(".","");
-                case "s6" -> location = prefix + "6ET/" + roomName.substring(1).replace(".","");
+                case "s1" -> location = prefix + "1ET/" + roomName.substring(1).replace(".", "");
+                case "s2" -> location = prefix + "2ET/" + roomName.substring(1).replace(".", "");
+                case "s3" -> location = prefix + "3ET/" + roomName.substring(1).replace(".", "");
+                case "s4" -> location = prefix + "4ET/" + roomName.substring(1).replace(".", "");
+                case "s5" -> location = prefix + "5ET/" + roomName.substring(1).replace(".", "");
+                case "s6" -> location = prefix + "6ET/" + roomName.substring(1).replace(".", "");
                 default -> {
+                    String roomNumber= location.replaceAll("[^0-9]", "");
+                    switch (roomNumber.substring(0,1)){
+                        case "1" -> location =  prefix + "1ET/" + roomNumber;
+                        case "2" -> location =  prefix + "2ET/" + roomNumber;
+                        case "3" -> location =  prefix + "3ET/" + roomNumber;
+                        case "4" -> location =  prefix + "4ET/" + roomNumber;
+                        case "5" -> location =  prefix + "5ET/" + roomNumber;
+                        case "6" -> location =  prefix + "6ET/" + roomNumber;
+                    }
                 }
             }
 
+        }else{
+            if (location.toLowerCase().contains("amphi") || location.toLowerCase().contains("salle")){
+                String roomNumber= location.replaceAll("[^0-9]", "");
+                switch (roomNumber.substring(0,1)){
+                    case "1" -> location =  prefix + "1ET/" + roomNumber;
+                    case "2" -> location =  prefix + "2ET/" + roomNumber;
+                    case "3" -> location =  prefix + "3ET/" + roomNumber;
+                    case "4" -> location =  prefix + "4ET/" + roomNumber;
+                    case "5" -> location =  prefix + "5ET/" + roomNumber;
+                    case "6" -> location =  prefix + "6ET/" + roomNumber;
+                }
+            }else{
+                //other location eg UJM
+//                location = location.replace("\(\d\d\)");
+                location = "UJM-" + location.replaceAll("[^0-9]", "");
 
-
+            }
         }
         return location;
-    }
+}
 
     public static void writeStringToFile(String content, String fileName) throws IOException {
         FileWriter fileWriter = new FileWriter(fileName);
@@ -75,5 +117,42 @@ public class Helpers {
         model.write(bufferedWriter, "Turtle");
         bufferedWriter.close();
         writer.close();
+    }
+
+    public static boolean validateWithSHACL(String fileContent, Boolean isCPS2Event) {
+        boolean conforms = false;
+        try {
+            String shape;
+
+            if (isCPS2Event) {
+                shape = SHACL_VALIDATION_SHAPE_CPS2_EVENT;
+
+            } else {
+                shape = SHACL_VALIDATION_SHAPE;
+            }
+
+
+            Model dataModel = JenaUtil.createDefaultModel();
+            dataModel.read(fileContent);
+            Model shapeModel = JenaUtil.createDefaultModel();
+            shapeModel.read(shape);
+
+            Resource reportResource = ValidationUtil.validateModel(dataModel, shapeModel, true);
+            conforms = reportResource.getProperty(SH.conforms).getBoolean();
+            logger.trace("Conforms = " + conforms);
+
+            if (!conforms) {
+//                String report = path.toFile().getAbsolutePath() + SHACL_VALIDATION_REPORTS;
+                File reportFile = new File(SHACL_VALIDATION_REPORTS);
+                reportFile.createNewFile();
+                OutputStream reportOutputStream = new FileOutputStream(reportFile);
+
+                RDFDataMgr.write(reportOutputStream, reportResource.getModel(), RDFFormat.TTL);
+            }
+
+        } catch (Throwable t) {
+            logger.error(WTF_MARKER, t.getMessage(), t);
+        }
+        return conforms;
     }
 }
