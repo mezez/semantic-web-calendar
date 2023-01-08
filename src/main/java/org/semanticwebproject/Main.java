@@ -49,18 +49,36 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         get("/read", (req, res) -> {
-            readFile();
-            return "success";
+            boolean isValidShape = readFile();
+            if(isValidShape) {
+                return "success";
+            }
+            else{
+                res.status(400);
+                return "Error occurred on validation";
+            }
         });
         post("/download", (req, res) -> {
             downloadICS(req.body());
-            readFile();
-            return "success";
+            boolean isValidShape = readFile();
+            if(isValidShape) {
+                return "success";
+            }
+            else{
+                res.status(400);
+                return "Error occurred on validation";
+            }
         });
         post("/extract", (req, res) -> {
             String url = "https://www.alentoor.fr/"+req.body()+"/agenda";
-            fetchRDFFromUrl(url, req.body());
-            return "success";
+            boolean isValidShape = fetchRDFFromUrl(url, req.body());
+            if(isValidShape) {
+                return "success";
+            }
+            else{
+                res.status(400);
+                return "Error occurred on validation";
+            }
         });
         post("/add-attendee", (req, res) -> {
             JSONMaker jm = new JSONMaker();
@@ -113,13 +131,14 @@ public class Main {
 
 
     }
-    public static void readFile()  throws Exception{
+    public static boolean readFile()  throws Exception{
         FileInputStream fin = new FileInputStream(CALENDAR_FILE_NAME);
         CalendarBuilder builder = new CalendarBuilder();
         Calendar calendar = builder.build(fin);
-        parseCalendarToRDF(calendar);
+        boolean isValidShape = parseCalendarToRDF(calendar);
         //TODO OPTION FOR DIRECTLY SAVING ALREADY PARSED OR WRITTEN TURTLE FILE
         //Events can either be generated from an ICS file, extracted from Web pages or manually written
+        return isValidShape;
     }
 
     public static String getCommand() throws IOException {
@@ -222,7 +241,7 @@ public class Main {
         return city;
     }
 
-    public static void parseCalendarToRDF(Calendar calendar) throws Exception {
+    public static Boolean parseCalendarToRDF(Calendar calendar) throws Exception {
         List<CalendarComponent> calendarList = calendar.getComponentList().getAll();
 
         List<String> eventFileName = new ArrayList<String>();
@@ -248,7 +267,7 @@ public class Main {
 
         model.write(bufferedWriter, "Turtle");
         bufferedWriter.close();
-        uploadTurtleFile(LDP_DESTINATION, true, 0, false);
+        boolean isValidShape = uploadTurtleFile(LDP_DESTINATION, true, 0, false);
 
 
         for (CalendarComponent calendarEvent : calendarList) {
@@ -327,7 +346,7 @@ public class Main {
 
         int cc = 1;
         while (cc < eventCount) {
-            uploadTurtleFile(LDP_DESTINATION, false, cc, true);
+            isValidShape = uploadTurtleFile(LDP_DESTINATION, false, cc, true);
             cc++;
 
         }
@@ -335,10 +354,12 @@ public class Main {
 //        System.out.println("Output file: " + CALENDAR_OUTPUT_TURTLE_FILE_NAME + " generated and stores in project root folder");
         System.out.println("Generated output has been uploaded to defined DB: Fuseki or LDP");
         System.out.println("::::::::::::::::::::");
+        return isValidShape;
     }
 
-    public static void parseJSONLDToRDF(Integer numberOfFiles) throws Exception {
+    public static boolean parseJSONLDToRDF(Integer numberOfFiles) throws Exception {
         int count = 1;
+        boolean isValidShape=false;
         while (count < numberOfFiles) {
             //read json ld file
             Model model = ModelFactory.createDefaultModel();
@@ -352,11 +373,12 @@ public class Main {
 
 
             //upload to ldp
-            uploadTurtleFile(LDP_DESTINATION, false, count, false);
+            isValidShape = uploadTurtleFile(LDP_DESTINATION, false, count, false);
             count++;
         }
         System.out.println("Generated output has been uploaded to defined DB: Fuseki or LDP");
         System.out.println("::::::::::::::::::::");
+        return isValidShape;
     }
 
     public static void mergeFiles(List<String> fileNames, String outputFileName) throws IOException {
@@ -378,14 +400,14 @@ public class Main {
 
     }
 
-    public static void uploadTurtleFile(String destination, Boolean isContainer, Integer count, Boolean isCPS2Event) throws Exception {
+    public static boolean uploadTurtleFile(String destination, Boolean isContainer, Integer count, Boolean isCPS2Event) throws Exception {
+        boolean isValidShape =false;
         if (destination.equals(FUSEKI_DESTINATION)) {
             try (RDFConnection conn = RDFConnectionFactory.connect(LOCAL_FUSEKI_SERVICE_URL)) {
                 conn.put(CALENDAR_OUTPUT_TURTLE_FILE_NAME);
             }
         } else {
             //upload to territoire
-
             try {
 
                 HttpPost post = new HttpPost(isContainer ? TERRITOIRE_SERVICE_URL : TERRITOIRE_CONTAINER_SERVICE_URL);
@@ -411,7 +433,7 @@ public class Main {
 
                 }
                 //validate shape
-                boolean isValidShape = validateWithSHACL(fileName, false);
+                isValidShape = validateWithSHACL(fileName, false);
                 if (!isValidShape){
                     System.out.println("File: "+ CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl");
                     System.out.println("Invalid events shape. See log file: " + SHACL_VALIDATION_REPORTS  + " for details");
@@ -440,11 +462,13 @@ public class Main {
                 Files.deleteIfExists(Paths.get(isContainer ? CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "_container.ttl" : CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl"));
 
                 System.out.println(EntityUtils.toString(response.getEntity()));
+                return isValidShape;
             } catch (Exception e) {
                 System.out.println(e.getMessage());
                 throw new Exception(e);
             }
         }
+        return isValidShape;
     }
 
     public static void deleteRemoteResource(String url) throws Exception {
@@ -655,7 +679,7 @@ public class Main {
         }
     }
 
-    public static void fetchRDFFromUrl(String url, String alentoorCity) throws Exception {
+    public static boolean fetchRDFFromUrl(String url, String alentoorCity) throws Exception {
         Document document = Jsoup.connect(url).get();
 //        List<String> rdfsItem = new ArrayList<String>();
 
@@ -699,8 +723,8 @@ public class Main {
 //        document.select("script").forEach(System.out::println);
 //        System.out.println(rdfsItem.size());
 //        System.out.println(rdfsItem);
-        parseJSONLDToRDF(count[0]);
-
+        boolean isValidShape = parseJSONLDToRDF(count[0]);
+        return isValidShape;
     }
 
 }
