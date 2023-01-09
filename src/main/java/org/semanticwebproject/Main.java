@@ -48,20 +48,41 @@ public class Main {
     public static final String EMSE_TERRITOIRE_PREFIX = "https://territoire.emse.fr/kg/emse/fayol/";
 
     public static void main(String[] args) throws Exception {
+
+        /**
+         * API ENDPOINTS START
+
+         * Re-process and upload previously downloaded CPS2 ICS file (calendar.ics in project root directory) found at $calendar_url
+         * to Territoire LDP
+         *
+         * request method: GET
+         *
+         * $calendar_url = https://planning.univ-st-etienne.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=4222&projectId=1&calType=ical&firstDate=2022-08-22&lastDate=2023-08-20
+         * */
         get("/read", (req, res) -> {
-            boolean isValidShape = readFile();
-            if(isValidShape) {
+            boolean isValidShapeAndUploaded = readFile();
+            if(isValidShapeAndUploaded) {
                 return "success";
             }
             else{
                 res.status(400);
-                return "Error occurred on validation";
+                return "Error occurred during shacl validation. Please ensure that the data conforms with the expected shape. See shacl_validation_shape.ttl and shacl_validation_shape_cps2_course.ttl files in project root directory";
             }
         });
+
+        /**
+        * (Re-)Download, process and upload CPS2 ICS file found at $calendar_url to Territoire LDP
+         *
+         * request method: POST
+         * request body: $calendar_url
+         * context type: text
+        *
+        * $calendar_url = https://planning.univ-st-etienne.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=4222&projectId=1&calType=ical&firstDate=2022-08-22&lastDate=2023-08-20
+        * */
         post("/download", (req, res) -> {
             downloadICS(req.body());
-            boolean isValidShape = readFile();
-            if(isValidShape) {
+            boolean isValidShapeAndUploaded = readFile();
+            if(isValidShapeAndUploaded) {
                 return "success";
             }
             else{
@@ -69,6 +90,16 @@ public class Main {
                 return "Error occurred on validation";
             }
         });
+
+        /**
+         * Extract, process and upload events from alentoor.fr
+         *
+         * request method: POST
+         * request body: $city_name
+         * context type: text
+         *
+         * $city_name = eg saint-etienne | lyon | paris...
+         * */
         post("/extract", (req, res) -> {
             String url = "https://www.alentoor.fr/"+req.body()+"/agenda";
             boolean isValidShape = fetchRDFFromUrl(url, req.body());
@@ -77,9 +108,19 @@ public class Main {
             }
             else{
                 res.status(400);
-                return "Error occurred on validation";
+                return "Error occurred during shacl validation. Please ensure that the data conforms with the expected shape. See shacl_validation_shape.ttl and shacl_validation_shape_cps2_course.ttl files in project root directory";
             }
         });
+
+        /**
+         * Add attendee to an event
+         *
+         * request method: POST
+         * request body: $city_name
+         * context type: text
+         *
+         * $city_name = eg saint-etienne | lyon | paris...
+         * */
         post("/add-attendee", (req, res) -> {
             JSONMaker jm = new JSONMaker();
             JSONParser.parseAny(new StringReader(req.body()), jm);
@@ -87,15 +128,46 @@ public class Main {
             addAttendeeToEvent(obj.getString("eventURI"), obj.getString("attendeeURI"));
             return "success";
         });
+
+        /**
+         * Get events happening on a specific date eg..
+         *
+         * request method: POST
+         * request body: $city_name
+         * context type: text
+         *
+         * $city_name = eg saint-etienne | lyon | paris...
+         * */
         post("/get-events", (req, res) -> {
             JSONMaker jm = new JSONMaker();
             JSONParser.parseAny(new StringReader(req.body()), jm);
             JsonObject obj = jm.jsonValue().getAsObject();
            return( upcomingEventsByDate(obj.getString("year"), obj.getString("month"), obj.getString("day")));
         });
+
+        /**
+         * Get non-course events
+         *
+         * request method: POST
+         * request body: $city_name
+         * context type: text
+         *
+         * $city_name = eg saint-etienne | lyon | paris...
+         * */
         post("/get-non-course-events", (req, res) -> {
             return( nonCourseEvents());
         });
+
+        /**
+         * API ENDPOINTS END
+         */
+
+
+
+
+        /**
+         * CONSOLE BASED EXECUTION/GUI START
+         * */
         //download and read calendar file or read if necessary
         String action = getCommand();
 
@@ -129,16 +201,18 @@ public class Main {
             System.out.println(nonCourseEvents());
         }
 
+        /**
+         * CONSOLE BASED EXECUTION/GUI END
+         * */
+
 
     }
+
     public static boolean readFile()  throws Exception{
         FileInputStream fin = new FileInputStream(CALENDAR_FILE_NAME);
         CalendarBuilder builder = new CalendarBuilder();
         Calendar calendar = builder.build(fin);
-        boolean isValidShape = parseCalendarToRDF(calendar);
-        //TODO OPTION FOR DIRECTLY SAVING ALREADY PARSED OR WRITTEN TURTLE FILE
-        //Events can either be generated from an ICS file, extracted from Web pages or manually written
-        return isValidShape;
+        return parseCalendarToRDF(calendar);
     }
 
     public static String getCommand() throws IOException {
@@ -147,6 +221,14 @@ public class Main {
                 new InputStreamReader(System.in));
 
         // Reading data using readLine
+        System.out.println();
+        System.out.println("Note::::::::::::::::::::::::::::");
+        System.out.println("________________________________");
+        System.out.println();
+        System.out.println("If you wish to use this application via API calls, see readme.md documentation for details.");
+        System.out.println("To continue on  the console, follow the instruction below.");
+        System.out.println("__________________________________________________________");
+        System.out.println();
         System.out.println("Please enter a run command: download | read | add_attendee | get_events | get_non_course_events | extract:");
         String command = reader.readLine().toUpperCase();
 
@@ -330,19 +412,16 @@ public class Main {
             model.createStatement(eventInfo, RDF.type, eventsInfo);
 
             tempFileName = CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + eventCount.toString() + ".ttl";
-//            eventFileName.add(tempFileName);
 
             eventCount++;
 
             writer = new FileWriter(tempFileName);
             bufferedWriter = new BufferedWriter(writer);
-//            model.write(System.out, "Turtle");
 
             model.write(bufferedWriter, "Turtle");
             bufferedWriter.close();
         }
 
-//        mergeFiles(eventFileName, CALENDAR_OUTPUT_TURTLE_FILE_NAME);
 
         int cc = 1;
         while (cc < eventCount) {
@@ -351,7 +430,6 @@ public class Main {
 
         }
 
-//        System.out.println("Output file: " + CALENDAR_OUTPUT_TURTLE_FILE_NAME + " generated and stores in project root folder");
         System.out.println("Generated output has been uploaded to defined DB: Fuseki or LDP");
         System.out.println("::::::::::::::::::::");
         return isValidShape;
@@ -419,7 +497,6 @@ public class Main {
 //            post.addHeader("Slug", CONTAINER_NAME);
                 post.addHeader("Slug", "testtest2");
 
-//                String requestBody = Files.readString(Path.of(CALENDAR_OUTPUT_TURTLE_FILE_NAME), StandardCharsets.UTF_8);
                 String requestBody;
                 String fileName = "";
                 if (isContainer) {
@@ -453,8 +530,6 @@ public class Main {
                     post.setEntity(requestBodyEntity);
                 }
 
-//            try (CloseableHttpClient httpClient = HttpClients.createDefault();
-//                 CloseableHttpResponse response = httpClient.execute(post)) {
                 CloseableHttpClient httpClient = HttpClients.createDefault();
                 CloseableHttpResponse response = httpClient.execute(post);
 
@@ -472,7 +547,6 @@ public class Main {
     }
 
     public static void deleteRemoteResource(String url) throws Exception {
-        //deleted from
         try {
             HttpDelete delete = new HttpDelete(url);
             delete.addHeader("Authorization", AUTH_TOKEN);
@@ -520,7 +594,6 @@ public class Main {
             throw new Exception(e);
         }
 
-//        System.out.println(EntityUtils.toString(response.getEntity()));
         String data = EntityUtils.toString(response.getEntity());
 
         // write results to file
@@ -563,13 +636,10 @@ public class Main {
         //write to file
         writer = new FileWriter(FETCHED_RESOURCE_TEMP_NAME);
         bufferedWriter = new BufferedWriter(writer);
-//            model.write(System.out, "Turtle");
 
         model.write(bufferedWriter, "Turtle");
 
         //push file online
-
-        // TODO ALTERNATIVE, DELETE OLD RESOURCE AND POST UPDATE
         try {
 
             HttpPut put = new HttpPut(eventUrl);
@@ -581,18 +651,14 @@ public class Main {
 
 
             String requestBody = Files.readString(Path.of(FETCHED_RESOURCE_TEMP_NAME));
-//            String requestBody = attendeeURI;
-//            System.out.println(requestBody);
 
             StringEntity requestBodyEntity = new StringEntity(requestBody);
             put.setEntity(requestBodyEntity);
 
-//            try (CloseableHttpClient httpClient = HttpClients.createDefault();
-//                 CloseableHttpResponse response = httpClient.execute(post)) {
+
             CloseableHttpClient httpClient = HttpClients.createDefault();
             response = httpClient.execute(put);
 
-//            System.out.println(EntityUtils.toString(response.getEntity()));
 
             Files.deleteIfExists(Paths.get(FETCHED_RESOURCE_TEMP_NAME));
 
@@ -629,8 +695,6 @@ public class Main {
             CloseableHttpClient httpClient = HttpClients.createDefault();
             CloseableHttpResponse response = httpClient.execute(post);
 
-//            System.out.println(response.toString());
-//            System.out.println(EntityUtils.toString(response.getEntity()));
             return(EntityUtils.toString(response.getEntity()));
 
         } catch (Exception e) {
@@ -669,8 +733,6 @@ public class Main {
             CloseableHttpClient httpClient = HttpClients.createDefault();
             CloseableHttpResponse response = httpClient.execute(post);
 
-//            System.out.println(response.toString());
-//            System.out.println(EntityUtils.toString(response.getEntity()));
             return(EntityUtils.toString(response.getEntity()));
 
         } catch (Exception e) {
@@ -681,7 +743,6 @@ public class Main {
 
     public static boolean fetchRDFFromUrl(String url, String alentoorCity) throws Exception {
         Document document = Jsoup.connect(url).get();
-//        List<String> rdfsItem = new ArrayList<String>();
 
         String jsonLDString = "";
 
@@ -695,7 +756,6 @@ public class Main {
                         element = element.replace("@context\":\"http://schema.org", "@context\":\"http://schema.org/docs/jsonldcontext.json");
 
                         element = element.replaceFirst("https://www.alentoor.fr/agenda/", TERRITOIRE_CONTAINER_SERVICE_URL+alentoorCity+"-agenda-");
-//                        System.out.println(element);
 
                         //UNIQUE TO ALENTOOR
 //                        Pattern pattern = Pattern.compile("[a-zA-Z]+://[a-zA-Z]+\\.[a-zA-Z]+\\.[a-zA-Z]+/[a-zA-Z]+/[a-zA-Z]+/[a-zA-Z]+/[0-9]+");
@@ -723,8 +783,7 @@ public class Main {
 //        document.select("script").forEach(System.out::println);
 //        System.out.println(rdfsItem.size());
 //        System.out.println(rdfsItem);
-        boolean isValidShape = parseJSONLDToRDF(count[0]);
-        return isValidShape;
+        return parseJSONLDToRDF(count[0]);
     }
 
 }

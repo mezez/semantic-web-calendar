@@ -91,7 +91,6 @@ public class Helpers {
                 }
             }else{
                 //other location eg UJM
-//                location = location.replace("\(\d\d\)");
                 location = "UJM-" + location.replaceAll("[^0-9]", "");
 
             }
@@ -112,7 +111,6 @@ public class Helpers {
         //write to file
         FileWriter writer = new FileWriter(fileName);
         BufferedWriter bufferedWriter = new BufferedWriter(writer);
-//            model.write(System.out, "Turtle");
 
         model.write(bufferedWriter, "Turtle");
         bufferedWriter.close();
