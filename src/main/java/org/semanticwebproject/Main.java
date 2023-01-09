@@ -116,8 +116,11 @@ public class Main {
          * Add attendee to an event
          *
          * request method: POST
-         * request body: $city_name
-         * context type: text
+         * request body: eventURI, attendeeURI
+         * context type: JSON
+         *
+         * eventURI: resource URI on territoire LDP, eg https://territoire.emse.fr/ldp/mieventcontainer/vevent-2
+         * attendeeURI: eg http://example.com/mezIgnas/
          *
          * $city_name = eg saint-etienne | lyon | paris...
          * */
@@ -125,18 +128,20 @@ public class Main {
             JSONMaker jm = new JSONMaker();
             JSONParser.parseAny(new StringReader(req.body()), jm);
             JsonObject obj = jm.jsonValue().getAsObject();
-            addAttendeeToEvent(obj.getString("eventURI"), obj.getString("attendeeURI"));
+            addAttendeeToEvent(obj.getString("attendeeURI"), obj.getString("eventURI"));
             return "success";
         });
 
         /**
-         * Get events happening on a specific date eg..
+         * Get events happening on a specific date eg..09-12-2022
          *
          * request method: POST
-         * request body: $city_name
-         * context type: text
+         * request body: year, month, day
+         * context type: JSON
          *
-         * $city_name = eg saint-etienne | lyon | paris...
+         * year = eg 2022
+         * month = eg 06 (ie june)
+         * day = eg 09
          * */
         post("/get-events", (req, res) -> {
             JSONMaker jm = new JSONMaker();
@@ -148,13 +153,9 @@ public class Main {
         /**
          * Get non-course events
          *
-         * request method: POST
-         * request body: $city_name
-         * context type: text
-         *
-         * $city_name = eg saint-etienne | lyon | paris...
+         * request method: GET
          * */
-        post("/get-non-course-events", (req, res) -> {
+        get("/get-non-course-events", (req, res) -> {
             return( nonCourseEvents());
         });
 
@@ -274,7 +275,7 @@ public class Main {
             eventUri = reader.readLine().toUpperCase();
         }
 
-        System.out.println("Please enter a attendee uri: eg http://example.com/mezIgnas");
+        System.out.println("Please enter a attendee uri: eg http://example.com/mezIgnas/");
         String attendeeUri = reader.readLine();
 
         while (attendeeUri.isEmpty()) {
@@ -587,7 +588,7 @@ public class Main {
             CloseableHttpClient httpClient = HttpClients.createDefault();
             response = httpClient.execute(get);
 
-            eTagHeader = response.getFirstHeader("Etag").getValue();
+            eTagHeader = response.getFirstHeader("ETag").getValue();
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -659,8 +660,11 @@ public class Main {
             CloseableHttpClient httpClient = HttpClients.createDefault();
             response = httpClient.execute(put);
 
-
-            Files.deleteIfExists(Paths.get(FETCHED_RESOURCE_TEMP_NAME));
+            try {
+                Files.deleteIfExists(Paths.get(FETCHED_RESOURCE_TEMP_NAME));
+            }catch (Exception exception){
+                System.out.println("Maybe file still in use");
+            }
 
             System.out.println(response.toString());
             System.out.println("Attendee added to event:::::::::");
@@ -680,9 +684,13 @@ public class Main {
 
 
             String requestBody = "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+                    "PREFIX ex: <http://example.org/>\n" +
+                    "PREFIX schema: <http://schema.org/>\n" +
                     "\n" +
                     "SELECT * WHERE {\n" +
-                    "  ?sub <https://schema.org/startDate> ?obj.\n" +
+                    "  ?sub ?pred ?obj;\n" +
+                    "  ex:summary ?summary;\n" +
+                    "  schema:startDate ?startDate.\n" +
                     "  FILTER(xsd:dateTime(?obj) >= \"" + year + "-" + month + "-" + day + "T00:00:00Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime>)\n" +
                     "  FILTER(xsd:dateTime(?obj) <= \"" + year + "-" + month + "-" + day + "T23:59:59Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime>)\n" +
                     "}";
