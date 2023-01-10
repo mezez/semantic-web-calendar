@@ -813,7 +813,7 @@ public class Main {
 
             //convert response to json
             JSONMaker jm = new JSONMaker();
-            JSONParser.parseAny(new StringReader(dqata), jm);
+            JSONParser.parseAny(new StringReader(data), jm);
             JsonObject obj = jm.jsonValue().getAsObject();
 
             List<JsonValue> bindings = obj.getObj("results").getArray("bindings").toList();
