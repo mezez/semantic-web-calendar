@@ -197,9 +197,9 @@ public class Main {
             JSONParser.parseAny(new StringReader(req.body()), jm);
             JsonObject obj = jm.jsonValue().getAsObject();
             List<String> events = linkSameEvents(obj.getString("startDate"), obj.getString("endDate"), obj.getString("location"));
-            if (!events.isEmpty()){
+            if (!events.isEmpty()) {
                 return events;
-            }else {
+            } else {
                 return "No events found";
             }
         });
@@ -254,7 +254,7 @@ public class Main {
                 System.out.println("");
                 System.out.println("Linked Events::");
                 System.out.println(events);
-            }else {
+            } else {
                 System.out.println("Events found");
             }
         }
@@ -809,7 +809,28 @@ public class Main {
             CloseableHttpClient httpClient = HttpClients.createDefault();
             CloseableHttpResponse response = httpClient.execute(post);
 
-            return (EntityUtils.toString(response.getEntity()));
+            String data = EntityUtils.toString(response.getEntity());
+
+            //convert response to json
+            JSONMaker jm = new JSONMaker();
+            JSONParser.parseAny(new StringReader(dqata), jm);
+            JsonObject obj = jm.jsonValue().getAsObject();
+
+            List<JsonValue> bindings = obj.getObj("results").getArray("bindings").toList();
+//        System.out.println(bindings);
+
+            List<String> resourcesIRIs = new ArrayList<String>();
+            for (JsonValue binding : bindings) {
+                String bindingSubjectType = binding.getAsObject().getObj("sub").getString("type");
+                String bindingSubjectValue = binding.getAsObject().getObj("sub").getString("value");
+                if (bindingSubjectType.equals("uri")) {
+                    if (!resourcesIRIs.contains(bindingSubjectValue)) {
+                        resourcesIRIs.add(bindingSubjectValue);
+                    }
+                }
+
+            }
+            return resourcesIRIs.toString();
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -848,8 +869,6 @@ public class Main {
             CloseableHttpClient httpClient = HttpClients.createDefault();
             CloseableHttpResponse response = httpClient.execute(post);
 
-//            return (EntityUtils.toString(response.getEntity()));
-
             String data = EntityUtils.toString(response.getEntity());
 
             //convert response to json
@@ -858,7 +877,6 @@ public class Main {
             JsonObject obj = jm.jsonValue().getAsObject();
 
             List<JsonValue> bindings = obj.getObj("results").getArray("bindings").toList();
-//        System.out.println(bindings);
 
             List<String> resourcesIRIs = new ArrayList<String>();
             for (JsonValue binding : bindings) {
