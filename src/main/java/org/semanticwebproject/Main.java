@@ -721,7 +721,7 @@ public class Main {
                     "SELECT * WHERE {\n" +
                     "  ?sub ?pred ?obj;\n" +
                     "  schema:startDate ?startDate;\n" +
-                    "  schema:startDate ?endDate.\n" +
+                    "  schema:endDate ?endDate.\n" +
                     "  FILTER(xsd:dateTime(?startDate) >= \"" + year + "-" + month + "-" + day + "T00:00:00Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime>)\n" +
                     "  FILTER(xsd:dateTime(?endDate) <= \"" + year + "-" + month + "-" + day + "T23:59:59Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime>)\n" +
                     "}";
