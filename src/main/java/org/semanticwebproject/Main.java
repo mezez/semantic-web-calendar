@@ -4,11 +4,15 @@ import net.fortuna.ical4j.data.CalendarBuilder;
 import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.component.CalendarComponent;
+import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.*;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.apache.jena.atlas.json.JsonObject;
+import org.apache.jena.atlas.json.io.JSONMaker;
+import org.apache.jena.atlas.json.io.parser.JSONParser;
 import org.apache.jena.base.Sys;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.rdfconnection.RDFConnection;
@@ -31,6 +35,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static spark.Spark.*;
+
 import static org.semanticwebproject.lib.Constants.*;
 import static org.semanticwebproject.lib.Helpers.*;
 
@@ -42,8 +48,147 @@ public class Main {
     public static final String EXAMPLE_PREFIX = "http://example.org/";
     public static final String EMSE_TERRITOIRE_PREFIX = "https://territoire.emse.fr/kg/emse/fayol/";
 
-
     public static void main(String[] args) throws Exception {
+
+        /**
+         * to remove CORS
+         * */
+        options("/*",
+                (request, response) -> {
+
+                    String accessControlRequestHeaders = request
+                            .headers("Access-Control-Request-Headers");
+                    if (accessControlRequestHeaders != null) {
+                        response.header("Access-Control-Allow-Headers",
+                                accessControlRequestHeaders);
+                    }
+
+                    String accessControlRequestMethod = request
+                            .headers("Access-Control-Request-Method");
+                    if (accessControlRequestMethod != null) {
+                        response.header("Access-Control-Allow-Methods",
+                                accessControlRequestMethod);
+                    }
+
+                    return "OK";
+                });
+
+        before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
+
+        /**
+         * API ENDPOINTS START
+         * (Re-)Download, process and upload CPS2 ICS file found at $calendar_url to Territoire LDP
+         *
+         * request method: POST
+         * request body: $calendar_url
+         * context type: text
+         *
+         * $calendar_url = https://planning.univ-st-etienne.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=4222&projectId=1&calType=ical&firstDate=2022-08-22&lastDate=2023-08-20
+         * */
+        post("/download", (req, res) -> {
+            downloadICS(req.body());
+            boolean isValidShapeAndUploaded = readFile();
+            if (isValidShapeAndUploaded) {
+                return "success";
+            } else {
+                res.status(400);
+                return "Error occurred on validation";
+            }
+        });
+
+
+        /** Re-process and upload previously downloaded CPS2 ICS file (calendar.ics in project root directory) found at $calendar_url
+         * to Territoire LDP
+         *
+         * request method: GET
+         *
+         * $calendar_url = https://planning.univ-st-etienne.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=4222&projectId=1&calType=ical&firstDate=2022-08-22&lastDate=2023-08-20
+         * */
+        get("/read", (req, res) -> {
+            boolean isValidShapeAndUploaded = readFile();
+            if (isValidShapeAndUploaded) {
+                return "success";
+            } else {
+                res.status(400);
+                return "Error occurred during shacl validation. Please ensure that the data conforms with the expected shape. See shacl_validation_shape.ttl and shacl_validation_shape_cps2_course.ttl files in project root directory";
+            }
+        });
+
+        /**
+         * Extract, process and upload events from alentoor.fr
+         *
+         * request method: POST
+         * request body: $city_name
+         * context type: text
+         *
+         * $city_name = eg saint-etienne | lyon | paris...
+         * */
+        post("/extract", (req, res) -> {
+            String url = "https://www.alentoor.fr/" + req.body() + "/agenda";
+            boolean isValidShape = fetchRDFFromUrl(url, req.body());
+            if (isValidShape) {
+                return "success";
+            } else {
+                res.status(400);
+                return "Error occurred during shacl validation. Please ensure that the data conforms with the expected shape. See shacl_validation_shape.ttl and shacl_validation_shape_cps2_course.ttl files in project root directory";
+            }
+        });
+
+        /**
+         * Get events happening on a specific date e.g. 09-12-2022
+         *
+         * request method: POST
+         * request body: year, month, day
+         * context type: JSON
+         *
+         * year = eg 2022
+         * month = eg 06 (ie june)
+         * day = eg 09
+         * */
+        post("/get-events", (req, res) -> {
+            JSONMaker jm = new JSONMaker();
+            JSONParser.parseAny(new StringReader(req.body()), jm);
+            JsonObject obj = jm.jsonValue().getAsObject();
+            return (upcomingEventsByDate(obj.getString("year"), obj.getString("month"), obj.getString("day")));
+        });
+
+        /**
+         * Add attendee to an event
+         *
+         * request method: POST
+         * request body: eventURI, attendeeURI
+         * context type: JSON
+         *
+         * eventURI: resource URI on territoire LDP, eg https://territoire.emse.fr/ldp/mieventcontainer/vevent-2
+         * attendeeURI: eg http://example.com/mezIgnas/
+         *
+         * $city_name = eg saint-etienne | lyon | paris...
+         * */
+        post("/add-attendee", (req, res) -> {
+            JSONMaker jm = new JSONMaker();
+            JSONParser.parseAny(new StringReader(req.body()), jm);
+            JsonObject obj = jm.jsonValue().getAsObject();
+            addAttendeeToEvent(obj.getString("attendeeURI"), obj.getString("eventURI"));
+            return "success";
+        });
+
+        /**
+         * Get non-course events
+         *
+         * request method: GET
+         * */
+        get("/get-non-course-events", (req, res) -> {
+            return (nonCourseEvents());
+        });
+
+        /**
+         * API ENDPOINTS END
+         */
+
+
+        /**
+         * CONSOLE BASED EXECUTION/GUI START
+         * */
         //download and read calendar file or read if necessary
         String action = getCommand();
 
@@ -52,21 +197,12 @@ public class Main {
                 String url = getUrl();
                 downloadICS(url);
             }
-
-
-            FileInputStream fin = new FileInputStream(CALENDAR_FILE_NAME);
-            CalendarBuilder builder = new CalendarBuilder();
-            Calendar calendar = builder.build(fin);
-
-
-            parseCalendarToRDF(calendar);
-            //TODO OPTION FOR DIRECTLY SAVING ALREADY PARSED OR WRITTEN TURTLE FILE
-            //Events can either be generated from an ICS file, extracted from Web pages or manually written
+            readFile();
         }
 
         if (action.equals(EXTRACT_COMMAND)) {
             String alentoorCity = getCity();
-            String url = "https://www.alentoor.fr/"+alentoorCity+"/agenda";
+            String url = "https://www.alentoor.fr/" + alentoorCity + "/agenda";
             fetchRDFFromUrl(url, alentoorCity);
         }
 
@@ -79,14 +215,25 @@ public class Main {
         if (action.equals(GET_EVENTS_COMMAND)) {
             List<String> dateDetails = getEventDate();
 
-            upcomingEventsByDate(dateDetails.get(2), dateDetails.get(1), dateDetails.get(0));
+            System.out.println(upcomingEventsByDate(dateDetails.get(2), dateDetails.get(1), dateDetails.get(0)));
         }
 
         if (action.equals(GET_NON_COURSE_EVENTS_COMMAND)) {
-            nonCourseEvents();
+            System.out.println(nonCourseEvents());
         }
 
+        /**
+         * CONSOLE BASED EXECUTION/GUI END
+         * */
 
+
+    }
+
+    public static boolean readFile() throws Exception {
+        FileInputStream fin = new FileInputStream(CALENDAR_FILE_NAME);
+        CalendarBuilder builder = new CalendarBuilder();
+        Calendar calendar = builder.build(fin);
+        return parseCalendarToRDF(calendar);
     }
 
     public static String getCommand() throws IOException {
@@ -95,7 +242,15 @@ public class Main {
                 new InputStreamReader(System.in));
 
         // Reading data using readLine
-        System.out.println("Please enter a run command: download | read | add_attendee | get_events | get_non_course_events | extract:");
+        System.out.println();
+        System.out.println("Note::::::::::::::::::::::::::::");
+        System.out.println("________________________________");
+        System.out.println();
+        System.out.println("If you wish to use this application via API calls, see readme.md documentation for details.");
+        System.out.println("To continue on  the console, follow the instruction below.");
+        System.out.println("__________________________________________________________");
+        System.out.println();
+        System.out.println("Please enter a run command: download | read  | extract | get_events | add_attendee | get_non_course_events:");
         String command = reader.readLine().toUpperCase();
 
         while (!command.equals(DOWNLOAD_ICS_COMMAND) && !command.equals(READ_COMMAND) && !command.equals(ADD_ATTENDEE_COMMAND) && !command.equals(GET_EVENTS_COMMAND) && !command.equals(EXTRACT_COMMAND) && !command.equals(GET_NON_COURSE_EVENTS_COMMAND)) {
@@ -112,7 +267,7 @@ public class Main {
                 new InputStreamReader(System.in));
 
         // Reading data using readLine
-        System.out.println("Please enter event date eg 01-01-2022 :");
+        System.out.println("Please enter event date in dd-MM-yyyy format eg 09-12-2022 :");
         String date = reader.readLine();
 
         while (date.isEmpty()) {
@@ -140,7 +295,7 @@ public class Main {
             eventUri = reader.readLine().toUpperCase();
         }
 
-        System.out.println("Please enter a attendee uri: eg http://example.com/mezIgnas");
+        System.out.println("Please enter a attendee uri: eg http://example.com/mezIgnas/");
         String attendeeUri = reader.readLine();
 
         while (attendeeUri.isEmpty()) {
@@ -160,7 +315,8 @@ public class Main {
                 new InputStreamReader(System.in));
 
         // Reading data using readLine
-        System.out.println("Please enter a url to file:");
+        System.out.println("Please enter a url to file (CPS2 ICS file):");
+        System.out.println("Eg https://planning.univ-st-etienne.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=4222&projectId=1&calType=ical&firstDate=2022-08-22&lastDate=2023-08-20 :");
 
         String url = reader.readLine();
 
@@ -189,7 +345,7 @@ public class Main {
         return city;
     }
 
-    public static void parseCalendarToRDF(Calendar calendar) throws Exception {
+    public static Boolean parseCalendarToRDF(Calendar calendar) throws Exception {
         List<CalendarComponent> calendarList = calendar.getComponentList().getAll();
 
         List<String> eventFileName = new ArrayList<String>();
@@ -215,7 +371,7 @@ public class Main {
 
         model.write(bufferedWriter, "Turtle");
         bufferedWriter.close();
-        uploadTurtleFile(LDP_DESTINATION, true, 0, false);
+        boolean isValidShape = uploadTurtleFile(LDP_DESTINATION, true, 0, false);
 
 
         for (CalendarComponent calendarEvent : calendarList) {
@@ -278,41 +434,39 @@ public class Main {
             model.createStatement(eventInfo, RDF.type, eventsInfo);
 
             tempFileName = CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + eventCount.toString() + ".ttl";
-//            eventFileName.add(tempFileName);
 
             eventCount++;
 
             writer = new FileWriter(tempFileName);
             bufferedWriter = new BufferedWriter(writer);
-//            model.write(System.out, "Turtle");
 
             model.write(bufferedWriter, "Turtle");
             bufferedWriter.close();
         }
 
-//        mergeFiles(eventFileName, CALENDAR_OUTPUT_TURTLE_FILE_NAME);
 
         int cc = 1;
         while (cc < eventCount) {
-            uploadTurtleFile(LDP_DESTINATION, false, cc, true);
+            isValidShape = uploadTurtleFile(LDP_DESTINATION, false, cc, true);
             cc++;
 
         }
 
-//        System.out.println("Output file: " + CALENDAR_OUTPUT_TURTLE_FILE_NAME + " generated and stores in project root folder");
         System.out.println("Generated output has been uploaded to defined DB: Fuseki or LDP");
         System.out.println("::::::::::::::::::::");
+        return isValidShape;
     }
 
-    public static void parseJSONLDToRDF(Integer numberOfFiles) throws Exception {
+    public static boolean parseJSONLDToRDF(Integer numberOfFiles) throws Exception {
         int count = 1;
+        boolean isValidShape = false;
         while (count < numberOfFiles) {
             //read json ld file
             Model model = ModelFactory.createDefaultModel();
             model.read(FETCHED_JSON_LD_TEMP_NAME + "-" + count + ".jsonld");
 
             //write data to turtle file
-            writeModelToFIle(CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME+ "-" + count + ".ttl", model);
+            writeModelToFIle(CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count + ".ttl", model);
 
             //DELETE TEMP FILE HERE
             try {
@@ -322,11 +476,12 @@ public class Main {
             }
 
             //upload to ldp
-            uploadTurtleFile(LDP_DESTINATION, false, count, false);
+            isValidShape = uploadTurtleFile(LDP_DESTINATION, false, count, false);
             count++;
         }
         System.out.println("Generated output has been uploaded to defined DB: Fuseki or LDP");
         System.out.println("::::::::::::::::::::");
+        return isValidShape;
     }
 
     public static void mergeFiles(List<String> fileNames, String outputFileName) throws IOException {
@@ -352,14 +507,14 @@ public class Main {
 
     }
 
-    public static void uploadTurtleFile(String destination, Boolean isContainer, Integer count, Boolean isCPS2Event) throws Exception {
+    public static boolean uploadTurtleFile(String destination, Boolean isContainer, Integer count, Boolean isCPS2Event) throws Exception {
+        boolean isValidShape = false;
         if (destination.equals(FUSEKI_DESTINATION)) {
             try (RDFConnection conn = RDFConnectionFactory.connect(LOCAL_FUSEKI_SERVICE_URL)) {
                 conn.put(CALENDAR_OUTPUT_TURTLE_FILE_NAME);
             }
         } else {
             //upload to territoire
-
             try {
 
                 HttpPost post = new HttpPost(isContainer ? TERRITOIRE_SERVICE_URL : TERRITOIRE_CONTAINER_SERVICE_URL);
@@ -371,42 +526,39 @@ public class Main {
 //            post.addHeader("Slug", CONTAINER_NAME);
                 post.addHeader("Slug", "testtest2");
 
-//                String requestBody = Files.readString(Path.of(CALENDAR_OUTPUT_TURTLE_FILE_NAME), StandardCharsets.UTF_8);
                 String requestBody;
                 String fileName = "";
                 if (isContainer) {
                     requestBody = Files.readString(Path.of(CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "_container.ttl"), StandardCharsets.UTF_8);
-                    fileName=CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "_container.ttl";
+                    fileName = CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "_container.ttl";
 
                 } else {
                     //container child
                     requestBody = Files.readString(Path.of(CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl"), StandardCharsets.UTF_8);
-                    fileName=CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl";
+                    fileName = CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl";
 
                 }
                 //validate shape
-                boolean isValidShape = validateWithSHACL(fileName, false);
-                if (!isValidShape){
-                    System.out.println("File: "+ CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl");
-                    System.out.println("Invalid events shape. See log file: " + SHACL_VALIDATION_REPORTS  + " for details");
+                isValidShape = validateWithSHACL(fileName, false);
+                if (!isValidShape) {
+                    System.out.println("File: " + CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl");
+                    System.out.println("Invalid events shape. See log file: " + SHACL_VALIDATION_REPORTS + " for details");
                 }
 
-                if (isCPS2Event){
+                if (isCPS2Event) {
                     isValidShape = validateWithSHACL(fileName, true);
-                    if (!isValidShape){
-                        System.out.println("File: "+ CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl");
-                        System.out.println("Invalid events shape. See log file: " + SHACL_VALIDATION_REPORTS  + " for details");
+                    if (!isValidShape) {
+                        System.out.println("File: " + CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl");
+                        System.out.println("Invalid events shape. See log file: " + SHACL_VALIDATION_REPORTS + " for details");
                     }
                 }
 
                 System.out.println(requestBody);
-                if(isValidShape) {
+                if (isValidShape) {
                     StringEntity requestBodyEntity = new StringEntity(requestBody);
                     post.setEntity(requestBodyEntity);
                 }
 
-//            try (CloseableHttpClient httpClient = HttpClients.createDefault();
-//                 CloseableHttpResponse response = httpClient.execute(post)) {
                 CloseableHttpClient httpClient = HttpClients.createDefault();
                 CloseableHttpResponse response = httpClient.execute(post);
 
@@ -417,15 +569,16 @@ public class Main {
                     System.out.println("file probably still in use");
                 }
                 System.out.println(EntityUtils.toString(response.getEntity()));
+                return isValidShape;
             } catch (Exception e) {
                 System.out.println(e.getMessage());
                 throw new Exception(e);
             }
         }
+        return isValidShape;
     }
 
     public static void deleteRemoteResource(String url) throws Exception {
-        //deleted from
         try {
             HttpDelete delete = new HttpDelete(url);
             delete.addHeader("Authorization", AUTH_TOKEN);
@@ -466,14 +619,13 @@ public class Main {
             CloseableHttpClient httpClient = HttpClients.createDefault();
             response = httpClient.execute(get);
 
-            eTagHeader = response.getFirstHeader("Etag").getValue();
+            eTagHeader = response.getFirstHeader("ETag").getValue();
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new Exception(e);
         }
 
-//        System.out.println(EntityUtils.toString(response.getEntity()));
         String data = EntityUtils.toString(response.getEntity());
 
         // write results to file
@@ -516,13 +668,10 @@ public class Main {
         //write to file
         writer = new FileWriter(FETCHED_RESOURCE_TEMP_NAME);
         bufferedWriter = new BufferedWriter(writer);
-//            model.write(System.out, "Turtle");
 
         model.write(bufferedWriter, "Turtle");
 
         //push file online
-
-        // TODO ALTERNATIVE, DELETE OLD RESOURCE AND POST UPDATE
         try {
 
             HttpPut put = new HttpPut(eventUrl);
@@ -534,18 +683,13 @@ public class Main {
 
 
             String requestBody = Files.readString(Path.of(FETCHED_RESOURCE_TEMP_NAME));
-//            String requestBody = attendeeURI;
-//            System.out.println(requestBody);
 
             StringEntity requestBodyEntity = new StringEntity(requestBody);
             put.setEntity(requestBodyEntity);
 
-//            try (CloseableHttpClient httpClient = HttpClients.createDefault();
-//                 CloseableHttpResponse response = httpClient.execute(post)) {
+
             CloseableHttpClient httpClient = HttpClients.createDefault();
             response = httpClient.execute(put);
-
-//            System.out.println(EntityUtils.toString(response.getEntity()));
 
             try {
                 Files.deleteIfExists(Paths.get(FETCHED_RESOURCE_TEMP_NAME));
@@ -561,7 +705,7 @@ public class Main {
         }
     }
 
-    public static void upcomingEventsByDate(String year, String month, String day) throws Exception {
+    public static String upcomingEventsByDate(String year, String month, String day) throws Exception {
 
         try {
 
@@ -571,9 +715,13 @@ public class Main {
 
 
             String requestBody = "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+                    "PREFIX ex: <http://example.org/>\n" +
+                    "PREFIX schema: <http://schema.org/>\n" +
                     "\n" +
                     "SELECT * WHERE {\n" +
-                    "  ?sub <https://schema.org/startDate> ?obj.\n" +
+                    "  ?sub ?pred ?obj;\n" +
+                    "  ex:summary ?summary;\n" +
+                    "  schema:startDate ?startDate.\n" +
                     "  FILTER(xsd:dateTime(?obj) >= \"" + year + "-" + month + "-" + day + "T00:00:00Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime>)\n" +
                     "  FILTER(xsd:dateTime(?obj) <= \"" + year + "-" + month + "-" + day + "T23:59:59Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime>)\n" +
                     "}";
@@ -586,16 +734,15 @@ public class Main {
             CloseableHttpClient httpClient = HttpClients.createDefault();
             CloseableHttpResponse response = httpClient.execute(post);
 
-//            System.out.println(response.toString());
-//            System.out.println(EntityUtils.toString(response.getEntity()));
-            System.out.println(EntityUtils.toString(response.getEntity()));
+            return (EntityUtils.toString(response.getEntity()));
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new Exception(e);
         }
     }
-    public static void nonCourseEvents() throws Exception {
+
+    public static String nonCourseEvents() throws Exception {
 
         try {
 
@@ -626,9 +773,7 @@ public class Main {
             CloseableHttpClient httpClient = HttpClients.createDefault();
             CloseableHttpResponse response = httpClient.execute(post);
 
-//            System.out.println(response.toString());
-//            System.out.println(EntityUtils.toString(response.getEntity()));
-            System.out.println(EntityUtils.toString(response.getEntity()));
+            return (EntityUtils.toString(response.getEntity()));
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -636,9 +781,8 @@ public class Main {
         }
     }
 
-    public static void fetchRDFFromUrl(String url, String alentoorCity) throws Exception {
+    public static boolean fetchRDFFromUrl(String url, String alentoorCity) throws Exception {
         Document document = Jsoup.connect(url).get();
-//        List<String> rdfsItem = new ArrayList<String>();
 
         String jsonLDString = "";
 
@@ -651,19 +795,18 @@ public class Main {
                         element = element.replace("</script>", "");
                         element = element.replace("@context\":\"http://schema.org", "@context\":\"http://schema.org/docs/jsonldcontext.json");
 
-                        element = element.replaceFirst("https://www.alentoor.fr/agenda/", TERRITOIRE_CONTAINER_SERVICE_URL+alentoorCity+"-agenda-");
-//                        System.out.println(element);
+                        element = element.replaceFirst("https://www.alentoor.fr/agenda/", TERRITOIRE_CONTAINER_SERVICE_URL + alentoorCity + "-agenda-");
 
                         //UNIQUE TO ALENTOOR
 //                        Pattern pattern = Pattern.compile("[a-zA-Z]+://[a-zA-Z]+\\.[a-zA-Z]+\\.[a-zA-Z]+/[a-zA-Z]+/[a-zA-Z]+/[a-zA-Z]+/[0-9]+");
 
-                        Pattern pattern = Pattern.compile("\"@id\":\"https://territoire.emse.fr/ldp/mieventcontainer/"+alentoorCity+"-agenda-[0-9]+\"");
+                        Pattern pattern = Pattern.compile("\"@id\":\"https://territoire.emse.fr/ldp/mieventcontainer/" + alentoorCity + "-agenda-[0-9]+\"");
                         Matcher matcher = pattern.matcher(element);
-                        if (matcher.find()){
+                        if (matcher.find()) {
 
                             String strToReplace = matcher.group();
 //                            System.out.println(strToReplace);
-                            element = element.replaceFirst(strToReplace, strToReplace.substring(0,strToReplace.length()-1)+"/\"");
+                            element = element.replaceFirst(strToReplace, strToReplace.substring(0, strToReplace.length() - 1) + "/\"");
                             System.out.println(element);
                         }
 
@@ -680,8 +823,7 @@ public class Main {
 //        document.select("script").forEach(System.out::println);
 //        System.out.println(rdfsItem.size());
 //        System.out.println(rdfsItem);
-        parseJSONLDToRDF(count[0]);
-
+        return parseJSONLDToRDF(count[0]);
     }
 
 }
