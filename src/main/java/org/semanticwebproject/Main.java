@@ -315,8 +315,11 @@ public class Main {
             writeModelToFIle(CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME+ "-" + count + ".ttl", model);
 
             //DELETE TEMP FILE HERE
-            Files.deleteIfExists(Paths.get(FETCHED_JSON_LD_TEMP_NAME + "-" + count + ".jsonld"));
-
+            try {
+                Files.deleteIfExists(Paths.get(FETCHED_JSON_LD_TEMP_NAME + "-" + count + ".jsonld"));
+            }catch (Exception ex){
+                System.out.println("file probably still in use");
+            }
 
             //upload to ldp
             uploadTurtleFile(LDP_DESTINATION, false, count, false);
@@ -337,7 +340,11 @@ public class Main {
                 line = br.readLine();
             }
             br.close();
-            Files.deleteIfExists(Paths.get(fileName));
+            try {
+                Files.deleteIfExists(Paths.get(fileName));
+            }catch (Exception ex){
+                System.out.println("file probably still in use");
+            }
         }
 
         pw.flush();
@@ -404,8 +411,11 @@ public class Main {
                 CloseableHttpResponse response = httpClient.execute(post);
 
                 //DELETE TEMP FILE HERE
-                Files.deleteIfExists(Paths.get(isContainer ? CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "_container.ttl" : CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl"));
-
+                try {
+                    Files.deleteIfExists(Paths.get(isContainer ? CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "_container.ttl" : CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl"));
+                }catch (Exception ex){
+                    System.out.println("file probably still in use");
+                }
                 System.out.println(EntityUtils.toString(response.getEntity()));
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -537,7 +547,11 @@ public class Main {
 
 //            System.out.println(EntityUtils.toString(response.getEntity()));
 
-            Files.deleteIfExists(Paths.get(FETCHED_RESOURCE_TEMP_NAME));
+            try {
+                Files.deleteIfExists(Paths.get(FETCHED_RESOURCE_TEMP_NAME));
+            }catch (Exception ex){
+                System.out.println("file probably still in use");
+            }
 
             System.out.println(response.toString());
             System.out.println("Attendee added to event:::::::::");
