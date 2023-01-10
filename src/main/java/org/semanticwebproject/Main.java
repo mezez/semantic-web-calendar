@@ -34,6 +34,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import static spark.Spark.*;
 
 import static org.semanticwebproject.lib.Constants.*;
@@ -49,6 +50,30 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
+        /**
+         * to remove CORS
+         * */
+        options("/*",
+                (request, response) -> {
+
+                    String accessControlRequestHeaders = request
+                            .headers("Access-Control-Request-Headers");
+                    if (accessControlRequestHeaders != null) {
+                        response.header("Access-Control-Allow-Headers",
+                                accessControlRequestHeaders);
+                    }
+
+                    String accessControlRequestMethod = request
+                            .headers("Access-Control-Request-Method");
+                    if (accessControlRequestMethod != null) {
+                        response.header("Access-Control-Allow-Methods",
+                                accessControlRequestMethod);
+                    }
+
+                    return "OK";
+                });
+
+        before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
 
         /**
          * API ENDPOINTS START
@@ -63,17 +88,16 @@ public class Main {
         post("/download", (req, res) -> {
             downloadICS(req.body());
             boolean isValidShapeAndUploaded = readFile();
-            if(isValidShapeAndUploaded) {
+            if (isValidShapeAndUploaded) {
                 return "success";
-            }
-            else{
+            } else {
                 res.status(400);
                 return "Error occurred on validation";
             }
         });
 
 
-         /** Re-process and upload previously downloaded CPS2 ICS file (calendar.ics in project root directory) found at $calendar_url
+        /** Re-process and upload previously downloaded CPS2 ICS file (calendar.ics in project root directory) found at $calendar_url
          * to Territoire LDP
          *
          * request method: GET
@@ -82,10 +106,9 @@ public class Main {
          * */
         get("/read", (req, res) -> {
             boolean isValidShapeAndUploaded = readFile();
-            if(isValidShapeAndUploaded) {
+            if (isValidShapeAndUploaded) {
                 return "success";
-            }
-            else{
+            } else {
                 res.status(400);
                 return "Error occurred during shacl validation. Please ensure that the data conforms with the expected shape. See shacl_validation_shape.ttl and shacl_validation_shape_cps2_course.ttl files in project root directory";
             }
@@ -101,12 +124,11 @@ public class Main {
          * $city_name = eg saint-etienne | lyon | paris...
          * */
         post("/extract", (req, res) -> {
-            String url = "https://www.alentoor.fr/"+req.body()+"/agenda";
+            String url = "https://www.alentoor.fr/" + req.body() + "/agenda";
             boolean isValidShape = fetchRDFFromUrl(url, req.body());
-            if(isValidShape) {
+            if (isValidShape) {
                 return "success";
-            }
-            else{
+            } else {
                 res.status(400);
                 return "Error occurred during shacl validation. Please ensure that the data conforms with the expected shape. See shacl_validation_shape.ttl and shacl_validation_shape_cps2_course.ttl files in project root directory";
             }
@@ -127,7 +149,7 @@ public class Main {
             JSONMaker jm = new JSONMaker();
             JSONParser.parseAny(new StringReader(req.body()), jm);
             JsonObject obj = jm.jsonValue().getAsObject();
-            return( upcomingEventsByDate(obj.getString("year"), obj.getString("month"), obj.getString("day")));
+            return (upcomingEventsByDate(obj.getString("year"), obj.getString("month"), obj.getString("day")));
         });
 
         /**
@@ -156,13 +178,12 @@ public class Main {
          * request method: GET
          * */
         get("/get-non-course-events", (req, res) -> {
-            return( nonCourseEvents());
+            return (nonCourseEvents());
         });
 
         /**
          * API ENDPOINTS END
          */
-
 
 
         /**
@@ -181,7 +202,7 @@ public class Main {
 
         if (action.equals(EXTRACT_COMMAND)) {
             String alentoorCity = getCity();
-            String url = "https://www.alentoor.fr/"+alentoorCity+"/agenda";
+            String url = "https://www.alentoor.fr/" + alentoorCity + "/agenda";
             fetchRDFFromUrl(url, alentoorCity);
         }
 
@@ -208,7 +229,7 @@ public class Main {
 
     }
 
-    public static boolean readFile()  throws Exception{
+    public static boolean readFile() throws Exception {
         FileInputStream fin = new FileInputStream(CALENDAR_FILE_NAME);
         CalendarBuilder builder = new CalendarBuilder();
         Calendar calendar = builder.build(fin);
@@ -438,14 +459,14 @@ public class Main {
 
     public static boolean parseJSONLDToRDF(Integer numberOfFiles) throws Exception {
         int count = 1;
-        boolean isValidShape=false;
+        boolean isValidShape = false;
         while (count < numberOfFiles) {
             //read json ld file
             Model model = ModelFactory.createDefaultModel();
             model.read(FETCHED_JSON_LD_TEMP_NAME + "-" + count + ".jsonld");
 
             //write data to turtle file
-            writeModelToFIle(CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME+ "-" + count + ".ttl", model);
+            writeModelToFIle(CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count + ".ttl", model);
 
             //DELETE TEMP FILE HERE
             Files.deleteIfExists(Paths.get(FETCHED_JSON_LD_TEMP_NAME + "-" + count + ".jsonld"));
@@ -480,7 +501,7 @@ public class Main {
     }
 
     public static boolean uploadTurtleFile(String destination, Boolean isContainer, Integer count, Boolean isCPS2Event) throws Exception {
-        boolean isValidShape =false;
+        boolean isValidShape = false;
         if (destination.equals(FUSEKI_DESTINATION)) {
             try (RDFConnection conn = RDFConnectionFactory.connect(LOCAL_FUSEKI_SERVICE_URL)) {
                 conn.put(CALENDAR_OUTPUT_TURTLE_FILE_NAME);
@@ -502,31 +523,31 @@ public class Main {
                 String fileName = "";
                 if (isContainer) {
                     requestBody = Files.readString(Path.of(CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "_container.ttl"), StandardCharsets.UTF_8);
-                    fileName=CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "_container.ttl";
+                    fileName = CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "_container.ttl";
 
                 } else {
                     //container child
                     requestBody = Files.readString(Path.of(CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl"), StandardCharsets.UTF_8);
-                    fileName=CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl";
+                    fileName = CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl";
 
                 }
                 //validate shape
                 isValidShape = validateWithSHACL(fileName, false);
-                if (!isValidShape){
-                    System.out.println("File: "+ CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl");
-                    System.out.println("Invalid events shape. See log file: " + SHACL_VALIDATION_REPORTS  + " for details");
+                if (!isValidShape) {
+                    System.out.println("File: " + CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl");
+                    System.out.println("Invalid events shape. See log file: " + SHACL_VALIDATION_REPORTS + " for details");
                 }
 
-                if (isCPS2Event){
+                if (isCPS2Event) {
                     isValidShape = validateWithSHACL(fileName, true);
-                    if (!isValidShape){
-                        System.out.println("File: "+ CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl");
-                        System.out.println("Invalid events shape. See log file: " + SHACL_VALIDATION_REPORTS  + " for details");
+                    if (!isValidShape) {
+                        System.out.println("File: " + CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl");
+                        System.out.println("Invalid events shape. See log file: " + SHACL_VALIDATION_REPORTS + " for details");
                     }
                 }
 
                 System.out.println(requestBody);
-                if(isValidShape) {
+                if (isValidShape) {
                     StringEntity requestBodyEntity = new StringEntity(requestBody);
                     post.setEntity(requestBodyEntity);
                 }
@@ -662,7 +683,7 @@ public class Main {
 
             try {
                 Files.deleteIfExists(Paths.get(FETCHED_RESOURCE_TEMP_NAME));
-            }catch (Exception exception){
+            } catch (Exception exception) {
                 System.out.println("Maybe file still in use");
             }
 
@@ -703,13 +724,14 @@ public class Main {
             CloseableHttpClient httpClient = HttpClients.createDefault();
             CloseableHttpResponse response = httpClient.execute(post);
 
-            return(EntityUtils.toString(response.getEntity()));
+            return (EntityUtils.toString(response.getEntity()));
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new Exception(e);
         }
     }
+
     public static String nonCourseEvents() throws Exception {
 
         try {
@@ -741,7 +763,7 @@ public class Main {
             CloseableHttpClient httpClient = HttpClients.createDefault();
             CloseableHttpResponse response = httpClient.execute(post);
 
-            return(EntityUtils.toString(response.getEntity()));
+            return (EntityUtils.toString(response.getEntity()));
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -763,18 +785,18 @@ public class Main {
                         element = element.replace("</script>", "");
                         element = element.replace("@context\":\"http://schema.org", "@context\":\"http://schema.org/docs/jsonldcontext.json");
 
-                        element = element.replaceFirst("https://www.alentoor.fr/agenda/", TERRITOIRE_CONTAINER_SERVICE_URL+alentoorCity+"-agenda-");
+                        element = element.replaceFirst("https://www.alentoor.fr/agenda/", TERRITOIRE_CONTAINER_SERVICE_URL + alentoorCity + "-agenda-");
 
                         //UNIQUE TO ALENTOOR
 //                        Pattern pattern = Pattern.compile("[a-zA-Z]+://[a-zA-Z]+\\.[a-zA-Z]+\\.[a-zA-Z]+/[a-zA-Z]+/[a-zA-Z]+/[a-zA-Z]+/[0-9]+");
 
-                        Pattern pattern = Pattern.compile("\"@id\":\"https://territoire.emse.fr/ldp/mieventcontainer/"+alentoorCity+"-agenda-[0-9]+\"");
+                        Pattern pattern = Pattern.compile("\"@id\":\"https://territoire.emse.fr/ldp/mieventcontainer/" + alentoorCity + "-agenda-[0-9]+\"");
                         Matcher matcher = pattern.matcher(element);
-                        if (matcher.find()){
+                        if (matcher.find()) {
 
                             String strToReplace = matcher.group();
 //                            System.out.println(strToReplace);
-                            element = element.replaceFirst(strToReplace, strToReplace.substring(0,strToReplace.length()-1)+"/\"");
+                            element = element.replaceFirst(strToReplace, strToReplace.substring(0, strToReplace.length() - 1) + "/\"");
                             System.out.println(element);
                         }
 
