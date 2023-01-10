@@ -1,27 +1,21 @@
-<https://territoire.emse.fr/ldp/mieventcontainer/veventthirtyclone/>
-        a                               <http://www.w3.org/ns/ldp#Container> , <http://www.w3.org/ns/ldp#RDFSource> , <http://schema.org/Event> , <https://carbonldp.com/ns/v1/platform#Document> , <http://www.w3.org/ns/ldp#BasicContainer> , <http://schema.org/Course> , <http://www.w3.org/ns/ldp#Resource> ;
-        <http://example.org/sequence>   "2140009049"^^<http://www.w3.org/2001/XMLSchema#int> ;
-        <http://example.org/summary>    "CM Semantic Web" ;
-        <http://schema.org/DateTime>    "2023-01-10T06:09:24Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
-        <http://schema.org/dateCreated>
-                "1969-12-31T23:00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
-        <http://schema.org/dateModified>
-                "2023-01-10T06:09:24Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+<https://territoire.emse.fr/ldp/jklm/ade60323032322d3230323353542d455449454e4e452d32323537312d342d30/>
+        a                              <http://www.w3.org/ns/ldp#Resource> , <http://www.w3.org/ns/ldp#BasicContainer> , <http://www.w3.org/ns/ldp#Container> , <https://carbonldp.com/ns/v1/platform#Document> , <http://www.w3.org/ns/ldp#RDFSource> , <http://example.org/ns#CalendarEvent> ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                "CM Semantic Web"@fr ;
         <http://schema.org/description>
-                "\r\n\r\nM2 CPS2\r\nM2 DSC\r\nM2 DSC Alternance\r\nZIMMERMANN A\r\nCHARPENAY VICTOR\r\n(Exportï¿½ le:10/01/2023 08:09)\r\n" ;
-        <http://schema.org/endDate>     "2022-12-09T10:00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
-        <http://schema.org/identifier>  "ADE603230wtf322d3230323353542d455449454e4e452d32323537312d342d30" ;
-        <http://schema.org/location>    <https://territoire.emse.fr/kg/emse/fayol/2ET/214> ;
-        <http://schema.org/startDate>   "2022-12-09T06:45:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+                "  M2 CPS2 M2 DSC M2 DSC Alternance ZIMMERMANN A CHARPENAY VICTOR (ExportÃ© le:13/12/2022 20:03) " ;
+        <http://schema.org/endDate>    "2022-12-09T11:00:00+00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+        <http://schema.org/location>   <https://territoire.emse.fr/kg/emse/fayol/2ET/214> ;
+        <http://schema.org/startDate>  "2022-12-09T07:45:00+00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
         <http://www.w3.org/2002/07/owl#sameAs>
-                <https://territoire.emse.fr/ldp/mieventcontainer/veventthirtyclonesecond/> , <https://territoire.emse.fr/ldp/mieventcontainer/vevent-30/> ;
+                <https://territoire.emse.fr/ldp/mieventcontainer/vevent-30/> , <https://territoire.emse.fr/ldp/morestelsimsek/ade60323032322d3230323353542d455449454e4e452d32323537312d342d30/> , <https://territoire.emse.fr/ldp/killianquoniou/Event-ADE60323032322d3230323353542d455449454e4e452d32323537312d342d30/> ;
         <http://www.w3.org/ns/ldp#hasMemberRelation>
                 <http://www.w3.org/ns/ldp#member> ;
         <http://www.w3.org/ns/ldp#insertedContentRelation>
                 <http://www.w3.org/ns/ldp#MemberSubject> ;
         <http://www.w3.org/ns/ldp#membershipResource>
-                <https://territoire.emse.fr/ldp/mieventcontainer/veventthirtyclone/> ;
+                <https://territoire.emse.fr/ldp/jklm/ade60323032322d3230323353542d455449454e4e452d32323537312d342d30/> ;
         <https://carbonldp.com/ns/v1/platform#created>
-                "2023-01-10T10:53:14.706Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+                "2023-01-09T20:03:07.519Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
         <https://carbonldp.com/ns/v1/platform#modified>
-                "2023-01-10T12:24:16.400Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+                "2023-01-10T12:58:25.545Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> .

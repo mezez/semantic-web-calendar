@@ -324,7 +324,7 @@ public class Main {
                 new InputStreamReader(System.in));
 
         // Reading data using readLine
-        System.out.println("Please enter a event start datetime: eg 2022-12-09T06:45:00Z");
+        System.out.println("Please enter a event start datetime: eg 2022-12-09T07:45:00Z");
         String startDate = reader.readLine();
 
         while (startDate.isEmpty()) {
@@ -332,7 +332,7 @@ public class Main {
             startDate = reader.readLine().toUpperCase();
         }
 
-        System.out.println("Please enter a event end datetime: eg 2022-12-09T10:00:00Z");
+        System.out.println("Please enter a event end datetime: eg 2022-12-09T11:00:00Z");
         String endDate = reader.readLine();
 
         while (endDate.isEmpty()) {
@@ -672,6 +672,8 @@ public class Main {
         String month = dateTimeString.substring(4, 6);
         String day = dateTimeString.substring(6, 8);
         String hour = dateTimeString.substring(9, 11);
+        Integer hourInt = Integer.parseInt(hour) + 1;
+        hour = hourInt.toString();
         String minute = dateTimeString.substring(11, 13);
         String second = dateTimeString.substring(13, 15);
 
