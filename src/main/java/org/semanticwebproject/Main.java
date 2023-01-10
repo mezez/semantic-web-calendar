@@ -4,16 +4,15 @@ import net.fortuna.ical4j.data.CalendarBuilder;
 import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.component.CalendarComponent;
-import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.*;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.apache.jena.atlas.json.JsonObject;
+import org.apache.jena.atlas.json.JsonValue;
 import org.apache.jena.atlas.json.io.JSONMaker;
 import org.apache.jena.atlas.json.io.parser.JSONParser;
-import org.apache.jena.base.Sys;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.rdfconnection.RDFConnection;
 import org.apache.jena.rdfconnection.RDFConnectionFactory;
@@ -29,11 +28,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import static spark.Spark.*;
 
@@ -45,6 +43,7 @@ public class Main {
     //PREFIXES
     public static final String SCHEMA_ORG_PREFIX = "http://schema.org/";
     public static final String W3_LDP_PREFIX = "http://www.w3.org/ns/ldp#";
+    public static final String OWL_PREFIX = "http://www.w3.org/2002/07/owl#";
     public static final String EXAMPLE_PREFIX = "http://example.org/";
     public static final String EMSE_TERRITOIRE_PREFIX = "https://territoire.emse.fr/kg/emse/fayol/";
 
@@ -81,7 +80,7 @@ public class Main {
          *
          * request method: POST
          * request body: $calendar_url
-         * context type: text
+         * content type: text
          *
          * $calendar_url = https://planning.univ-st-etienne.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=4222&projectId=1&calType=ical&firstDate=2022-08-22&lastDate=2023-08-20
          * */
@@ -119,7 +118,7 @@ public class Main {
          *
          * request method: POST
          * request body: $city_name
-         * context type: text
+         * content type: text
          *
          * $city_name = eg saint-etienne | lyon | paris...
          * */
@@ -139,7 +138,7 @@ public class Main {
          *
          * request method: POST
          * request body: year, month, day
-         * context type: JSON
+         * content type: JSON
          *
          * year = eg 2022
          * month = eg 06 (ie june)
@@ -157,12 +156,11 @@ public class Main {
          *
          * request method: POST
          * request body: eventURI, attendeeURI
-         * context type: JSON
+         * content type: JSON
          *
          * eventURI: resource URI on territoire LDP, eg https://territoire.emse.fr/ldp/mieventcontainer/vevent-2
          * attendeeURI: eg http://example.com/mezIgnas/
          *
-         * $city_name = eg saint-etienne | lyon | paris...
          * */
         post("/add-attendee", (req, res) -> {
             JSONMaker jm = new JSONMaker();
@@ -179,6 +177,31 @@ public class Main {
          * */
         get("/get-non-course-events", (req, res) -> {
             return (nonCourseEvents());
+        });
+
+
+        /**
+         * Discover and Link Same Events
+         *
+         * request method: POST
+         * request body: startDate, endDate, location
+         * content type: JSON
+         *
+         * startDate: start datetime of events e.g. 2022-12-09T06:45:00Z
+         * endDate: end datetime of events e.g. 2022-12-09T10:00:00Z
+         * location: full iri of event location eg https://territoire.emse.fr/kg/emse/fayol/2ET/214
+         *
+         * */
+        post("/discover-and-link-same-events", (req, res) -> {
+            JSONMaker jm = new JSONMaker();
+            JSONParser.parseAny(new StringReader(req.body()), jm);
+            JsonObject obj = jm.jsonValue().getAsObject();
+            List<String> events = linkSameEvents(obj.getString("startDate"), obj.getString("endDate"), obj.getString("location"));
+            if (!events.isEmpty()){
+                return events;
+            }else {
+                return "No events found";
+            }
         });
 
         /**
@@ -222,6 +245,20 @@ public class Main {
             System.out.println(nonCourseEvents());
         }
 
+        if (action.equals(LINK_COMMAND)) {
+            List<String> eventDetails = getEventDetails();
+            List<String> events = linkSameEvents(eventDetails.get(0), eventDetails.get(1), eventDetails.get(2));
+            if (!events.isEmpty()) {
+                System.out.println("Linking completed");
+                System.out.println("_________________");
+                System.out.println("");
+                System.out.println("Linked Events::");
+                System.out.println(events);
+            }else {
+                System.out.println("Events found");
+            }
+        }
+
         /**
          * CONSOLE BASED EXECUTION/GUI END
          * */
@@ -250,11 +287,11 @@ public class Main {
         System.out.println("To continue on  the console, follow the instruction below.");
         System.out.println("__________________________________________________________");
         System.out.println();
-        System.out.println("Please enter a run command: download | read  | extract | get_events | add_attendee | get_non_course_events:");
+        System.out.println("Please enter a run command: download | read  | extract | get_events | add_attendee | get_non_course_events | link_same_events:");
         String command = reader.readLine().toUpperCase();
 
-        while (!command.equals(DOWNLOAD_ICS_COMMAND) && !command.equals(READ_COMMAND) && !command.equals(ADD_ATTENDEE_COMMAND) && !command.equals(GET_EVENTS_COMMAND) && !command.equals(EXTRACT_COMMAND) && !command.equals(GET_NON_COURSE_EVENTS_COMMAND)) {
-            System.out.println("Command must be either of DOWNLOAD | READ | ADD_ATTENDEE | GET_EVENTS| GET_NON_COURSE_EVENTS | EXTRACT");
+        while (!command.equals(DOWNLOAD_ICS_COMMAND) && !command.equals(READ_COMMAND) && !command.equals(ADD_ATTENDEE_COMMAND) && !command.equals(GET_EVENTS_COMMAND) && !command.equals(EXTRACT_COMMAND) && !command.equals(GET_NON_COURSE_EVENTS_COMMAND) && !command.equals(LINK_COMMAND)) {
+            System.out.println("Command must be either of DOWNLOAD | READ | EXTRACT | GET_EVENTS| ADD_ATTENDEE | GET_NON_COURSE_EVENTS | LINK_SAME_EVENTS");
             command = reader.readLine().toUpperCase();
         }
 
@@ -279,6 +316,44 @@ public class Main {
         System.out.println(dateDetails);
 
         return dateDetails;
+    }
+
+    public static List<String> getEventDetails() throws IOException {
+        // Enter data using BufferReader
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(System.in));
+
+        // Reading data using readLine
+        System.out.println("Please enter a event start datetime: eg 2022-12-09T06:45:00Z");
+        String startDate = reader.readLine();
+
+        while (startDate.isEmpty()) {
+            System.out.println("start date is invalid");
+            startDate = reader.readLine().toUpperCase();
+        }
+
+        System.out.println("Please enter a event end datetime: eg 2022-12-09T10:00:00Z");
+        String endDate = reader.readLine();
+
+        while (endDate.isEmpty()) {
+            System.out.println("end date is invalid");
+            endDate = reader.readLine();
+        }
+
+        System.out.println("Please enter event location iri: eg https://territoire.emse.fr/kg/emse/fayol/2ET/214");
+        String location = reader.readLine();
+
+        while (location.isEmpty()) {
+            System.out.println("location is invalid");
+            location = reader.readLine();
+        }
+
+        List<String> eventDetails = new ArrayList<String>();
+        eventDetails.add(startDate.replaceAll("\\s+", ""));
+        eventDetails.add(endDate.replaceAll("\\s+", ""));
+        eventDetails.add(location.replaceAll("\\s+", ""));
+
+        return eventDetails;
     }
 
     public static List<String> getAttendeeDetails() throws IOException {
@@ -471,7 +546,7 @@ public class Main {
             //DELETE TEMP FILE HERE
             try {
                 Files.deleteIfExists(Paths.get(FETCHED_JSON_LD_TEMP_NAME + "-" + count + ".jsonld"));
-            }catch (Exception ex){
+            } catch (Exception ex) {
                 System.out.println("file probably still in use");
             }
 
@@ -497,7 +572,7 @@ public class Main {
             br.close();
             try {
                 Files.deleteIfExists(Paths.get(fileName));
-            }catch (Exception ex){
+            } catch (Exception ex) {
                 System.out.println("file probably still in use");
             }
         }
@@ -565,7 +640,7 @@ public class Main {
                 //DELETE TEMP FILE HERE
                 try {
                     Files.deleteIfExists(Paths.get(isContainer ? CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "_container.ttl" : CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl"));
-                }catch (Exception ex){
+                } catch (Exception ex) {
                     System.out.println("file probably still in use");
                 }
                 System.out.println(EntityUtils.toString(response.getEntity()));
@@ -693,7 +768,7 @@ public class Main {
 
             try {
                 Files.deleteIfExists(Paths.get(FETCHED_RESOURCE_TEMP_NAME));
-            }catch (Exception ex){
+            } catch (Exception ex) {
                 System.out.println("file probably still in use");
             }
 
@@ -780,6 +855,177 @@ public class Main {
             throw new Exception(e);
         }
     }
+
+    public static String discoverSameEvents(String startDate, String endDate, String location) throws Exception {
+
+        try {
+
+            HttpPost post = new HttpPost(TERRITOIRE_CONTAINER_SERVICE_URL);
+            post.addHeader("Authorization", AUTH_TOKEN);
+            post.addHeader("Content-Type", "application/sparql-query");
+
+
+            String requestBody = "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+                    "PREFIX ex: <http://example.org/>\n" +
+                    "PREFIX schema: <http://schema.org/>\n" +
+                    "\n" +
+                    "SELECT * WHERE {\n" +
+                    "  ?sub ?pred ?obj;\n" +
+                    "  schema:location <" + location + ">;\n" +
+                    "  schema:startDate ?startDate;\n" +
+                    "  schema:endDate ?endDate.\n" +
+                    "  FILTER(xsd:dateTime(?startDate) = \"" + startDate + "\"^^<http://www.w3.org/2001/XMLSchema#dateTime>)\n" +
+                    "  FILTER(xsd:dateTime(?endDate) = \"" + endDate + "\"^^<http://www.w3.org/2001/XMLSchema#dateTime>)\n" +
+                    "}";
+            System.out.println("requestBody::::");
+            System.out.println(requestBody);
+            System.out.println();
+
+            StringEntity requestBodyEntity = new StringEntity(requestBody);
+            post.setEntity(requestBodyEntity);
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            CloseableHttpResponse response = httpClient.execute(post);
+
+            return (EntityUtils.toString(response.getEntity()));
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new Exception(e);
+        }
+    }
+
+
+    public static List<String> linkSameEvents(String startDate, String endDate, String location) throws Exception {
+
+        String sameEvents = discoverSameEvents(startDate, endDate, location);
+
+        //convert events to json
+        JSONMaker jm = new JSONMaker();
+        JSONParser.parseAny(new StringReader(sameEvents), jm);
+        JsonObject obj = jm.jsonValue().getAsObject();
+
+        List<JsonValue> bindings = obj.getObj("results").getArray("bindings").toList();
+//        System.out.println(bindings);
+
+        List<String> resourcesIRIs = new ArrayList<String>();
+        for (JsonValue binding : bindings) {
+            String bindingSubjectValue = binding.getAsObject().getObj("sub").getString("value");
+            if (bindingSubjectValue.contains("https://territoire.emse.fr/ldp/")) {
+                if (!resourcesIRIs.contains(bindingSubjectValue)) {
+                    resourcesIRIs.add(bindingSubjectValue);
+                }
+            }
+
+        }
+
+//        System.out.println(resourcesIRIs);
+
+
+        for (String currentResourceIRI : resourcesIRIs) {
+
+            //loop through other resources, fetch and add same as the current
+            for (String resourceIRIExceptCurrent : resourcesIRIs) {
+                if (!resourceIRIExceptCurrent.equals(currentResourceIRI)) {
+
+                    HttpGet get = new HttpGet(resourceIRIExceptCurrent.trim());
+                    get.addHeader("Authorization", AUTH_TOKEN);
+
+                    CloseableHttpResponse response;
+                    String eTagHeader;
+                    try {
+                        CloseableHttpClient httpClient = HttpClients.createDefault();
+                        response = httpClient.execute(get);
+
+                        eTagHeader = response.getFirstHeader("ETag").getValue();
+
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                        throw new Exception(e);
+                    }
+
+                    String data = EntityUtils.toString(response.getEntity());
+
+                    // write results to file
+                    String tempFileName = FETCHED_RESOURCE_TEMP_NAME; //REFACTOR TO include random numbers
+
+                    FileWriter writer = new FileWriter(tempFileName);
+                    BufferedWriter bufferedWriter = new BufferedWriter(writer);
+
+                    bufferedWriter.write(data);
+                    bufferedWriter.close();
+
+                    //read file into jena and update or delete and repost
+                    Model model = ModelFactory.createDefaultModel();
+                    model.read(FETCHED_RESOURCE_TEMP_NAME);
+
+                    final org.apache.jena.rdf.model.Property SAME_ASS = model.createProperty(OWL_PREFIX + "sameAs");
+                    model.getResource(resourceIRIExceptCurrent).addProperty(SAME_ASS, model.createResource(currentResourceIRI));
+
+                    // list the statements in the Model
+//        StmtIterator iter = model.listStatements();
+//
+//        while (iter.hasNext()) {
+//            Statement stmt      = iter.nextStatement();  // get next statement
+//            Resource  subject   = stmt.getSubject();     // get the subject
+//            org.apache.jena.rdf.model.Property predicate = stmt.getPredicate();   // get the predicate
+//            RDFNode   object    = stmt.getObject();      // get the object
+//
+//            System.out.print(subject.toString());
+//            System.out.print(" " + predicate.toString() + " ");
+//            if (object instanceof Resource) {
+//                System.out.print(object.toString());
+//            } else {
+//                // object is a literal
+//                System.out.print(" \"" + object.toString() + "\"");
+//            }
+//
+//            System.out.println(" .");
+//        }
+
+                    //write to file
+                    writer = new FileWriter(FETCHED_RESOURCE_TEMP_NAME);
+                    bufferedWriter = new BufferedWriter(writer);
+
+                    model.write(bufferedWriter, "Turtle");
+
+                    //push file online
+                    try {
+
+                        HttpPut put = new HttpPut(resourceIRIExceptCurrent);
+                        put.addHeader("Authorization", AUTH_TOKEN);
+                        put.addHeader("Accept", "text/turtle");
+                        put.addHeader("Content-Type", "text/turtle");
+                        put.addHeader("If-Match", eTagHeader);
+                        put.addHeader("Prefer", "http://www.w3.org/ns/ldp#RDFSource; rel=interaction-model");
+
+
+                        String requestBody = Files.readString(Path.of(FETCHED_RESOURCE_TEMP_NAME));
+
+                        StringEntity requestBodyEntity = new StringEntity(requestBody);
+                        put.setEntity(requestBodyEntity);
+
+
+                        CloseableHttpClient httpClient = HttpClients.createDefault();
+                        response = httpClient.execute(put);
+
+                        try {
+                            Files.deleteIfExists(Paths.get(FETCHED_RESOURCE_TEMP_NAME));
+                        } catch (Exception ex) {
+                            System.out.println("file probably still in use");
+                        }
+
+                        System.out.println(response.toString());
+                        System.out.println(currentResourceIRI + " resource now added as ow:sameAs for " + resourceIRIExceptCurrent);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                        throw new Exception(e);
+                    }
+                }
+            }
+        }
+        return resourcesIRIs;
+    }
+
 
     public static boolean fetchRDFFromUrl(String url, String alentoorCity) throws Exception {
         Document document = Jsoup.connect(url).get();
