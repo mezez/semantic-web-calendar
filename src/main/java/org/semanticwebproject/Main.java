@@ -828,7 +828,7 @@ public class Main {
 
             String requestBody = "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
                     "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
-                    "PREFIX schema: <https://schema.org/>\n" +
+                    "PREFIX schema: <http://schema.org/>\n" +
                     "\n" +
                     "SELECT * WHERE {\n" +
                     "  ?sub a schema:Event.\n" +
@@ -848,7 +848,30 @@ public class Main {
             CloseableHttpClient httpClient = HttpClients.createDefault();
             CloseableHttpResponse response = httpClient.execute(post);
 
-            return (EntityUtils.toString(response.getEntity()));
+//            return (EntityUtils.toString(response.getEntity()));
+
+            String data = EntityUtils.toString(response.getEntity());
+
+            //convert response to json
+            JSONMaker jm = new JSONMaker();
+            JSONParser.parseAny(new StringReader(data), jm);
+            JsonObject obj = jm.jsonValue().getAsObject();
+
+            List<JsonValue> bindings = obj.getObj("results").getArray("bindings").toList();
+//        System.out.println(bindings);
+
+            List<String> resourcesIRIs = new ArrayList<String>();
+            for (JsonValue binding : bindings) {
+                String bindingSubjectType = binding.getAsObject().getObj("sub").getString("type");
+                String bindingSubjectValue = binding.getAsObject().getObj("sub").getString("value");
+                if (bindingSubjectType.equals("uri")) {
+                    if (!resourcesIRIs.contains(bindingSubjectValue)) {
+                        resourcesIRIs.add(bindingSubjectValue);
+                    }
+                }
+
+            }
+            return resourcesIRIs.toString();
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
