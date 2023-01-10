@@ -49,10 +49,31 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
+
         /**
          * API ENDPOINTS START
+         * (Re-)Download, process and upload CPS2 ICS file found at $calendar_url to Territoire LDP
+         *
+         * request method: POST
+         * request body: $calendar_url
+         * context type: text
+         *
+         * $calendar_url = https://planning.univ-st-etienne.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=4222&projectId=1&calType=ical&firstDate=2022-08-22&lastDate=2023-08-20
+         * */
+        post("/download", (req, res) -> {
+            downloadICS(req.body());
+            boolean isValidShapeAndUploaded = readFile();
+            if(isValidShapeAndUploaded) {
+                return "success";
+            }
+            else{
+                res.status(400);
+                return "Error occurred on validation";
+            }
+        });
 
-         * Re-process and upload previously downloaded CPS2 ICS file (calendar.ics in project root directory) found at $calendar_url
+
+         /** Re-process and upload previously downloaded CPS2 ICS file (calendar.ics in project root directory) found at $calendar_url
          * to Territoire LDP
          *
          * request method: GET
@@ -67,27 +88,6 @@ public class Main {
             else{
                 res.status(400);
                 return "Error occurred during shacl validation. Please ensure that the data conforms with the expected shape. See shacl_validation_shape.ttl and shacl_validation_shape_cps2_course.ttl files in project root directory";
-            }
-        });
-
-        /**
-        * (Re-)Download, process and upload CPS2 ICS file found at $calendar_url to Territoire LDP
-         *
-         * request method: POST
-         * request body: $calendar_url
-         * context type: text
-        *
-        * $calendar_url = https://planning.univ-st-etienne.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=4222&projectId=1&calType=ical&firstDate=2022-08-22&lastDate=2023-08-20
-        * */
-        post("/download", (req, res) -> {
-            downloadICS(req.body());
-            boolean isValidShapeAndUploaded = readFile();
-            if(isValidShapeAndUploaded) {
-                return "success";
-            }
-            else{
-                res.status(400);
-                return "Error occurred on validation";
             }
         });
 
@@ -113,6 +113,24 @@ public class Main {
         });
 
         /**
+         * Get events happening on a specific date e.g. 09-12-2022
+         *
+         * request method: POST
+         * request body: year, month, day
+         * context type: JSON
+         *
+         * year = eg 2022
+         * month = eg 06 (ie june)
+         * day = eg 09
+         * */
+        post("/get-events", (req, res) -> {
+            JSONMaker jm = new JSONMaker();
+            JSONParser.parseAny(new StringReader(req.body()), jm);
+            JsonObject obj = jm.jsonValue().getAsObject();
+            return( upcomingEventsByDate(obj.getString("year"), obj.getString("month"), obj.getString("day")));
+        });
+
+        /**
          * Add attendee to an event
          *
          * request method: POST
@@ -133,24 +151,6 @@ public class Main {
         });
 
         /**
-         * Get events happening on a specific date eg..09-12-2022
-         *
-         * request method: POST
-         * request body: year, month, day
-         * context type: JSON
-         *
-         * year = eg 2022
-         * month = eg 06 (ie june)
-         * day = eg 09
-         * */
-        post("/get-events", (req, res) -> {
-            JSONMaker jm = new JSONMaker();
-            JSONParser.parseAny(new StringReader(req.body()), jm);
-            JsonObject obj = jm.jsonValue().getAsObject();
-           return( upcomingEventsByDate(obj.getString("year"), obj.getString("month"), obj.getString("day")));
-        });
-
-        /**
          * Get non-course events
          *
          * request method: GET
@@ -162,7 +162,6 @@ public class Main {
         /**
          * API ENDPOINTS END
          */
-
 
 
 
@@ -230,7 +229,7 @@ public class Main {
         System.out.println("To continue on  the console, follow the instruction below.");
         System.out.println("__________________________________________________________");
         System.out.println();
-        System.out.println("Please enter a run command: download | read | add_attendee | get_events | get_non_course_events | extract:");
+        System.out.println("Please enter a run command: download | read  | extract | get_events | add_attendee | get_non_course_events:");
         String command = reader.readLine().toUpperCase();
 
         while (!command.equals(DOWNLOAD_ICS_COMMAND) && !command.equals(READ_COMMAND) && !command.equals(ADD_ATTENDEE_COMMAND) && !command.equals(GET_EVENTS_COMMAND) && !command.equals(EXTRACT_COMMAND) && !command.equals(GET_NON_COURSE_EVENTS_COMMAND)) {
@@ -247,7 +246,7 @@ public class Main {
                 new InputStreamReader(System.in));
 
         // Reading data using readLine
-        System.out.println("Please enter event date eg 01-01-2022 :");
+        System.out.println("Please enter event date in dd-MM-yyyy format eg 09-12-2022 :");
         String date = reader.readLine();
 
         while (date.isEmpty()) {
@@ -295,7 +294,8 @@ public class Main {
                 new InputStreamReader(System.in));
 
         // Reading data using readLine
-        System.out.println("Please enter a url to file:");
+        System.out.println("Please enter a url to file (CPS2 ICS file):");
+        System.out.println("Eg https://planning.univ-st-etienne.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=4222&projectId=1&calType=ical&firstDate=2022-08-22&lastDate=2023-08-20 :");
 
         String url = reader.readLine();
 
