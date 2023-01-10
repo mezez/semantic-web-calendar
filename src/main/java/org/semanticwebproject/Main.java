@@ -720,10 +720,10 @@ public class Main {
                     "\n" +
                     "SELECT * WHERE {\n" +
                     "  ?sub ?pred ?obj;\n" +
-                    "  ex:summary ?summary;\n" +
-                    "  schema:startDate ?startDate.\n" +
-                    "  FILTER(xsd:dateTime(?obj) >= \"" + year + "-" + month + "-" + day + "T00:00:00Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime>)\n" +
-                    "  FILTER(xsd:dateTime(?obj) <= \"" + year + "-" + month + "-" + day + "T23:59:59Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime>)\n" +
+                    "  schema:startDate ?startDate;\n" +
+                    "  schema:startDate ?endDate.\n" +
+                    "  FILTER(xsd:dateTime(?startDate) >= \"" + year + "-" + month + "-" + day + "T00:00:00Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime>)\n" +
+                    "  FILTER(xsd:dateTime(?endDate) <= \"" + year + "-" + month + "-" + day + "T23:59:59Z\"^^<http://www.w3.org/2001/XMLSchema#dateTime>)\n" +
                     "}";
             System.out.println("requestBody::::");
             System.out.println(requestBody);
