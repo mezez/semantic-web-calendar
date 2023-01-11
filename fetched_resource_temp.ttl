@@ -1,27 +1,26 @@
-<https://territoire.emse.fr/ldp/mieventcontainer/vevent-10/>
-        a                               <http://www.w3.org/ns/ldp#Container> , <http://www.w3.org/ns/ldp#RDFSource> , <http://www.w3.org/ns/ldp#BasicContainer> , <http://www.w3.org/ns/ldp#Resource> , <http://schema.org/Event> , <http://schema.org/Course> , <https://carbonldp.com/ns/v1/platform#Document> ;
+<https://territoire.emse.fr/ldp/mieventcontainer/vevent-3/>
+        a                               <http://schema.org/Course> , <http://www.w3.org/ns/ldp#BasicContainer> , <https://carbonldp.com/ns/v1/platform#Document> , <http://www.w3.org/ns/ldp#Resource> , <http://www.w3.org/ns/ldp#RDFSource> , <http://schema.org/Event> , <http://www.w3.org/ns/ldp#Container> ;
         <http://example.org/sequence>   "2140539387"^^<http://www.w3.org/2001/XMLSchema#int> ;
         <http://example.org/summary>    "CM Cybersecurity" ;
         <http://schema.org/DateTime>    "2023-01-10T12:47:30Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+        <http://schema.org/attendee>    <http://example.com/MezIgnas/> ;
         <http://schema.org/dateCreated>
                 "1970-01-01T00:00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
         <http://schema.org/dateModified>
                 "2023-01-10T12:47:30Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
         <http://schema.org/description>
                 "\n\nM2 CPS2\nMULLER GUILLAUME\n(Exportï¿½ le:10/01/2023 13:47)\n" ;
-        <http://schema.org/endDate>     "2022-11-16T11:15:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
-        <http://schema.org/identifier>  "ADE60323032322d3230323353542d455449454e4e452d32353234362d332d30" ;
-        <http://schema.org/location>    <https://territoire.emse.fr/kg/emse/fayol/2ET/212> ;
-        <http://schema.org/startDate>   "2022-11-16T09:45:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
-        <http://www.w3.org/2002/07/owl#sameAs>
-                <https://territoire.emse.fr/ldp/killianquoniou/Event-ADE60323032322d3230323353542d455449454e4e452d32353234362d332d30/> ;
+        <http://schema.org/endDate>     "2022-11-23T09:30:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+        <http://schema.org/identifier>  "ADE60323032322d3230323353542d455449454e4e452d32353234362d342d30" ;
+        <http://schema.org/location>    <https://territoire.emse.fr/kg/emse/fayol/2ET/211> ;
+        <http://schema.org/startDate>   "2022-11-23T08:00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
         <http://www.w3.org/ns/ldp#hasMemberRelation>
                 <http://www.w3.org/ns/ldp#member> ;
         <http://www.w3.org/ns/ldp#insertedContentRelation>
                 <http://www.w3.org/ns/ldp#MemberSubject> ;
         <http://www.w3.org/ns/ldp#membershipResource>
-                <https://territoire.emse.fr/ldp/mieventcontainer/vevent-10/> ;
+                <https://territoire.emse.fr/ldp/mieventcontainer/vevent-3/> ;
         <https://carbonldp.com/ns/v1/platform#created>
-                "2023-01-10T12:47:43.039Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+                "2023-01-10T12:47:38.941Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
         <https://carbonldp.com/ns/v1/platform#modified>
-                "2023-01-10T12:47:43.039Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+                "2023-01-10T12:47:38.941Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> .

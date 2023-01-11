@@ -1001,8 +1001,8 @@ public class Main {
                     Model model = ModelFactory.createDefaultModel();
                     model.read(FETCHED_RESOURCE_TEMP_NAME);
 
-                    final org.apache.jena.rdf.model.Property SAME_ASS = model.createProperty(OWL_PREFIX + "sameAs");
-                    model.getResource(resourceIRIExceptCurrent).addProperty(SAME_ASS, model.createResource(currentResourceIRI));
+                    final org.apache.jena.rdf.model.Property SAME_AS = model.createProperty(OWL_PREFIX + "sameAs");
+                    model.getResource(resourceIRIExceptCurrent).addProperty(SAME_AS, model.createResource(currentResourceIRI));
 
                     // list the statements in the Model
 //        StmtIterator iter = model.listStatements();
