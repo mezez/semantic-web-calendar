@@ -786,7 +786,7 @@ public class Main {
 
         try {
 
-            HttpPost post = new HttpPost(TERRITOIRE_CONTAINER_SERVICE_URL);
+            HttpPost post = new HttpPost(TERRITOIRE_SERVICE_URL);
             post.addHeader("Authorization", AUTH_TOKEN);
             post.addHeader("Content-Type", "application/sparql-query");
 
@@ -844,7 +844,7 @@ public class Main {
 
         try {
 
-            HttpPost post = new HttpPost(TERRITOIRE_CONTAINER_SERVICE_URL);
+            HttpPost post = new HttpPost(TERRITOIRE_SERVICE_URL);
             post.addHeader("Authorization", AUTH_TOKEN);
             post.addHeader("Content-Type", "application/sparql-query");
 
@@ -903,7 +903,7 @@ public class Main {
 
         try {
 
-            HttpPost post = new HttpPost(TERRITOIRE_CONTAINER_SERVICE_URL);
+            HttpPost post = new HttpPost(TERRITOIRE_SERVICE_URL);
             post.addHeader("Authorization", AUTH_TOKEN);
             post.addHeader("Content-Type", "application/sparql-query");
 
@@ -953,7 +953,7 @@ public class Main {
         List<String> resourcesIRIs = new ArrayList<String>();
         for (JsonValue binding : bindings) {
             String bindingSubjectValue = binding.getAsObject().getObj("sub").getString("value");
-            if (bindingSubjectValue.contains("https://territoire.emse.fr/ldp/")) {
+            if (bindingSubjectValue.contains(TERRITOIRE_SERVICE_URL)) {
                 if (!resourcesIRIs.contains(bindingSubjectValue)) {
                     resourcesIRIs.add(bindingSubjectValue);
                 }
