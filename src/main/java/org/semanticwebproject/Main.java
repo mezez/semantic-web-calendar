@@ -795,7 +795,7 @@ public class Main {
                     "PREFIX ex: <http://example.org/>\n" +
                     "PREFIX schema: <http://schema.org/>\n" +
                     "\n" +
-                    "SELECT * WHERE {\n" +
+                    "SELECT ?sub WHERE {\n" +
                     "  ?sub ?pred ?obj;\n" +
                     "  schema:startDate ?startDate;\n" +
                     "  schema:endDate ?endDate.\n" +
@@ -912,7 +912,7 @@ public class Main {
                     "PREFIX ex: <http://example.org/>\n" +
                     "PREFIX schema: <http://schema.org/>\n" +
                     "\n" +
-                    "SELECT * WHERE {\n" +
+                    "SELECT ?sub WHERE {\n" +
                     "  ?sub ?pred ?obj;\n" +
                     "  schema:location <" + location + ">;\n" +
                     "  schema:startDate ?startDate;\n" +
