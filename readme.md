@@ -21,7 +21,7 @@ This system consists of seven major features:
 
 #### DOWNLOAD
 
-This downloads a CPS2 master calendar events in ics format, processes/validates the content and uploads to territoire.emse.fr Linked Data Platform (LDP). The calendar data can be found at https://planning.univ-st-etienne.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=4222&projectId=1&calType=ical&firstDate=2022-08-22&lastDate=2023-08-20
+This downloads a CPS2 master calendar events in ics format, processes/validates the content and uploads to territoire.emse.fr Linked Data Platform (LDP). A container is created automatically on the LDP by this command or the READ command in event that one does not already exist. The calendar data can be found at https://planning.univ-st-etienne.fr/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=4222&projectId=1&calType=ical&firstDate=2022-08-22&lastDate=2023-08-20
 
 
 #### READ
@@ -31,6 +31,8 @@ Reads, processes/validates and uploads an already downloaded or manually added i
 #### EXTRACT
 
 Downloads a page corresponding to a city (passed as an argument by the user) on alentoor.fr. The downloaded page is scraped and jsonld events data is extracted, processed, validated and uploaded to the LDP.
+
+Note: It is assumed that you already have an LDP container existing to use the EXTRACT feature. So it is advisable to run the download/read commands in order to automatically create a container if one does not already exist
 
 #### GET_EVENTS
 
