@@ -1,46 +1,23 @@
-@prefix csvw:     <http://www.w3.org/ns/csvw#> .
-@prefix dash:     <http://datashapes.org/dash#> .
-@prefix dc:       <http://purl.org/dc/elements/1.1/> .
-@prefix dcam:     <http://purl.org/dc/dcam/> .
-@prefix dcat:     <http://www.w3.org/ns/dcat#> .
-@prefix dcmitype: <http://purl.org/dc/dcmitype/> .
-@prefix dct:      <http://purl.org/dc/terms/> .
-@prefix dcterms:  <http://purl.org/dc/terms/> .
-@prefix dctype:   <http://purl.org/dc/dcmitype/> .
-@prefix doap:     <http://usefulinc.com/ns/doap#> .
-@prefix ex:       <http://example.org/> .
-@prefix foaf:     <http://xmlns.com/foaf/0.1/> .
-@prefix graphql:  <http://datashapes.org/graphql#> .
-@prefix odrl:     <http://www.w3.org/ns/odrl/2/> .
-@prefix org:      <http://www.w3.org/ns/org#> .
-@prefix owl:      <http://www.w3.org/2002/07/owl#> .
-@prefix prof:     <http://www.w3.org/ns/dx/prof/> .
-@prefix prov:     <http://www.w3.org/ns/prov#> .
-@prefix qb:       <http://purl.org/linked-data/cube#> .
-@prefix rdf:      <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs:     <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix schema:   <http://schema.org/> .
-@prefix sh:       <http://www.w3.org/ns/shacl#> .
-@prefix skos:     <http://www.w3.org/2004/02/skos/core#> .
-@prefix sosa:     <http://www.w3.org/ns/sosa/> .
-@prefix ssn:      <http://www.w3.org/ns/ssn/> .
-@prefix swa:      <http://topbraid.org/swa#> .
-@prefix time:     <http://www.w3.org/2006/time#> .
-@prefix tosh:     <http://topbraid.org/tosh#> .
-@prefix vann:     <http://purl.org/vocab/vann/> .
-@prefix void:     <http://rdfs.org/ns/void#> .
-@prefix wgs:      <https://www.w3.org/2003/01/geo/wgs84_pos#> .
-@prefix xsd:      <http://www.w3.org/2001/XMLSchema#> .
+@prefix dash:    <http://datashapes.org/dash#> .
+@prefix ex:      <http://example.org/> .
+@prefix graphql: <http://datashapes.org/graphql#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema:  <http://schema.org/> .
+@prefix sh:      <http://www.w3.org/ns/shacl#> .
+@prefix swa:     <http://topbraid.org/swa#> .
+@prefix tosh:    <http://topbraid.org/tosh#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
 
 [ rdf:type     sh:ValidationReport ;
   sh:conforms  false ;
   sh:result    [ rdf:type                      sh:ValidationResult ;
-                 sh:focusNode                  <https://territoire.emse.fr/ldp/mieventcontainer/lyon-agenda-2848351/> ;
-                 sh:resultMessage              "Cannot compare with 2023-12-31" ;
-                 sh:resultPath                 schema:startDate ;
+                 sh:focusNode                  <file:///C:/University/UJM/2nd%20year/semantic-web/project/semantic-web-calendar/vEVENT-1> ;
+                 sh:resultMessage              "Property needs to have at least 1 value" ;
+                 sh:resultPath                 schema:location ;
                  sh:resultSeverity             sh:Violation ;
-                 sh:sourceConstraintComponent  sh:LessThanOrEqualsConstraintComponent ;
-                 sh:sourceShape                []  ;
-                 sh:value                      "2023-01-02"^^schema:Date
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent ;
+                 sh:sourceShape                [] 
                ]
 ] .
