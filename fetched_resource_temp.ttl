@@ -1,21 +1,21 @@
-<https://territoire.emse.fr/ldp/llmm/ade60323032322d3230323353542d455449454e4e452d32333432382d302d30/>
-        a                              <http://www.w3.org/ns/ldp#RDFSource> , <http://www.w3.org/ns/ldp#Resource> , <http://www.w3.org/ns/ldp#Container> , <https://carbonldp.com/ns/v1/platform#Document> , <http://www.w3.org/ns/ldp#BasicContainer> , <http://example.org/ns#CalendarEvent> ;
+<https://territoire.emse.fr/ldp/llmm/ade60323032322d3230323353542d455449454e4e452d32323537312d342d30/>
+        a                              <http://www.w3.org/ns/ldp#Container> , <http://www.w3.org/ns/ldp#BasicContainer> , <http://www.w3.org/ns/ldp#RDFSource> , <http://www.w3.org/ns/ldp#Resource> , <http://example.org/ns#CalendarEvent> , <https://carbonldp.com/ns/v1/platform#Document> ;
         <http://www.w3.org/2000/01/rdf-schema#label>
-                "CM Multi agent coordination"@fr ;
+                "CM Semantic Web"@fr ;
         <http://schema.org/description>
-                "  M2 CPS2 BOISSIER OLIVIER BALBO FLAVIEN NARDIN GUSTAVO (ExportÃ© le:12/01/2023 10:31) " ;
-        <http://schema.org/endDate>    "2022-12-14T14:30:00+00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
-        <http://schema.org/location>   <https://territoire.emse.fr/kg/emse/fayol/2ET/224> ;
-        <http://schema.org/startDate>  "2022-12-14T12:30:00+00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+                "  M2 CPS2 M2 DSC M2 DSC Alternance ZIMMERMANN A CHARPENAY VICTOR (ExportÃ© le:12/01/2023 10:31) " ;
+        <http://schema.org/endDate>    "2022-12-09T11:00:00+00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+        <http://schema.org/location>   <https://territoire.emse.fr/kg/emse/fayol/2ET/214> ;
+        <http://schema.org/startDate>  "2022-12-09T07:45:00+00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
         <http://www.w3.org/2002/07/owl#sameAs>
-                <https://territoire.emse.fr/ldp/morestelsimsek/ade60323032322d3230323353542d455449454e4e452d32333432382d302d30/> , <https://territoire.emse.fr/ldp/jklm/ade60323032322d3230323353542d455449454e4e452d32333432382d302d30/> , <https://territoire.emse.fr/ldp/simsekmorestel/ade60323032322d3230323353542d455449454e4e452d32333432382d302d30/> , <https://territoire.emse.fr/ldp/killianquoniou/Event-ADE60323032322d3230323353542d455449454e4e452d32333432382d302d30/> , <https://territoire.emse.fr/ldp/mieventcontainer/vevent-41/> ;
+                <https://territoire.emse.fr/ldp/simsekmorestel/ade60323032322d3230323353542d455449454e4e452d32323537312d342d30/> , <https://territoire.emse.fr/ldp/killianquoniou/Event-ADE60323032322d3230323353542d455449454e4e452d32323537312d342d30/> , <https://territoire.emse.fr/ldp/jklm/ade60323032322d3230323353542d455449454e4e452d32323537312d342d30/> , <https://territoire.emse.fr/ldp/morestelsimsek/ade60323032322d3230323353542d455449454e4e452d32323537312d342d30/> , <https://territoire.emse.fr/ldp/mieventcontainer/vevent-32/> ;
         <http://www.w3.org/ns/ldp#hasMemberRelation>
                 <http://www.w3.org/ns/ldp#member> ;
         <http://www.w3.org/ns/ldp#insertedContentRelation>
                 <http://www.w3.org/ns/ldp#MemberSubject> ;
         <http://www.w3.org/ns/ldp#membershipResource>
-                <https://territoire.emse.fr/ldp/llmm/ade60323032322d3230323353542d455449454e4e452d32333432382d302d30/> ;
+                <https://territoire.emse.fr/ldp/llmm/ade60323032322d3230323353542d455449454e4e452d32323537312d342d30/> ;
         <https://carbonldp.com/ns/v1/platform#created>
-                "2023-01-12T09:32:54.219Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+                "2023-01-12T09:32:49.789Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
         <https://carbonldp.com/ns/v1/platform#modified>
-                "2023-01-12T21:56:26.298Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+                "2023-01-13T17:25:32.899Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> .

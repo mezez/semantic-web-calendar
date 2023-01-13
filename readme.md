@@ -6,9 +6,9 @@ A semantic web project for creating and managing a calendar using RDF technologi
 
 To run this application, run the main.java application. This will start up an API web server as well as a console interface
 
-The application can be used via only one of the  two interfaces, which ever approach selected first will remain the only available interface until the application is restarted
+The application can be used via only one of the  two interfaces at each time, which ever approach selected first will remain the only available interface until the application is restarted
 
-Documentation for the API endpoint can be found at https://documenter.getpostman.com/view/6071478/2s8Z76uUCw#7d397d02-d645-4a8a-81e5-d05efe8073a6
+Documentation for the API endpoints can be found at https://documenter.getpostman.com/view/6071478/2s8Z76uUCw#7d397d02-d645-4a8a-81e5-d05efe8073a6
 
 To use via console, simply follow the prompts displayed on the console interface.
 

@@ -266,6 +266,10 @@ public class Main {
 
     }
 
+
+    /**
+     * LOADS calendar.ics file for processing calendar data and uploading to LDP
+     * */
     public static boolean readFile() throws Exception {
         FileInputStream fin = new FileInputStream(CALENDAR_FILE_NAME);
         CalendarBuilder builder = new CalendarBuilder();
@@ -273,6 +277,9 @@ public class Main {
         return parseCalendarToRDF(calendar);
     }
 
+    /**
+     * Used for accepting command on what feature to execute by the user
+     * */
     public static String getCommand() throws IOException {
         // Enter data using BufferReader
         BufferedReader reader = new BufferedReader(
@@ -298,6 +305,9 @@ public class Main {
         return command;
     }
 
+    /**
+     * Used for taking datetime input from user during console based execution by the user
+     * */
     public static List<String> getEventDate() throws IOException {
         // Enter data using BufferReader
         BufferedReader reader = new BufferedReader(
@@ -318,6 +328,9 @@ public class Main {
         return dateDetails;
     }
 
+    /**
+     * Used for taking event details input from user during console based execution
+     * */
     public static List<String> getEventDetails() throws IOException {
         // Enter data using BufferReader
         BufferedReader reader = new BufferedReader(
@@ -356,6 +369,9 @@ public class Main {
         return eventDetails;
     }
 
+    /**
+     * Used for taking event attendee details (IRI) input from user during console based execution
+     * */
     public static List<String> getAttendeeDetails() throws IOException {
         // Enter data using BufferReader
         BufferedReader reader = new BufferedReader(
@@ -385,6 +401,9 @@ public class Main {
         return attendeeDetails;
     }
 
+    /**
+     * Used for taking input on url of calendar to download from user during console based execution
+     * */
     public static String getUrl() throws IOException {
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(System.in));
@@ -403,6 +422,9 @@ public class Main {
         return url;
     }
 
+    /**
+     * Used for taking alentoor city name input for webpage extraction from user during console based execution
+     * */
     public static String getCity() throws IOException {
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(System.in));
@@ -420,6 +442,12 @@ public class Main {
         return city;
     }
 
+    /**
+     * Takes a Calendar object which is generated after parsing ICS file as input
+     * Tries to create a container on the LDP (this will have no effect if a container already exists)
+     * Iterates through the calendar list generated, creates a resource from each event and writes each resource to a temp file
+     * Attempts to validate the file contents against a shacl shape and upload to ldp
+     * */
     public static Boolean parseCalendarToRDF(Calendar calendar) throws Exception {
         List<CalendarComponent> calendarList = calendar.getComponentList().getAll();
 
@@ -442,7 +470,6 @@ public class Main {
 
         FileWriter writer = new FileWriter(tempFileName);
         BufferedWriter bufferedWriter = new BufferedWriter(writer);
-//            model.write(System.out, "Turtle");
 
         model.write(bufferedWriter, "Turtle");
         bufferedWriter.close();
@@ -451,7 +478,6 @@ public class Main {
 
         for (CalendarComponent calendarEvent : calendarList) {
             model = ModelFactory.createDefaultModel();
-//            eventsInfo = model.createResource("https://mines-saint-etienne.cps2.com/mycalendar");
 
             //PROPERTIES
             final org.apache.jena.rdf.model.Property A_THING = model.createProperty("a");
@@ -471,11 +497,9 @@ public class Main {
 
             //loop through event details and form RDF
 
-//            eventInfo = model.createResource(EVENTS_PREFIX+"#"+ eventName.substring(0, 1).toLowerCase() + eventName.substring(1) + "-"+ eventCount.toString());
             eventInfo = model.createResource(eventName.substring(0, 1).toLowerCase() + eventName.substring(1) + "-" + eventCount.toString());
 
 
-//            eventInfo.addProperty(A_THING, SCHEMA_ORG_PREFIX + "Event");
             eventInfo.addProperty(RDF.type, model.createResource(SCHEMA_ORG_PREFIX + "Event"));
             eventInfo.addProperty(RDF.type, model.createResource(SCHEMA_ORG_PREFIX + "Course"));
 
@@ -532,6 +556,10 @@ public class Main {
         return isValidShape;
     }
 
+    /**
+     * parses temp files containing json ld data into jena models, creates resources and writes them to temp files
+     * then attempts to validate the file contents against shacl a shape and upload to ldp
+     * */
     public static boolean parseJSONLDToRDF(Integer numberOfFiles) throws Exception {
         int count = 1;
         boolean isValidShape = false;
@@ -547,7 +575,7 @@ public class Main {
             try {
                 Files.deleteIfExists(Paths.get(FETCHED_JSON_LD_TEMP_NAME + "-" + count + ".jsonld"));
             } catch (Exception ex) {
-                System.out.println("file probably still in use");
+//                System.out.println("file probably still in use");
             }
 
             //upload to ldp
@@ -573,7 +601,7 @@ public class Main {
             try {
                 Files.deleteIfExists(Paths.get(fileName));
             } catch (Exception ex) {
-                System.out.println("file probably still in use");
+//                System.out.println("file probably still in use");
             }
         }
 
@@ -582,8 +610,13 @@ public class Main {
 
     }
 
+    /**
+     * uploads a resource to ldp, either a container or a container child on successful validation against shacl shape
+     * */
     public static boolean uploadTurtleFile(String destination, Boolean isContainer, Integer count, Boolean isCPS2Event) throws Exception {
         boolean isValidShape = false;
+
+        //USED FOR FUSEKI TESTS
         if (destination.equals(FUSEKI_DESTINATION)) {
             try (RDFConnection conn = RDFConnectionFactory.connect(LOCAL_FUSEKI_SERVICE_URL)) {
                 conn.put(CALENDAR_OUTPUT_TURTLE_FILE_NAME);
@@ -617,14 +650,14 @@ public class Main {
                 isValidShape = validateWithSHACL(fileName, false);
                 if (!isValidShape) {
                     System.out.println("File: " + CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl");
-                    System.out.println("Invalid events shape. See log file: " + SHACL_VALIDATION_REPORTS + " for details");
+                    System.out.println("Invalid events shape. See log file: in shacl-validation-reports folder for details");
                 }
 
                 if (isCPS2Event) {
                     isValidShape = validateWithSHACL(fileName, true);
                     if (!isValidShape) {
                         System.out.println("File: " + CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl");
-                        System.out.println("Invalid events shape. See log file: " + SHACL_VALIDATION_REPORTS + " for details");
+                        System.out.println("Invalid events shape. See log file: in shacl-validation-reports folder for details");
                     }
                 }
 
@@ -641,7 +674,7 @@ public class Main {
                 try {
                     Files.deleteIfExists(Paths.get(isContainer ? CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "_container.ttl" : CALENDAR_OUTPUT_TURTLE_FILE_TEMP_NAME + "-" + count.toString() + ".ttl"));
                 } catch (Exception ex) {
-                    System.out.println("file probably still in use");
+//                    System.out.println("file probably still in use");
                 }
                 System.out.println(EntityUtils.toString(response.getEntity()));
                 return isValidShape;
@@ -667,6 +700,9 @@ public class Main {
         }
     }
 
+    /**
+     * Converts datetime string to XSDDateTimeObject
+     * */
     public static XSDDateTime createDateTimeObject(String dateTimeString) throws ParseException {
         String year = dateTimeString.substring(0, 4);
         String month = dateTimeString.substring(4, 6);
@@ -685,6 +721,10 @@ public class Main {
         return new XSDDateTime(calendar);
     }
 
+    /**
+     * Retrieves and attendee resource from ldp, creates an attendee iri from input string and adds to the event resource
+     * Then saves the updated content in the ldp
+     * */
     public static void addAttendeeToEvent(String attendeeURI, String eventUrl) throws Exception {
         //fetch event
         HttpGet get = new HttpGet(eventUrl);
@@ -771,7 +811,7 @@ public class Main {
             try {
                 Files.deleteIfExists(Paths.get(FETCHED_RESOURCE_TEMP_NAME));
             } catch (Exception ex) {
-                System.out.println("file probably still in use");
+//                System.out.println("file probably still in use");
             }
 
             System.out.println(response.toString());
@@ -782,6 +822,9 @@ public class Main {
         }
     }
 
+    /**
+     * Uses a sparql query to retrieve events by date, returns the iri (url) to the events found
+     * */
     public static String upcomingEventsByDate(String year, String month, String day) throws Exception {
 
         try {
@@ -840,6 +883,9 @@ public class Main {
         }
     }
 
+    /**
+     * Uses a sparql query to retrieve events without schema:Course property, returns the iri (url) to the events found
+     * */
     public static String nonCourseEvents() throws Exception {
 
         try {
@@ -899,6 +945,9 @@ public class Main {
         }
     }
 
+    /**
+     * Uses a sparql query to retrieve events with the same start and end dates and times
+     * */
     public static String discoverSameEvents(String startDate, String endDate, String location) throws Exception {
 
         try {
@@ -938,6 +987,11 @@ public class Main {
     }
 
 
+    /**
+     * calls the discoverSameEvents method to retrieve events with the same start and end dates and times,
+     * Links the results found using the owl:sameAs property
+     * returns the iri (url) to the events found
+     * */
     public static List<String> linkSameEvents(String startDate, String endDate, String location) throws Exception {
 
         String sameEvents = discoverSameEvents(startDate, endDate, location);
@@ -1054,7 +1108,7 @@ public class Main {
                         try {
                             Files.deleteIfExists(Paths.get(FETCHED_RESOURCE_TEMP_NAME));
                         } catch (Exception ex) {
-                            System.out.println("file probably still in use");
+//                            System.out.println("file probably still in use");
                         }
 
                         System.out.println(response.toString());
@@ -1070,6 +1124,10 @@ public class Main {
     }
 
 
+    /**
+     * Scrapes alentoor.fr from events information for the spefic city defined by user,
+     * writes the json ld results retrieved to files and calls on another method to parse the files to turtle for processing and upload to ldp
+     * */
     public static boolean fetchRDFFromUrl(String url, String alentoorCity) throws Exception {
         Document document = Jsoup.connect(url).get();
 

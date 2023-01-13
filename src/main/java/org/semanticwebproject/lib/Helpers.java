@@ -141,7 +141,9 @@ public class Helpers {
 
             if (!conforms) {
 //                String report = path.toFile().getAbsolutePath() + SHACL_VALIDATION_REPORTS;
-                File reportFile = new File(SHACL_VALIDATION_REPORTS);
+//                File reportFile = new File(SHACL_VALIDATION_REPORTS);
+                File reportFile = new File("./shacl-validation-reports/"+fileContent);
+
                 reportFile.createNewFile();
                 OutputStream reportOutputStream = new FileOutputStream(reportFile);
 
