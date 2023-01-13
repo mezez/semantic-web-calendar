@@ -2,9 +2,11 @@
 
 A semantic web project for creating and managing a calendar using RDF technologies.
 
+
+A detailed guide and explanation of this project, codebase and features implementation is available online at https://docs.google.com/document/d/1ho0AaZf1vrmZeG5lASwfKAgwwbCUxJwa8RvnFNizOKg/edit?usp=sharing
 ## Execution
 
-To run this application, run the main.java application. This will start up an API web server as well as a console interface
+To run this application, run the **main.java** file. This will start up an API web server as well as a console interface
 
 The application can be used via only one of the  two interfaces at each time, which ever approach selected first will remain the only available interface until the application is restarted
 
